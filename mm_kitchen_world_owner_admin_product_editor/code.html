@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MM Kitchen World - Owner Admin Dashboard</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "background": "#f9f9ff",
+            "secondary": "#295fa4",
+            "secondary-fixed": "#d5e3ff",
+            "surface-dim": "#d1daee",
+            "primary-container": "#0073e0",
+            "on-tertiary-fixed": "#002109",
+            "on-error-container": "#93000a",
+            "error": "#ba1a1a",
+            "surface-container-lowest": "#ffffff",
+            "tertiary-fixed-dim": "#3de273",
+            "primary": "#005bb3",
+            "on-tertiary-container": "#f7fff3",
+            "primary-fixed-dim": "#a9c7ff",
+            "on-secondary-fixed-variant": "#004689",
+            "on-surface-variant": "#414753",
+            "tertiary-fixed": "#66ff8e",
+            "surface-container-low": "#f0f3ff",
+            "on-primary-fixed-variant": "#00468c",
+            "surface-container-high": "#dfe8fd",
+            "surface": "#f9f9ff",
+            "surface-variant": "#dae3f7",
+            "on-surface": "#131c2a",
+            "on-background": "#131c2a",
+            "inverse-on-surface": "#ecf1ff",
+            "on-tertiary": "#ffffff",
+            "primary-fixed": "#d6e3ff",
+            "surface-container": "#e7eeff",
+            "on-primary-container": "#fefcff",
+            "secondary-container": "#86b5ff",
+            "outline-variant": "#c1c6d6",
+            "inverse-surface": "#283140",
+            "secondary-fixed-dim": "#a8c8ff",
+            "inverse-primary": "#a9c7ff",
+            "outline": "#717785",
+            "surface-bright": "#f9f9ff",
+            "on-primary-fixed": "#001b3d",
+            "surface-container-highest": "#dae3f7",
+            "error-container": "#ffdad6",
+            "on-secondary": "#ffffff",
+            "surface-tint": "#005db7",
+            "on-secondary-fixed": "#001b3c",
+            "on-primary": "#ffffff",
+            "on-error": "#ffffff",
+            "on-secondary-container": "#004587",
+            "on-tertiary-fixed-variant": "#005322",
+            "tertiary": "#006b2e",
+            "tertiary-container": "#00873c"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-xl": "2.5rem",
+            "space-xs": "0.25rem",
+            "gutter": "1.5rem",
+            "space-lg": "1.5rem",
+            "space-md": "1rem",
+            "space-sm": "0.5rem",
+            "margin": "3rem",
+            "margin-mobile": "1.25rem",
+            "gutter-mobile": "1rem"
+          },
+          "fontFamily": {
+            "headline-lg": ["Playfair Display"],
+            "body-md": ["Plus Jakarta Sans"],
+            "label-sm": ["Plus Jakarta Sans"],
+            "label-md": ["Plus Jakarta Sans"],
+            "body-sm": ["Plus Jakarta Sans"],
+            "body-lg": ["Plus Jakarta Sans"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "display-hero-mobile": ["Playfair Display"],
+            "label-lg": ["Plus Jakarta Sans"],
+            "display-hero": ["Playfair Display"],
+            "headline-lg-mobile": ["Playfair Display"],
+            "headline-sm": ["Plus Jakarta Sans"]
+          },
+          "fontSize": {
+            "headline-lg": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "body-md": ["15px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "700" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+            "body-sm": ["13px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+            "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "display-hero-mobile": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "display-hero": ["56px", { "lineHeight": "64px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "600" }],
+            "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }]
+          }
+        },
+      },
+    }
+  </script>
+</head>
+<body class="bg-background text-on-surface antialiased flex min-h-screen">
+<!-- LEFT NAVIGATION SIDEBAR (Shared Component: SideNavBar) -->
+<aside class="fixed left-0 top-0 h-screen w-72 flex flex-col justify-between p-6 z-40 bg-surface-container-lowest border-r border-outline-variant shadow-sm">
+<!-- Brand / Console Header -->
+<div class="flex flex-col gap-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-on-primary font-bold text-headline-sm">
+          MM
+        </div>
+<div>
+<div class="text-headline-sm font-headline-sm text-primary font-bold tracking-tight">MM Kitchen World</div>
+<div class="text-body-sm font-body-sm text-on-surface-variant flex items-center gap-1.5">
+<span class="inline-block w-2 h-2 rounded-full bg-tertiary"></span>
+            Showroom Operations Console
+          </div>
+</div>
+</div>
+<!-- Quick Action CTA -->
+<button class="w-full flex items-center justify-center gap-2 bg-primary hover:bg-secondary text-on-primary py-2.5 px-4 rounded-lg font-label-lg text-label-lg transition-transform active:scale-98 shadow-sm">
+<span class="material-symbols-outlined text-body-lg">add_circle</span>
+        Add Product
+      </button>
+<!-- Navigation Links -->
+<nav class="flex flex-col gap-1.5">
+<!-- Dashboard -->
+<a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-container-low hover:text-primary rounded-lg px-4 py-3 transition-colors duration-150 text-label-md font-label-md" href="#dashboard">
+<span class="material-symbols-outlined text-body-lg">dashboard</span>
+<span>Dashboard</span>
+</a>
+<!-- Products (Active per Intent: Products Management Screen) -->
+<a class="flex items-center justify-between bg-surface-container-low text-primary font-semibold rounded-lg px-4 py-3 border-l-4 border-primary text-label-md font-label-md" href="#products">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-body-lg">inventory_2</span>
+<span>Products</span>
+</div>
+<span class="px-2 py-0.5 rounded-full text-label-sm font-label-sm bg-primary text-on-primary">48</span>
+</a>
+<!-- Categories -->
+<a class="flex items-center justify-between text-on-surface-variant hover:bg-surface-container-low hover:text-primary rounded-lg px-4 py-3 transition-colors duration-150 text-label-md font-label-md" href="#categories">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-body-lg">category</span>
+<span>Categories</span>
+</div>
+<span class="text-label-sm font-label-sm text-outline">6</span>
+</a>
+<!-- Brands -->
+<a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-container-low hover:text-primary rounded-lg px-4 py-3 transition-colors duration-150 text-label-md font-label-md" href="#brands">
+<span class="material-symbols-outlined text-body-lg">verified</span>
+<span>Brands</span>
+</a>
+<!-- Enquiries -->
+<a class="flex items-center justify-between text-on-surface-variant hover:bg-surface-container-low hover:text-primary rounded-lg px-4 py-3 transition-colors duration-150 text-label-md font-label-md" href="#enquiries">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-body-lg">mark_chat_unread</span>
+<span>Enquiries</span>
+</div>
+<span class="px-2 py-0.5 rounded-full text-label-sm font-label-sm bg-tertiary-container text-on-tertiary font-bold">3 New</span>
+</a>
+<!-- Store Settings -->
+<a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-container-low hover:text-primary rounded-lg px-4 py-3 transition-colors duration-150 text-label-md font-label-md" href="#settings">
+<span class="material-symbols-outlined text-body-lg">settings</span>
+<span>Store Settings</span>
+</a>
+</nav>
+</div>
+<!-- Sidebar Footer / Storefront link & Profile -->
+<div class="flex flex-col gap-3 pt-4 border-t border-outline-variant">
+<a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-container-low hover:text-primary rounded-lg px-4 py-2.5 text-body-sm font-body-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-body-lg">storefront</span>
+<span>Live Showroom Storefront</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-container-low hover:text-primary rounded-lg px-4 py-2.5 text-body-sm font-body-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-body-lg">help</span>
+<span>Help &amp; Docs</span>
+</a>
+<!-- Showroom Admin Profile Avatar Card -->
+<div class="flex items-center gap-3 p-3 bg-surface-container-low rounded-lg mt-1">
+<div class="w-9 h-9 rounded-full bg-secondary-fixed text-on-secondary-fixed-variant flex items-center justify-center font-bold text-label-md">
+          MK
+        </div>
+<div class="flex-1 min-w-0">
+<div class="text-label-md font-label-md text-on-surface truncate">M. Kumar (Owner)</div>
+<div class="text-label-sm font-label-sm text-outline truncate">Kavundampalayam Showroom</div>
+</div>
+<span class="material-symbols-outlined text-outline text-body-lg">expand_more</span>
+</div>
+</div>
+</aside>
+<!-- MAIN VIEWPORT CONTAINER (Offset by 72 (18rem) for left sidebar) -->
+<div class="ml-72 flex-1 flex flex-col min-w-0 bg-background">
+<!-- TOP BAR (Engineered Controls & Breadcrumbs) -->
+<header class="h-20 bg-surface-container-lowest border-b border-outline-variant px-8 flex items-center justify-between sticky top-0 z-30 shadow-sm">
+<!-- Breadcrumbs & Search -->
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2 text-label-md font-label-md text-outline">
+<span>Store Admin</span>
+<span class="material-symbols-outlined text-body-sm">chevron_right</span>
+<span>Products</span>
+<span class="material-symbols-outlined text-body-sm">chevron_right</span>
+<span class="text-primary font-bold">Add &amp; Edit Inventory</span>
+</div>
+<div class="h-5 w-px bg-outline-variant"></div>
+<!-- Quick Search Bar -->
+<div class="relative w-80">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-outline text-body-lg">search</span>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-lg pl-10 pr-4 py-2 text-body-sm font-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all" placeholder="Search SKUs, models, appliances..." type="text"/>
+</div>
+</div>
+<!-- Action Cluster -->
+<div class="flex items-center gap-3">
+<!-- Export Catalog -->
+<button class="flex items-center gap-2 px-3.5 py-2 border border-outline-variant hover:bg-surface-container-low text-on-surface-variant rounded-lg text-label-md font-label-md transition-colors">
+<span class="material-symbols-outlined text-body-lg">file_download</span>
+          Export Catalog (CSV/PDF)
+        </button>
+<!-- WhatsApp Hub Trigger -->
+<button class="flex items-center gap-2 px-3.5 py-2 bg-tertiary-container text-on-tertiary rounded-lg text-label-md font-label-md hover:bg-tertiary transition-colors shadow-sm">
+<span class="material-symbols-outlined text-body-lg">chat</span>
+          WhatsApp Hub (3)
+        </button>
+<!-- Add New Product (Primary #0878E8 style) -->
+<button class="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-secondary text-on-primary rounded-lg text-label-md font-label-md transition-all shadow-sm">
+<span class="material-symbols-outlined text-body-lg">add</span>
+          + Add New Product
+        </button>
+</div>
+</header>
+<!-- MAIN BODY CONTENT -->
+<main class="p-8 flex flex-col gap-8 max-w-[1440px] w-full mx-auto">
+<!-- A. EXECUTIVE SUMMARY CARDS (Top Row Bento) -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+<!-- Metric 1: Total Products -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-5 shadow-sm relative overflow-hidden flex flex-col justify-between">
+<div class="absolute top-0 left-0 right-0 h-1 bg-primary"></div>
+<div class="flex items-center justify-between text-outline text-label-md font-label-md">
+<span>Total Appliance SKUs</span>
+<span class="material-symbols-outlined text-primary text-body-lg">kitchen</span>
+</div>
+<div class="mt-3 flex items-baseline gap-2">
+<span class="text-headline-lg font-headline-md text-on-surface">48</span>
+<span class="text-label-sm font-label-sm text-outline">items</span>
+</div>
+<div class="mt-2 text-body-sm font-body-sm text-on-surface-variant flex items-center gap-2">
+<span class="inline-flex items-center text-label-sm font-label-sm text-tertiary font-bold bg-surface-container-high px-2 py-0.5 rounded">42 Live</span>
+<span class="text-outline">•</span>
+<span class="text-outline">6 In Draft</span>
+</div>
+</div>
+<!-- Metric 2: WhatsApp Enquiries -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-5 shadow-sm relative overflow-hidden flex flex-col justify-between">
+<div class="absolute top-0 left-0 right-0 h-1 bg-tertiary-container"></div>
+<div class="flex items-center justify-between text-outline text-label-md font-label-md">
+<span>WhatsApp Leads</span>
+<span class="material-symbols-outlined text-tertiary text-body-lg">forum</span>
+</div>
+<div class="mt-3 flex items-baseline gap-2">
+<span class="text-headline-lg font-headline-md text-on-surface">34</span>
+<span class="text-label-sm font-label-sm text-tertiary font-bold">+18% this week</span>
+</div>
+<div class="mt-2 text-body-sm font-body-sm text-on-surface-variant">
+            High intent on Glen &amp; Elica Hobs
+          </div>
+</div>
+<!-- Metric 3: Active Categories -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-5 shadow-sm relative overflow-hidden flex flex-col justify-between">
+<div class="absolute top-0 left-0 right-0 h-1 bg-secondary"></div>
+<div class="flex items-center justify-between text-outline text-label-md font-label-md">
+<span>Active Categories</span>
+<span class="material-symbols-outlined text-secondary text-body-lg">category</span>
+</div>
+<div class="mt-3 flex items-baseline gap-2">
+<span class="text-headline-lg font-headline-md text-on-surface">6</span>
+<span class="text-label-sm font-label-sm text-outline">verified groups</span>
+</div>
+<div class="mt-2 text-body-sm font-body-sm text-on-surface-variant truncate">
+            Hobs, Chimneys, Ovens, Sinks, Stoves
+          </div>
+</div>
+<!-- Metric 4: Showroom Sync Status -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-5 shadow-sm relative overflow-hidden flex flex-col justify-between">
+<div class="absolute top-0 left-0 right-0 h-1 bg-primary-container"></div>
+<div class="flex items-center justify-between text-outline text-label-md font-label-md">
+<span>Showroom Sync</span>
+<span class="material-symbols-outlined text-primary-container text-body-lg">sync</span>
+</div>
+<div class="mt-3 flex items-baseline gap-2">
+<span class="text-headline-md font-headline-md text-on-surface flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-tertiary animate-pulse"></span>
+              Live &amp; Synced
+            </span>
+</div>
+<div class="mt-2 text-body-sm font-body-sm text-on-surface-variant">
+            Kavundampalayam floor terminal connected
+          </div>
+</div>
+</section>
+<!-- B. COMPLETE "ADD / EDIT PRODUCT" FULL INTERFACE (Modern Architectural Console Form) -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-2xl shadow-sm overflow-hidden">
+<!-- Editor Header Bar -->
+<div class="bg-surface-container-low px-8 py-5 border-b border-outline-variant flex flex-wrap items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-headline-sm">tune</span>
+<div>
+<div class="flex items-center gap-3">
+<h2 class="text-headline-md font-headline-md text-on-surface">
+                  Product Editor: Glen Vortex 4-Burner Built-in Hob
+                </h2>
+<span class="bg-surface-container-high text-primary px-2.5 py-0.5 rounded text-label-sm font-label-sm font-bold">
+                  SKU: MM-HB-402
+                </span>
+</div>
+<p class="text-body-sm font-body-sm text-outline">Manage showroom display visibility, technical specifications, and WhatsApp lead routing.</p>
+</div>
+</div>
+<!-- Status Switch [Published / Draft] -->
+<div class="flex items-center gap-3 bg-surface-container-lowest border border-outline-variant rounded-lg p-1.5 shadow-sm">
+<button class="px-3.5 py-1.5 rounded text-label-md font-label-md bg-tertiary-container text-on-tertiary font-bold flex items-center gap-1.5 transition-all">
+<span class="material-symbols-outlined text-body-sm">check_circle</span>
+              Published
+            </button>
+<button class="px-3.5 py-1.5 rounded text-label-md font-label-md text-outline hover:text-on-surface transition-colors flex items-center gap-1.5">
+              Draft Only
+            </button>
+</div>
+</div>
+<!-- 6 Detailed Form Sections Grid Layout -->
+<form class="p-8 flex flex-col gap-10">
+<!-- Section 1 & 2: General Information & Pricing Settings (2-Column Grid) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- 1. GENERAL INFORMATION (7 Columns) -->
+<div class="lg:col-span-7 flex flex-col gap-5">
+<div class="flex items-center gap-2 border-b border-outline-variant pb-2">
+<span class="material-symbols-outlined text-primary text-body-lg">info</span>
+<h3 class="text-headline-sm font-headline-sm text-on-surface">1. General Information</h3>
+</div>
+<!-- Product Title -->
+<div>
+<label class="block text-label-md font-label-md text-on-surface mb-1.5">Product Title</label>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-2.5 text-body-md font-body-md text-on-surface focus:ring-2 focus:ring-primary focus:border-primary outline-none" type="text" value="Glen Vortex 4-Burner Built-in Hob"/>
+</div>
+<!-- URL Slug (auto-generated) -->
+<div>
+<label class="block text-label-md font-label-md text-on-surface mb-1.5">Showroom URL Slug (SEO)</label>
+<div class="flex rounded-lg border border-outline-variant bg-surface-container-low overflow-hidden">
+<span class="px-3.5 py-2.5 text-outline text-body-sm font-body-sm border-r border-outline-variant">mmkitchenworld.com/products/</span>
+<input class="flex-1 bg-transparent px-3 py-2.5 text-body-sm font-body-sm text-on-surface focus:outline-none" type="text" value="glen-vortex-4-burner-hob"/>
+</div>
+</div>
+<!-- 3 Field Row: Category, Brand, Model/SKU -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+<div>
+<label class="block text-label-md font-label-md text-on-surface mb-1.5">Category</label>
+<select class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2.5 text-body-sm font-body-sm text-on-surface focus:ring-2 focus:ring-primary outline-none">
+<option selected="">Built-in Hobs</option>
+<option>Kitchen Chimneys</option>
+<option>Built-in Ovens</option>
+<option>Gas Stoves</option>
+<option>Quartz Sinks</option>
+<option>Hardware &amp; Fittings</option>
+</select>
+</div>
+<div>
+<label class="block text-label-md font-label-md text-on-surface mb-1.5">Brand Partner</label>
+<select class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2.5 text-body-sm font-body-sm text-on-surface focus:ring-2 focus:ring-primary outline-none">
+<option selected="">Glen</option>
+<option>Faber</option>
+<option>Elica</option>
+<option>Bosch</option>
+<option>Hafele</option>
+<option>Kaff</option>
+</select>
+</div>
+<div>
+<label class="block text-label-md font-label-md text-on-surface mb-1.5">Model / SKU</label>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2.5 text-body-sm font-body-sm text-on-surface focus:ring-2 focus:ring-primary outline-none font-mono" type="text" value="GL-1043-SQ-BL"/>
+</div>
+</div>
+</div>
+<!-- 2. PRICING & ENQUIRY SETTINGS (5 Columns) -->
+<div class="lg:col-span-5 flex flex-col gap-5 bg-surface-container-low p-6 rounded-xl border border-outline-variant">
+<div class="flex items-center gap-2 border-b border-outline-variant pb-2">
+<span class="material-symbols-outlined text-primary text-body-lg">sell</span>
+<h3 class="text-headline-sm font-headline-sm text-on-surface">2. Pricing &amp; Enquiry Settings</h3>
+</div>
+<!-- Price on Request Mode (Showroom Default Strategy) -->
+<div class="flex items-center justify-between p-3.5 bg-surface-container-lowest rounded-lg border border-outline-variant">
+<div>
+<div class="text-label-md font-label-md text-on-surface">"Price on Request" Mode</div>
+<div class="text-body-sm font-body-sm text-outline">Forces customer to click WhatsApp for curated quotation</div>
+</div>
+<!-- Toggle switch ON -->
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-outline-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<!-- Display Numeric MRP/Price Toggle -->
+<div class="flex items-center justify-between p-3.5 bg-surface-container-lowest rounded-lg border border-outline-variant opacity-75">
+<div>
+<div class="text-label-md font-label-md text-on-surface">Public Display Price</div>
+<div class="text-body-sm font-body-sm text-outline">Show exact retail price on digital catalog</div>
+</div>
+<!-- Toggle switch OFF -->
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-outline-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<!-- Internal Trade Price Field -->
+<div>
+<label class="block text-label-md font-label-md text-on-surface mb-1.5 flex items-center justify-between">
+<span>Showroom Trade Price (Internal Notes)</span>
+<span class="text-label-sm font-label-sm text-tertiary">Confidential</span>
+</label>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3.5 py-2.5 text-body-sm font-body-sm text-on-surface font-semibold focus:ring-2 focus:ring-primary outline-none" type="text" value="₹18,500 (MRP ₹24,990)"/>
+</div>
+</div>
+</div>
+<!-- Section 3: Product Description & Specifications Matrix -->
+<div class="flex flex-col gap-5">
+<div class="flex items-center gap-2 border-b border-outline-variant pb-2">
+<span class="material-symbols-outlined text-primary text-body-lg">subject</span>
+<h3 class="text-headline-sm font-headline-sm text-on-surface">3. Product Description &amp; Specifications Matrix</h3>
+</div>
+<!-- Rich Text Summary -->
+<div>
+<label class="block text-label-md font-label-md text-on-surface mb-1.5">Architectural Specification Summary</label>
+<textarea class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg p-3.5 text-body-md font-body-md text-on-surface focus:ring-2 focus:ring-primary outline-none" rows="2">8mm toughened beveled glass with Italian forged brass burners and integrated pulse ignition.</textarea>
+</div>
+<!-- Key Specs Key-Value Table -->
+<div class="border border-outline-variant rounded-xl overflow-hidden shadow-sm">
+<div class="bg-surface-container-low px-4 py-2.5 border-b border-outline-variant flex justify-between items-center">
+<span class="text-label-md font-label-md text-on-surface font-semibold">Technical Specification Key-Value Pairs</span>
+<button class="text-label-sm font-label-sm text-primary hover:underline flex items-center gap-1 font-bold" type="button">
+<span class="material-symbols-outlined text-body-sm">add</span> Add Row
+                </button>
+</div>
+<div class="divide-y divide-outline-variant">
+<!-- Row 1: Dimensions -->
+<div class="grid grid-cols-12 p-3 bg-surface-container-lowest items-center gap-4">
+<div class="col-span-4 text-body-sm font-body-sm text-on-surface-variant font-medium flex items-center gap-2">
+<span class="material-symbols-outlined text-body-sm text-outline">straighten</span>
+                    Surface Dimensions
+                  </div>
+<div class="col-span-7">
+<input class="w-full bg-surface-container-low border border-outline-variant rounded px-3 py-1.5 text-body-sm font-body-sm text-on-surface font-semibold" type="text" value="780 x 520 mm"/>
+</div>
+<div class="col-span-1 text-right">
+<button class="text-outline hover:text-error" type="button"><span class="material-symbols-outlined text-body-lg">close</span></button>
+</div>
+</div>
+<!-- Row 2: Cutout -->
+<div class="grid grid-cols-12 p-3 bg-background items-center gap-4">
+<div class="col-span-4 text-body-sm font-body-sm text-on-surface-variant font-medium flex items-center gap-2">
+<span class="material-symbols-outlined text-body-sm text-outline">crop_free</span>
+                    Cutout Size
+                  </div>
+<div class="col-span-7">
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded px-3 py-1.5 text-body-sm font-body-sm text-on-surface font-semibold" type="text" value="700 x 470 x 55 mm"/>
+</div>
+<div class="col-span-1 text-right">
+<button class="text-outline hover:text-error" type="button"><span class="material-symbols-outlined text-body-lg">close</span></button>
+</div>
+</div>
+<!-- Row 3: Burners -->
+<div class="grid grid-cols-12 p-3 bg-surface-container-lowest items-center gap-4">
+<div class="col-span-4 text-body-sm font-body-sm text-on-surface-variant font-medium flex items-center gap-2">
+<span class="material-symbols-outlined text-body-sm text-outline">local_fire_department</span>
+                    Burners
+                  </div>
+<div class="col-span-7">
+<input class="w-full bg-surface-container-low border border-outline-variant rounded px-3 py-1.5 text-body-sm font-body-sm text-on-surface font-semibold" type="text" value="2 Triple-Ring (4.0kW) + 2 Dual-Ring"/>
+</div>
+<div class="col-span-1 text-right">
+<button class="text-outline hover:text-error" type="button"><span class="material-symbols-outlined text-body-lg">close</span></button>
+</div>
+</div>
+<!-- Row 4: Safety -->
+<div class="grid grid-cols-12 p-3 bg-background items-center gap-4">
+<div class="col-span-4 text-body-sm font-body-sm text-on-surface-variant font-medium flex items-center gap-2">
+<span class="material-symbols-outlined text-body-sm text-outline">shield</span>
+                    Safety Mechanism
+                  </div>
+<div class="col-span-7">
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded px-3 py-1.5 text-body-sm font-body-sm text-on-surface font-semibold" type="text" value="Flame Failure Device (FFD)"/>
+</div>
+<div class="col-span-1 text-right">
+<button class="text-outline hover:text-error" type="button"><span class="material-symbols-outlined text-body-lg">close</span></button>
+</div>
+</div>
+<!-- Row 5: Warranty -->
+<div class="grid grid-cols-12 p-3 bg-surface-container-lowest items-center gap-4">
+<div class="col-span-4 text-body-sm font-body-sm text-on-surface-variant font-medium flex items-center gap-2">
+<span class="material-symbols-outlined text-body-sm text-outline">verified_user</span>
+                    Warranty
+                  </div>
+<div class="col-span-7">
+<input class="w-full bg-surface-container-low border border-outline-variant rounded px-3 py-1.5 text-body-sm font-body-sm text-on-surface font-semibold" type="text" value="5 Years on Burners &amp; Glass"/>
+</div>
+<div class="col-span-1 text-right">
+<button class="text-outline hover:text-error" type="button"><span class="material-symbols-outlined text-body-lg">close</span></button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Section 4: Media & Asset Management -->
+<div class="flex flex-col gap-5">
+<div class="flex items-center gap-2 border-b border-outline-variant pb-2">
+<span class="material-symbols-outlined text-primary text-body-lg">photo_library</span>
+<h3 class="text-headline-sm font-headline-sm text-on-surface">4. Media &amp; Asset Management</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- Primary Thumbnail Showcase -->
+<div class="md:col-span-4 flex flex-col gap-2">
+<span class="text-label-md font-label-md text-on-surface">Primary Showroom Cover</span>
+<div class="relative rounded-xl border-2 border-primary overflow-hidden group bg-surface-container-low aspect-video flex items-center justify-center">
+<img class="w-full h-full object-cover" data-alt="A luxurious built-in black glass four burner kitchen hob seamlessly installed flush onto a polished white marble countertop in a bright contemporary architectural kitchen showroom. High key natural light reflects gracefully off the beveled tempered glass surface and brass burner rings. The atmosphere is pristine, sophisticated, and high end, matching an upscale appliance boutique." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDP2M_rzTv-jNJ0aoIfTUxa6fzY1ThVOEGPSIImaaGjI-809f7_1Vf5Onc-TA47dzGG4hh_ALkeSBu865DYN57myLOxkbMFmabB4PpOwTIMoUG_oul1y-4_cAvkODdVCGW_Jom7Y9WhuIYf8XpVcGbOIn-prUdIVRuFrAzes1Ta2IWIHBnOg9mKGHRZmeb4GXRCgbYl-mhgGu6X73GKqxTKGKuptRlJOp6UdkdppsPo"/>
+<div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+<button class="p-2 bg-surface-container-lowest text-primary rounded-full shadow-md" type="button">
+<span class="material-symbols-outlined text-body-lg">edit</span>
+</button>
+</div>
+<span class="absolute top-2 left-2 px-2 py-0.5 rounded text-label-sm font-label-sm bg-primary text-on-primary font-bold shadow-sm">Main Display</span>
+</div>
+</div>
+<!-- Additional Media Thumbnails + Dropzone -->
+<div class="md:col-span-8 flex flex-col gap-2">
+<span class="text-label-md font-label-md text-on-surface">Gallery Angles &amp; Technical Schematics (3 Uploaded)</span>
+<div class="grid grid-cols-3 sm:grid-cols-4 gap-3">
+<!-- Gallery 1: Flame detail -->
+<div class="relative rounded-lg border border-outline-variant overflow-hidden aspect-video bg-surface-container-low group">
+<img class="w-full h-full object-cover" data-alt="A close up detailed architectural photograph of a high performance Italian forged brass gas burner firing clean luminous blue flames on a black glass hob. The lighting is soft and focused, emphasizing metal precision craftsmanship in a luxury kitchen setting with a clean cool toned ambiance." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcclOTIYXKxHXoNJghhKnFQLzVWQEgErQt34iEL4qTEYmrZawNWoPHsQGOLpuMRjMFtJvtJMGgXp8LizQPFfbb9gPyGuVtQAGPoHlr8O_624ra1FaxwWGptCVfpD8rsnoGf0nvCWG8_UU-e5QxaWab1aDXL8Ea-4hMh4zDQbhvay8a_Em_FGY6HYwNqAqPsRWuu6mPXkRN4pTw9wcXIFAo1e1Y4NbPtlyOxY6gu3g9"/>
+<button class="absolute top-1 right-1 p-1 bg-surface-container-lowest/80 rounded hover:bg-error hover:text-on-error transition-colors" type="button">
+<span class="material-symbols-outlined text-body-sm">delete</span>
+</button>
+</div>
+<!-- Gallery 2: Angle shot -->
+<div class="relative rounded-lg border border-outline-variant overflow-hidden aspect-video bg-surface-container-low group">
+<img class="w-full h-full object-cover" data-alt="An isometric 45 degree angle view of a sleek four burner hob positioned on a minimal light grey solid surface kitchen island. Soft daylight illuminates the brushed knobs and cast iron pan supports with studio quality commercial lighting and clean reflections." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4gIWB1wQwPBuQSeltPFlep4M_ZeMuHggsT3sV91GjxSTM-2r68BuCychyshPRN_2w3jKgqc6aK3x9mRGXNXnaZjsU1ZWtN55oWfYq6kmz2Ds_E0_lZJBS6j7Awe0RskF7IQ9aS9ocR1WCBNNOlmEqsOS5bdQc9FhEMVkSr9yKnSro0s8ap5_v4-Lbr0xJurxZIUM5Jij0QOd34CoGsciLRQTpD92UK1_B2xGZka2d"/>
+<button class="absolute top-1 right-1 p-1 bg-surface-container-lowest/80 rounded hover:bg-error hover:text-on-error transition-colors" type="button">
+<span class="material-symbols-outlined text-body-sm">delete</span>
+</button>
+</div>
+<!-- Gallery 3: Dimension Schematic -->
+<div class="relative rounded-lg border border-outline-variant overflow-hidden aspect-video bg-surface-container-low flex items-center justify-center p-2 text-center group">
+<div class="flex flex-col items-center text-outline">
+<span class="material-symbols-outlined text-headline-sm">architecture</span>
+<span class="text-label-sm font-label-sm mt-1">cutout-diagram.pdf</span>
+</div>
+<button class="absolute top-1 right-1 p-1 bg-surface-container-lowest/80 rounded hover:bg-error hover:text-on-error transition-colors" type="button">
+<span class="material-symbols-outlined text-body-sm">delete</span>
+</button>
+</div>
+<!-- Upload Dropzone -->
+<div class="rounded-lg border-2 border-dashed border-outline-variant hover:border-primary bg-surface-container-low hover:bg-surface-container transition-colors aspect-video flex flex-col items-center justify-center cursor-pointer p-2 text-center">
+<span class="material-symbols-outlined text-primary text-headline-sm">upload_file</span>
+<span class="text-label-sm font-label-sm text-primary font-bold mt-1">+ Add Image</span>
+<span class="text-label-sm font-label-sm text-outline text-[10px]">JPG, PNG, WebP &lt; 5MB</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Section 5: Badges & Showroom Floor Visibility Toggles -->
+<div class="flex flex-col gap-4 bg-surface-container-low p-6 rounded-xl border border-outline-variant">
+<div class="flex items-center gap-2 border-b border-outline-variant pb-2">
+<span class="material-symbols-outlined text-primary text-body-lg">loyalty</span>
+<h3 class="text-headline-sm font-headline-sm text-on-surface">5. Visibility &amp; Showroom Floor Toggles</h3>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+<!-- Toggle 1: Featured -->
+<label class="flex items-start gap-3 p-3 bg-surface-container-lowest rounded-lg border border-outline-variant cursor-pointer hover:border-primary transition-colors">
+<input checked="" class="mt-1 w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
+<div>
+<div class="text-label-md font-label-md text-on-surface">Mark as "Featured Product"</div>
+<div class="text-body-sm font-body-sm text-outline">Spotlights appliance on the digital showroom home hero carousel.</div>
+</div>
+</label>
+<!-- Toggle 2: New Arrival -->
+<label class="flex items-start gap-3 p-3 bg-surface-container-lowest rounded-lg border border-outline-variant cursor-pointer hover:border-primary transition-colors">
+<input checked="" class="mt-1 w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
+<div>
+<div class="text-label-md font-label-md text-on-surface">Mark as "New Arrival"</div>
+<div class="text-body-sm font-body-sm text-outline">Attaches a dark navy badge for latest seasonal collection.</div>
+</div>
+</label>
+<!-- Toggle 3: In-Stock at Kavundampalayam -->
+<label class="flex items-start gap-3 p-3 bg-surface-container-lowest rounded-lg border border-outline-variant cursor-pointer hover:border-primary transition-colors">
+<input checked="" class="mt-1 w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
+<div>
+<div class="text-label-md font-label-md text-on-surface">In-Stock at Kavundampalayam</div>
+<div class="text-body-sm font-body-sm text-outline">Shows "Available for Physical Demo" on the live store.</div>
+</div>
+</label>
+</div>
+</div>
+<!-- Section 6: Form Actions -->
+<div class="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-outline-variant">
+<!-- Destructive action -->
+<button class="flex items-center gap-2 px-4 py-2.5 border border-error/50 text-error hover:bg-error-container rounded-lg text-label-md font-label-md transition-colors" title="Permanently delete appliance from inventory" type="button">
+<span class="material-symbols-outlined text-body-lg">delete</span>
+              Delete Product
+            </button>
+<!-- Save / Publish cluster -->
+<div class="flex items-center gap-3">
+<button class="px-5 py-2.5 border border-secondary text-secondary hover:bg-surface-container-low rounded-lg text-label-md font-label-md font-semibold transition-colors" type="button">
+                Save Draft
+              </button>
+<button class="flex items-center gap-2 px-6 py-2.5 bg-primary hover:bg-secondary text-on-primary rounded-lg text-label-md font-label-md font-bold transition-all shadow-md active:scale-98" type="button">
+<span class="material-symbols-outlined text-body-lg">cloud_done</span>
+                Publish &amp; Sync to Showroom
+              </button>
+</div>
+</div>
+</form>
+</section>
+<!-- C. LIVE PRODUCT INVENTORY MANAGEMENT TABLE -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-2xl shadow-sm overflow-hidden flex flex-col gap-4 p-6">
+<!-- Header & Category Filter Tabs -->
+<div class="flex flex-wrap items-center justify-between gap-4 border-b border-outline-variant pb-4">
+<div>
+<h3 class="text-headline-md font-headline-md text-on-surface">Showroom Inventory</h3>
+<p class="text-body-sm font-body-sm text-outline">48 active appliances cataloged for Kavundampalayam showroom.</p>
+</div>
+<!-- Filter Pills -->
+<div class="flex items-center gap-1.5 bg-surface-container-low p-1 rounded-xl border border-outline-variant">
+<button class="px-3.5 py-1.5 rounded-lg text-label-md font-label-md bg-surface-container-lowest text-primary font-bold shadow-sm">
+              All (48)
+            </button>
+<button class="px-3 py-1.5 rounded-lg text-label-md font-label-md text-outline hover:text-on-surface transition-colors">
+              Chimneys (18)
+            </button>
+<button class="px-3 py-1.5 rounded-lg text-label-md font-label-md text-outline hover:text-on-surface transition-colors">
+              Hobs (14)
+            </button>
+<button class="px-3 py-1.5 rounded-lg text-label-md font-label-md text-outline hover:text-on-surface transition-colors">
+              Ovens (8)
+            </button>
+<button class="px-3 py-1.5 rounded-lg text-label-md font-label-md text-outline hover:text-on-surface transition-colors">
+              Gas Stoves (8)
+            </button>
+</div>
+</div>
+<!-- Filter & Search Controls Row -->
+<div class="flex flex-wrap items-center justify-between gap-4">
+<div class="flex items-center gap-3 flex-1 min-w-[280px]">
+<div class="relative flex-1">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-outline text-body-lg">filter_alt</span>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-lg pl-10 pr-4 py-2 text-body-sm font-body-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Filter by appliance name, brand, or SKU..." type="text"/>
+</div>
+<select class="bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-body-sm font-body-sm text-on-surface">
+<option>All Brands (6)</option>
+<option>Glen</option>
+<option>Faber</option>
+<option>Elica</option>
+<option>Bosch</option>
+<option>Hafele</option>
+<option>Kaff</option>
+</select>
+<select class="bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-body-sm font-body-sm text-on-surface">
+<option>All Statuses</option>
+<option>Published</option>
+<option>Draft</option>
+</select>
+</div>
+<div class="text-label-sm font-label-sm text-outline">
+            Showing <strong class="text-on-surface">1 - 4</strong> of 48 appliances
+          </div>
+</div>
+<!-- Data Table -->
+<div class="overflow-x-auto border border-outline-variant rounded-xl">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low text-on-surface-variant text-label-sm font-label-sm uppercase tracking-wider border-b border-outline-variant">
+<th class="py-3.5 px-4">Appliance</th>
+<th class="py-3.5 px-4">Category &amp; Brand</th>
+<th class="py-3.5 px-4">SKU Code</th>
+<th class="py-3.5 px-4">Price Mode</th>
+<th class="py-3.5 px-4">Status</th>
+<th class="py-3.5 px-4">Last Updated</th>
+<th class="py-3.5 px-4 text-right">Quick Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant text-body-sm font-body-sm">
+<!-- Item 1: Glen Hob (Active Edited Product) -->
+<tr class="hover:bg-surface-container-low transition-colors bg-surface-container-high/30">
+<td class="py-3 px-4">
+<div class="flex items-center gap-3">
+<div class="w-12 h-10 rounded-lg overflow-hidden border border-outline-variant bg-surface-container-low flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="A clean product shot of an architectural black glass built in hob featuring four precision brass burners and heavy duty cast iron pan supports. Crisp studio lighting on an ivory reflective background with premium luxury appliance detailing." src="https://lh3.googleusercontent.com/aida-public/AB6AXuByIiaEwycRbPBNuAufGyXDlOQveuvEicZns28e34A3yM4sH7IMEPZFfbsGmtfamXHcV_aWKAmXt00fO9PAVKfQVwiJjqbdcAg7el_KFRjnJ9lY1CirBzCCZuoeFA9vH0ZA3Qsk9rHCgT46rxBCAqZl_AK14M9dpoiBhgOAG1-7z3XekLbO7vDXfztUUxtxPqnFJ3Si5bJwJ2n5JOechT3rCWv0Eog6w6kYku1-bIRW"/>
+</div>
+<div>
+<div class="font-semibold text-on-surface">Glen Vortex 4-Burner Built-in Hob</div>
+<div class="text-label-sm font-label-sm text-tertiary">Featured • Showroom Floor Demo</div>
+</div>
+</div>
+</td>
+<td class="py-3 px-4">
+<div class="font-medium text-on-surface">Built-in Hobs</div>
+<div class="text-label-sm font-label-sm text-outline">Glen Appliances</div>
+</td>
+<td class="py-3 px-4 font-mono text-outline">GL-1043-SQ-BL</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-label-sm font-label-sm bg-surface-container-high text-primary font-bold">
+<span class="material-symbols-outlined text-label-sm">request_quote</span>
+                    Price on Request
+                  </span>
+</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-label-sm font-label-sm bg-tertiary-container text-on-tertiary font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-white"></span>
+                    Published
+                  </span>
+</td>
+<td class="py-3 px-4 text-outline">Today, 11:20 AM</td>
+<td class="py-3 px-4 text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="p-1.5 rounded hover:bg-surface-container text-primary hover:text-secondary" title="Edit Form">
+<span class="material-symbols-outlined text-body-lg">edit</span>
+</button>
+<button class="p-1.5 rounded hover:bg-tertiary-container/20 text-tertiary" title="Quick Share via WhatsApp">
+<span class="material-symbols-outlined text-body-lg">share</span>
+</button>
+<button class="p-1.5 rounded hover:bg-error-container text-outline hover:text-error" title="Delete">
+<span class="material-symbols-outlined text-body-lg">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Item 2: Faber Chimney -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3 px-4">
+<div class="flex items-center gap-3">
+<div class="w-12 h-10 rounded-lg overflow-hidden border border-outline-variant bg-surface-container-low flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="A modern wall mounted matte black kitchen chimney hood with touch control panel and warm LED strip lighting installed above a cooktop in a designer contemporary kitchen. Elegant light mode architectural showroom setup." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxCT-ie-v52a0fX2rXrvuM-1lkcfJUrTSbmllX2F5a5RjS6XwJRNwsLpvRNCx6_xOiP6RdBZ4Xvsnm8Vs11gRYXoI_HmILcf0eU5rA8hrrhnEgaW5ArBB-Sl3ux81AVOFMY8FfkGpx9L2q_CrolhmcfGgo2TxHzhGeU7awj9Pe3srb694ubCYG55XO-alQ9xR2zCL2DUCA0Iee8oRMtz5NXYZZOgNnNGIxaWnAkG31"/>
+</div>
+<div>
+<div class="font-semibold text-on-surface">Faber Primus 3D Plus 90cm Chimney</div>
+<div class="text-label-sm font-label-sm text-outline">1295 m³/h Suction • Filterless</div>
+</div>
+</div>
+</td>
+<td class="py-3 px-4">
+<div class="font-medium text-on-surface">Chimneys</div>
+<div class="text-label-sm font-label-sm text-outline">Faber India</div>
+</td>
+<td class="py-3 px-4 font-mono text-outline">FB-PRM-90-BL</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-label-sm font-label-sm bg-surface-container-high text-primary font-bold">
+<span class="material-symbols-outlined text-label-sm">request_quote</span>
+                    Price on Request
+                  </span>
+</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-label-sm font-label-sm bg-tertiary-container text-on-tertiary font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-white"></span>
+                    Published
+                  </span>
+</td>
+<td class="py-3 px-4 text-outline">Yesterday</td>
+<td class="py-3 px-4 text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="p-1.5 rounded hover:bg-surface-container text-primary hover:text-secondary" title="Edit Form">
+<span class="material-symbols-outlined text-body-lg">edit</span>
+</button>
+<button class="p-1.5 rounded hover:bg-tertiary-container/20 text-tertiary" title="Quick Share via WhatsApp">
+<span class="material-symbols-outlined text-body-lg">share</span>
+</button>
+<button class="p-1.5 rounded hover:bg-error-container text-outline hover:text-error" title="Delete">
+<span class="material-symbols-outlined text-body-lg">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Item 3: Bosch Built-in Oven -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3 px-4">
+<div class="flex items-center gap-3">
+<div class="w-12 h-10 rounded-lg overflow-hidden border border-outline-variant bg-surface-container-low flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="A built in stainless steel and glass convection oven integrated seamlessly into dark oak kitchen cabinetry. The digital clock display glows subtly with clean reflections of an architectural kitchen interior with porcelain floor tiles." src="https://lh3.googleusercontent.com/aida-public/AB6AXuANkbe-W26cpKbZoGR40vTudjfo2w0oKVa6GjuVNCNELe--MW0jb8jYrwnRMQyecQpffSqolNNZP5EGxGpWGi98JV2lfghuUKzJYKE9DRqE2ybiQ5dxlOiCbbRxhW1ownR1Z_TD3uVap942nZoD776016aKFEwgA45MfhdtnSgHL494myOCddH95b6QU9zaH2wBjVOnRAX6DdOfwhcy-3HeqhENkJ48i3YM1HHNr8V6"/>
+</div>
+<div>
+<div class="font-semibold text-on-surface">Bosch Series 4 66L Built-in Convection Oven</div>
+<div class="text-label-sm font-label-sm text-outline">3D Hotair • Stainless Steel</div>
+</div>
+</div>
+</td>
+<td class="py-3 px-4">
+<div class="font-medium text-on-surface">Built-in Ovens</div>
+<div class="text-label-sm font-label-sm text-outline">Bosch Home Appliances</div>
+</td>
+<td class="py-3 px-4 font-mono text-outline">BSH-O4-66L</td>
+<td class="py-3 px-4">
+<span class="text-label-md font-label-md font-bold text-on-surface">₹48,990</span>
+</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-label-sm font-label-sm bg-tertiary-container text-on-tertiary font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-white"></span>
+                    Published
+                  </span>
+</td>
+<td class="py-3 px-4 text-outline">3 days ago</td>
+<td class="py-3 px-4 text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="p-1.5 rounded hover:bg-surface-container text-primary hover:text-secondary" title="Edit Form">
+<span class="material-symbols-outlined text-body-lg">edit</span>
+</button>
+<button class="p-1.5 rounded hover:bg-tertiary-container/20 text-tertiary" title="Quick Share via WhatsApp">
+<span class="material-symbols-outlined text-body-lg">share</span>
+</button>
+<button class="p-1.5 rounded hover:bg-error-container text-outline hover:text-error" title="Delete">
+<span class="material-symbols-outlined text-body-lg">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Item 4: Hafele Granite Quartz Sink (Draft) -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3 px-4">
+<div class="flex items-center gap-3">
+<div class="w-12 h-10 rounded-lg overflow-hidden border border-outline-variant bg-surface-container-low flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="A premium matte graphite quartz composite undermount kitchen sink paired with an elegant brushed steel gooseneck faucet. Soft daylight illuminates the textured composite stone surface in a minimalist kitchen showroom setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAczLsgNlRjf6reMtxShXhoddIhWSWR0tnhrwXzFivhmRdtIiOH4iIshEf798sCmgX4DumYLcKI80_g-8UKrZ0i8AXiyEtNGSZ9lLJSwhl5biUK8y1SAywyD4aYipUDKE8JrN5Nm7kYM6vM1JTuXOYoAf0E8gqfIP9UY7UZ6b1hRe8b35LWQdrdl5dGsqy6g09vtwrsl30l92r1rxCabJHX4gZCQynA_p7asGnnX16p"/>
+</div>
+<div>
+<div class="font-semibold text-on-surface">Hafele Terrazzo Quartz Undermount Sink</div>
+<div class="text-label-sm font-label-sm text-outline">Double Bowl • Metallic Black</div>
+</div>
+</div>
+</td>
+<td class="py-3 px-4">
+<div class="font-medium text-on-surface">Quartz Sinks</div>
+<div class="text-label-sm font-label-sm text-outline">Hafele Architectural</div>
+</td>
+<td class="py-3 px-4 font-mono text-outline">HF-SNK-920-BK</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-label-sm font-label-sm bg-surface-container-high text-primary font-bold">
+<span class="material-symbols-outlined text-label-sm">request_quote</span>
+                    Price on Request
+                  </span>
+</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-label-sm font-label-sm bg-secondary-fixed text-on-secondary-fixed-variant font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                    Draft
+                  </span>
+</td>
+<td class="py-3 px-4 text-outline">1 week ago</td>
+<td class="py-3 px-4 text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="p-1.5 rounded hover:bg-surface-container text-primary hover:text-secondary" title="Edit Form">
+<span class="material-symbols-outlined text-body-lg">edit</span>
+</button>
+<button class="p-1.5 rounded hover:bg-tertiary-container/20 text-tertiary" title="Quick Share via WhatsApp">
+<span class="material-symbols-outlined text-body-lg">share</span>
+</button>
+<button class="p-1.5 rounded hover:bg-error-container text-outline hover:text-error" title="Delete">
+<span class="material-symbols-outlined text-body-lg">delete</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Pagination -->
+<div class="flex items-center justify-between pt-2">
+<span class="text-label-sm font-label-sm text-outline">Showing 4 of 48 total items</span>
+<div class="flex items-center gap-2">
+<button class="px-3 py-1.5 border border-outline-variant rounded-lg text-label-md font-label-md text-outline hover:text-on-surface disabled:opacity-50" disabled="">
+              Previous
+            </button>
+<button class="px-3 py-1.5 bg-primary text-on-primary rounded-lg text-label-md font-label-md font-bold">
+              1
+            </button>
+<button class="px-3 py-1.5 border border-outline-variant rounded-lg text-label-md font-label-md text-outline hover:text-on-surface">
+              2
+            </button>
+<button class="px-3 py-1.5 border border-outline-variant rounded-lg text-label-md font-label-md text-outline hover:text-on-surface">
+              3
+            </button>
+<button class="px-3 py-1.5 border border-outline-variant rounded-lg text-label-md font-label-md text-outline hover:text-on-surface">
+              Next
+            </button>
+</div>
+</div>
+</section>
+<!-- D. RECENT WHATSAPP INQUIRIES STREAM (Lead Queue) -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-2xl shadow-sm p-6 flex flex-col gap-4">
+<div class="flex items-center justify-between border-b border-outline-variant pb-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-tertiary-container text-on-tertiary flex items-center justify-center">
+<span class="material-symbols-outlined text-headline-sm">forum</span>
+</div>
+<div>
+<h3 class="text-headline-md font-headline-md text-on-surface">Live Showroom WhatsApp Inquiries</h3>
+<p class="text-body-sm font-body-sm text-outline">Direct inquiries generated from "Price on Request" clicks on the public catalog.</p>
+</div>
+</div>
+<span class="px-3 py-1 rounded-full text-label-sm font-label-sm bg-tertiary-container text-on-tertiary font-bold flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-white animate-ping"></span>
+            3 New Incoming Leads
+          </span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<!-- Lead 1 -->
+<div class="bg-surface-container-low border border-outline-variant rounded-xl p-4 flex flex-col justify-between gap-3 hover:border-tertiary transition-all">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-secondary-fixed text-on-secondary-fixed font-bold text-label-md flex items-center justify-center">
+                  AR
+                </div>
+<div>
+<div class="font-semibold text-on-surface text-label-md font-label-md">Anand Radhakrishnan</div>
+<div class="text-label-sm font-label-sm text-outline">+91 98422 10928</div>
+</div>
+</div>
+<span class="text-label-sm font-label-sm text-outline">12 mins ago</span>
+</div>
+<div class="bg-surface-container-lowest p-3 rounded-lg border border-outline-variant">
+<div class="text-label-sm font-label-sm text-primary font-bold">Glen Vortex 4-Burner Built-in Hob</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant italic mt-1">
+                "Hello MM Kitchen World, please share trade price &amp; cutout details for Glen Vortex 4-Burner Hob."
+              </p>
+</div>
+<button class="w-full flex items-center justify-center gap-2 py-2 px-3 bg-tertiary hover:bg-on-tertiary-fixed-variant text-on-tertiary rounded-lg text-label-md font-label-md font-bold transition-all shadow-sm">
+<span class="material-symbols-outlined text-body-md">chat</span>
+              Open WhatsApp Chat
+            </button>
+</div>
+<!-- Lead 2 -->
+<div class="bg-surface-container-low border border-outline-variant rounded-xl p-4 flex flex-col justify-between gap-3 hover:border-tertiary transition-all">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-secondary-fixed text-on-secondary-fixed font-bold text-label-md flex items-center justify-center">
+                  PS
+                </div>
+<div>
+<div class="font-semibold text-on-surface text-label-md font-label-md">Priya Senthil</div>
+<div class="text-label-sm font-label-sm text-outline">+91 94431 88201</div>
+</div>
+</div>
+<span class="text-label-sm font-label-sm text-outline">45 mins ago</span>
+</div>
+<div class="bg-surface-container-lowest p-3 rounded-lg border border-outline-variant">
+<div class="text-label-sm font-label-sm text-primary font-bold">Faber Primus 3D Chimney</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant italic mt-1">
+                "Is installation included in Coimbatore for Faber Primus 90cm? Can we see physical unit?"
+              </p>
+</div>
+<button class="w-full flex items-center justify-center gap-2 py-2 px-3 bg-tertiary hover:bg-on-tertiary-fixed-variant text-on-tertiary rounded-lg text-label-md font-label-md font-bold transition-all shadow-sm">
+<span class="material-symbols-outlined text-body-md">chat</span>
+              Open WhatsApp Chat
+            </button>
+</div>
+<!-- Lead 3 -->
+<div class="bg-surface-container-low border border-outline-variant rounded-xl p-4 flex flex-col justify-between gap-3 hover:border-tertiary transition-all">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-secondary-fixed text-on-secondary-fixed font-bold text-label-md flex items-center justify-center">
+                  VR
+                </div>
+<div>
+<div class="font-semibold text-on-surface text-label-md font-label-md">Vikram Rajan (Architect)</div>
+<div class="text-label-sm font-label-sm text-outline">+91 97900 45112</div>
+</div>
+</div>
+<span class="text-label-sm font-label-sm text-outline">2 hours ago</span>
+</div>
+<div class="bg-surface-container-lowest p-3 rounded-lg border border-outline-variant">
+<div class="text-label-sm font-label-sm text-primary font-bold">Bosch Series 4 Convection Oven</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant italic mt-1">
+                "Looking for full kitchen appliance package (Hob, Chimney, Oven, Microwave). Kindly call."
+              </p>
+</div>
+<button class="w-full flex items-center justify-center gap-2 py-2 px-3 bg-tertiary hover:bg-on-tertiary-fixed-variant text-on-tertiary rounded-lg text-label-md font-label-md font-bold transition-all shadow-sm">
+<span class="material-symbols-outlined text-body-md">chat</span>
+              Open WhatsApp Chat
+            </button>
+</div>
+</div>
+</section>
+</main>
+<!-- ADMIN CONSOLE FOOTER -->
+<footer class="mt-auto border-t border-outline-variant bg-surface-container-lowest py-6 px-8 flex flex-col sm:flex-row items-center justify-between text-body-sm font-body-sm text-outline gap-4">
+<div>
+        © 2025 MM Kitchen World. Showroom Operations Console. Kavundampalayam, Coimbatore.
+      </div>
+<div class="flex items-center gap-6 text-label-md font-label-md text-on-surface-variant">
+<span>System Version 2.4.8 (Stable)</span>
+<span class="w-1 h-1 rounded-full bg-outline"></span>
+<a class="hover:text-primary transition-colors" href="#">Catalog API Docs</a>
+<span class="w-1 h-1 rounded-full bg-outline"></span>
+<a class="hover:text-primary transition-colors" href="#">Support Helpline</a>
+</div>
+</footer>
+</div>
+</body></html>
