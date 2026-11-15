@@ -105,7 +105,7 @@ export default function Footer() {
                 <a className="hover:text-white font-semibold" href="tel:+919743233729">+91 97432 33729</a>
                 <span className="text-white/40"> · </span>
                 <a className="hover:text-white font-semibold" href="tel:+919663078780">+91 96630 78780</a>
-                <span className="block text-white/60 text-xs mt-0.5">Praveen Kumar</span>
+                <span className="block text-white/60 text-xs mt-0.5">Pravin Kumar</span>
               </ContactRow>
               <ContactRow icon="mail">
                 <a href="mailto:mmkitchenworld.glen@gmail.com" className="hover:text-white underline underline-offset-2">mmkitchenworld.glen@gmail.com</a>

@@ -3,7 +3,7 @@ import { WhatsAppIcon, InstagramIcon, YouTubeIcon } from "../BrandIcons";
 import { PHONE_TEL, whatsappUrl, assetUrl, GMB_URL, YOUTUBE_URL, INSTAGRAM_URL } from "../../constants";
 import { trackEnquiry } from "../../lib/analytics";
 
-/** Contact CTA & Praveen Kumar Showroom Specialist Profile Card */
+/** Contact CTA & Pravin Kumar Showroom Specialist Profile Card */
 export default function ContactSection() {
   return (
     <section className="relative overflow-hidden py-14 sm:py-20 bg-gradient-to-br from-[#0B4F9C] via-[#08376D] to-[#052A55] text-white" id="contact">
@@ -51,8 +51,8 @@ export default function ContactSection() {
               {/* Circular image container (enlarged) */}
               <div className="relative w-52 h-52 sm:w-64 sm:h-64 lg:w-72 lg:h-72 rounded-full p-2 bg-white shadow-2xl ring-4 ring-primary/20 overflow-hidden">
                 <img
-                  src={assetUrl("assets/team/praveen-kumar.webp")}
-                  alt="Praveen Kumar - Owner & Glen Appliance Specialist at MM Kitchen World"
+                  src={assetUrl("assets/team/pravin-kumar.webp")}
+                  alt="Pravin Kumar - Owner & Glen Appliance Specialist at MM Kitchen World"
                   className="w-full h-full object-cover rounded-full group-hover:scale-105 transition-transform duration-500"
                 />
               </div>
@@ -71,7 +71,7 @@ export default function ContactSection() {
                 <Icon name="verified" className="text-sm text-primary" /> Showroom Owner &amp; Glen Specialist
               </span>
               <h3 className="font-headline-md text-2xl sm:text-3xl lg:text-4xl font-extrabold text-on-surface tracking-tight">
-                Praveen Kumar
+                Pravin Kumar
               </h3>
             </div>
 
@@ -107,12 +107,12 @@ export default function ContactSection() {
 
                 {/* WhatsApp */}
                 <a
-                  href={whatsappUrl("Hello Praveen, I would like guidance on kitchen appliances for my home")}
+                  href={whatsappUrl("Hello Pravin, I would like guidance on kitchen appliances for my home")}
                   target="_blank"
                   rel="noopener noreferrer"
-                  onClick={() => trackEnquiry(null, "praveen-whatsapp")}
-                  title="Message Praveen on WhatsApp"
-                  aria-label="Chat with Praveen Kumar on WhatsApp"
+                  onClick={() => trackEnquiry(null, "pravin-whatsapp")}
+                  title="Message Pravin on WhatsApp"
+                  aria-label="Chat with Pravin Kumar on WhatsApp"
                   className="w-12 h-12 rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-lg shadow-emerald-500/30 hover:scale-115 hover:-translate-y-1 transition-all duration-200"
                 >
                   <WhatsAppIcon className="w-6 h-6 fill-current" />
