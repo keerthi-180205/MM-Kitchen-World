@@ -1,12 +1,10 @@
 import { Link } from "react-router-dom";
 import Icon from "../Icon";
 import HashLink from "../HashLink";
-import { InstagramIcon, WhatsAppIcon, YouTubeIcon } from "../BrandIcons";
-import { GMB_URL, whatsappUrl, assetUrl, YOUTUBE_URL, INSTAGRAM_URL } from "../../constants";
+import { whatsappUrl, assetUrl } from "../../constants";
 
 const linkClass = "text-white/70 hover:text-white transition-colors duration-150";
 const headingClass = "text-xs font-bold uppercase tracking-[0.16em] text-sky-300 mb-5";
-const socialClass = "w-10 h-10 rounded-full flex items-center justify-center text-white hover:scale-110 transition-transform";
 
 const CATEGORY_LINKS = [
   { label: "Chimneys", category: "Chimneys" },
@@ -57,20 +55,6 @@ export default function Footer() {
               <Icon name="inventory" className="text-lg" />
               Bulk orders &amp; corporate gifting
             </a>
-            <div className="flex items-center gap-3 mt-6">
-              <a href={YOUTUBE_URL} target="_blank" rel="noopener noreferrer" className={`${socialClass} bg-[#FF0000]`} title="Watch on YouTube" aria-label="Watch on YouTube">
-                <YouTubeIcon className="w-5 h-5 fill-current" />
-              </a>
-              <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className={`${socialClass} bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888]`} title="Follow us on Instagram" aria-label="Follow us on Instagram">
-                <InstagramIcon className="w-5 h-5 fill-current" />
-              </a>
-              <a href={whatsappUrl()} target="_blank" rel="noopener noreferrer" className={`${socialClass} bg-[#25D366]`} title="Chat with us on WhatsApp" aria-label="Chat with us on WhatsApp">
-                <WhatsAppIcon className="w-5 h-5 fill-current" />
-              </a>
-              <a href={GMB_URL} target="_blank" rel="noopener noreferrer" className={`${socialClass} bg-white/15 border border-white/20 hover:bg-white/25`} title="Find us on Google Maps" aria-label="Find us on Google Maps">
-                <Icon name="location_on" className="text-xl" />
-              </a>
-            </div>
           </div>
 
           {/* Shop */}
