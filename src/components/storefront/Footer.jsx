@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import Icon from "../Icon";
 import HashLink from "../HashLink";
-import { whatsappUrl, assetUrl } from "../../constants";
+import { GMB_URL, whatsappUrl, assetUrl } from "../../constants";
 
 const linkClass = "text-white/70 hover:text-white transition-colors duration-150";
 const headingClass = "text-xs font-bold uppercase tracking-[0.16em] text-sky-300 mb-5";
