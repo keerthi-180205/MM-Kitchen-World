@@ -37,7 +37,7 @@ export default function ContactSection() {
                 Call the Showroom
               </a>
             </div>
-            <p className="flex items-center gap-2 mt-6 text-sm text-white/70"><Icon name="schedule" className="text-lg text-sky-300" />Open every day, 10 AM to 8:30 PM</p>
+            <p className="flex items-center gap-2 mt-6 text-sm text-white/70"><Icon name="schedule" className="text-lg text-sky-300" />Open all days, 10:30 AM to 8:30 PM</p>
           </div>
 
           <div id="callback" className="lg:col-span-3 bg-white text-on-surface rounded-3xl p-6 sm:p-8 shadow-2xl shadow-black/30 scroll-mt-28">

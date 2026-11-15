@@ -38,7 +38,7 @@ export default function CallbackForm({ productId = null, productTitle = "", sour
           <Icon name="check_circle" className="text-3xl" />
         </div>
         <h3 className="font-bold text-on-surface text-lg">Thank you, {form.name.trim().split(" ")[0]}!</h3>
-        <p className="text-sm text-on-surface-variant mt-1">We've received your request and will call you back during showroom hours (10 AM to 8:30 PM, every day).</p>
+        <p className="text-sm text-on-surface-variant mt-1">We've received your request and will call you back during showroom hours (10:30 AM to 8:30 PM, all days).</p>
       </div>
     );
   }

@@ -104,7 +104,7 @@ export default function Showroom() {
               </InfoRow>
               <InfoRow icon="schedule">
                 <p className="font-label-md text-label-md text-on-surface font-bold">Visiting Hours</p>
-                <p className="font-body-sm text-body-sm text-on-surface-variant">Monday – Sunday : 10:00 AM – 8:30 PM (No Lunch Break)</p>
+                <p className="font-body-sm text-body-sm text-on-surface-variant">Monday – Sunday : 10:30 AM – 8:30 PM (Open all days · No Lunch Break)</p>
               </InfoRow>
               <InfoRow icon="support_agent">
                 <p className="font-label-md text-label-md text-on-surface font-bold">Showroom Consultation Desk</p>

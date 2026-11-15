@@ -33,7 +33,7 @@ const LOCAL_BUSINESS = {
     {
       "@type": "OpeningHoursSpecification",
       dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-      opens: "10:00",
+      opens: "10:30",
       closes: "20:30",
     },
   ],

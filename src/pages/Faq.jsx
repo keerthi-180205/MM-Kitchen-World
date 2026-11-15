@@ -24,7 +24,7 @@ const FAQS = [
   },
   {
     q: "Can I see the appliances before buying?",
-    a: "Absolutely. Visit our showroom in Basaveshwara Nagar any day between 10 AM and 8:30 PM to see and compare models in person.",
+    a: "Absolutely. Visit our showroom in Basaveshwara Nagar any day between 10:30 AM and 8:30 PM (open all days) to see and compare models in person.",
   },
   {
     q: "Do you take bulk orders or corporate gifting?",

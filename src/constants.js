@@ -6,6 +6,11 @@ export const PHONE_TEL = "+919743233729";
 // maps.app.goo.gl link that depends on a redirect and can fail in some apps.
 export const GMB_URL = "https://www.google.com/maps?cid=4811143146357491421";
 
+// Showroom hours & schedule
+export const SHOWROOM_TIMINGS = "10:30 AM to 8:30 PM";
+export const SHOWROOM_DAYS = "Open all days";
+export const SHOWROOM_HOURS_LABEL = "Open all days · 10:30 AM to 8:30 PM";
+
 // Shown on the website. Seen on the Google profile on 10 Nov 2026; update if it changes.
 export const GOOGLE_RATING = { score: 4.7, count: 139 };
 

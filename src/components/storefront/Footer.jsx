@@ -97,7 +97,7 @@ export default function Footer() {
             <h4 className={headingClass}>Visit the showroom</h4>
             <ul className="space-y-3.5 text-sm text-white/80">
               <ContactRow icon="location_on">No. MIG-45, KHB Colony, 2nd Stage, near Pavithra Paradise, opposite IndusInd Bank, Basaveshwara Nagar, Bangalore - 560079</ContactRow>
-              <ContactRow icon="schedule">Open every day, 10:00 AM – 8:30 PM</ContactRow>
+              <ContactRow icon="schedule">Open all days, 10:30 AM – 8:30 PM</ContactRow>
               <ContactRow icon="call">
                 <a className="hover:text-white font-semibold" href="tel:+919743233729">+91 97432 33729</a>
                 <span className="text-white/40"> · </span>

@@ -1,6 +1,5 @@
 import Icon from "../Icon";
-import { assetUrl, whatsappUrl } from "../../constants";
-import GoogleRating from "../GoogleRating";
+import { assetUrl, whatsappUrl, GMB_URL } from "../../constants";
 import { trackEnquiry } from "../../lib/analytics";
 
 const TRUST_BADGES = [
@@ -63,47 +62,80 @@ export default function Hero() {
           </div>
 
           {/* Right hero visual */}
-          <div className="lg:col-span-5 relative">
-            {/* Floating product cards (large screens) */}
-            <div aria-hidden="true" style={{ "--tilt": "-4deg" }} className="floaty hidden lg:block absolute -left-10 top-14 z-20 w-40 rounded-2xl bg-white p-3 shadow-2xl shadow-slate-900/15 border border-slate-100">
-              <img src={assetUrl("assets/products/chimneys/chimneys-ch-6052-di-bl-ac.webp")} alt="" className="h-20 w-full object-contain mix-blend-multiply" />
-              <p className="mt-1 text-[13px] font-bold text-on-surface leading-tight">Chimneys</p>
-              <p className="text-[11px] text-on-surface-variant">49 models</p>
-            </div>
-            <div aria-hidden="true" style={{ "--tilt": "3deg", animationDelay: "-2.5s" }} className="floaty hidden lg:block absolute -right-8 top-36 z-20 w-40 rounded-2xl bg-white p-3 shadow-2xl shadow-slate-900/15 border border-slate-100">
-              <img src={assetUrl("assets/products/hobs/hobs-bh-1018-ic-2z.webp")} alt="" className="h-20 w-full object-contain mix-blend-multiply" />
-              <p className="mt-1 text-[13px] font-bold text-on-surface leading-tight">Hobs</p>
-              <p className="text-[11px] text-on-surface-variant">75 models</p>
-            </div>
-
-            <div className="relative rounded-3xl overflow-hidden border border-white/60 bg-surface-container-lowest shadow-2xl shadow-primary/20 ring-1 ring-black/5">
-              <div className="absolute top-3 left-3 sm:top-5 sm:left-5 z-10 px-3.5 py-2 rounded-full bg-white/95 backdrop-blur shadow-lg">
-                <GoogleRating />
+          <div className="lg:col-span-5 flex flex-col gap-3.5">
+            {/* Eye-catching Google Reviews Tab Above Image */}
+            <a
+              href={GMB_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              title="View verified 4.7-star rating & 139+ reviews on Google Maps"
+              className="group flex items-center justify-between gap-3 p-3 sm:px-4 sm:py-3 rounded-2xl bg-white border border-outline-variant shadow-md hover:shadow-xl hover:border-primary/50 transition-all duration-300"
+            >
+              <div className="flex items-center gap-3 min-w-0">
+                {/* Official Google 4-Color G Logo */}
+                <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-200/90 flex items-center justify-center shadow-xs shrink-0 group-hover:scale-105 transition-transform">
+                  <svg className="w-5 h-5" viewBox="0 0 24 24" aria-hidden="true">
+                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" />
+                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" />
+                  </svg>
+                </div>
+                <div className="min-w-0">
+                  <div className="flex items-center gap-1.5 flex-wrap">
+                    <span className="font-headline-sm text-base font-bold text-slate-900 leading-none">4.7</span>
+                    <div className="flex text-amber-400" aria-label="5 stars rating">
+                      {[0, 1, 2, 3, 4].map((i) => (
+                        <Icon key={i} name="star" fill className="text-[17px]" />
+                      ))}
+                    </div>
+                    <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                      <Icon name="verified" className="text-xs text-emerald-600" />
+                      Verified
+                    </span>
+                  </div>
+                  <p className="text-xs text-on-surface-variant font-medium mt-0.5 truncate">
+                    <strong className="text-on-surface font-semibold">139+ Google Reviews</strong> · Bangalore's Top Rated Glen Store
+                  </p>
+                </div>
               </div>
+              <div className="flex items-center gap-1 text-primary text-xs font-bold pl-2 shrink-0 group-hover:translate-x-1 transition-transform">
+                <span className="hidden sm:inline">View Reviews</span>
+                <Icon name="arrow_outward" className="text-base" />
+              </div>
+            </a>
+
+            {/* 100% Unobstructed Full Showroom Photo (inner_image) */}
+            <div className="relative rounded-3xl overflow-hidden border border-outline-variant/80 bg-surface-container-lowest shadow-xl shadow-slate-900/10">
               <img
-                className="w-full h-[320px] sm:h-[420px] lg:h-[520px] object-cover"
-                alt="MM Kitchen World - GLEN Exclusive Store physical storefront in Basaveshwara Nagar Bangalore with grand illuminated signage and glass displays"
-                src={assetUrl("assets/hero/hero-storefront.webp")}
+                className="w-full h-[280px] sm:h-[360px] lg:h-[440px] object-cover"
+                alt="MM Kitchen World - GLEN Exclusive Showroom Interior with live consultation counter, built-in appliances, and display counters"
+                src={assetUrl("assets/hero/hero-inner.webp")}
                 loading="eager"
                 fetchPriority="high"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-inverse-surface/80 via-transparent to-transparent"></div>
-              {/* Floating walk-in showroom badge */}
-              <div className="absolute bottom-3 left-3 right-3 sm:bottom-6 sm:left-6 sm:right-6 p-3 sm:p-4 rounded-xl bg-surface-container-lowest/95 backdrop-blur-md border border-outline-variant flex items-center justify-between shadow-lg">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center text-primary">
-                    <Icon name="location_on" />
-                  </div>
-                  <div>
-                    <span className="font-label-sm text-label-sm text-primary uppercase font-bold tracking-wider">Walk-ins Welcome</span>
-                    <p className="font-headline-sm text-headline-sm text-on-surface font-bold leading-tight">Basaveshwara Nagar Showroom</p>
-                    <p className="font-body-sm text-body-sm text-on-surface-variant">Open every day · 10 AM to 8:30 PM</p>
-                  </div>
+            </div>
+
+            {/* Walk-in Welcome Card positioned cleanly BELOW the image */}
+            <div className="p-4 sm:p-4.5 rounded-2xl bg-white border border-outline-variant flex items-center justify-between shadow-md hover:border-primary/40 transition-colors">
+              <div className="flex items-center gap-3.5 min-w-0">
+                <div className="w-11 h-11 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary shrink-0">
+                  <Icon name="location_on" className="text-2xl" />
                 </div>
-                <a className="w-10 h-10 rounded-lg bg-primary-container text-on-primary flex items-center justify-center hover:bg-primary transition-colors" href="#showroom">
-                  <Icon name="arrow_outward" />
-                </a>
+                <div className="min-w-0">
+                  <span className="font-label-sm text-xs text-primary uppercase font-bold tracking-wider block">Walk-ins Welcome</span>
+                  <p className="font-headline-sm text-sm sm:text-base text-on-surface font-bold leading-tight truncate">Basaveshwara Nagar Showroom</p>
+                  <p className="font-body-sm text-xs sm:text-sm text-on-surface-variant mt-0.5">Open all days · 10:30 AM to 8:30 PM</p>
+                </div>
               </div>
+              <a
+                className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-primary-container text-on-primary flex items-center justify-center hover:bg-primary transition-all shadow-sm hover:scale-105 active:scale-95 shrink-0 ml-2"
+                href="#showroom"
+                title="View Showroom Details & Directions"
+                aria-label="View Showroom Details & Directions"
+              >
+                <Icon name="arrow_outward" className="text-xl" />
+              </a>
             </div>
           </div>
         </div>
