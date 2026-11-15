@@ -8,7 +8,7 @@ export default function WhatsAppFab() {
   const { compare } = useShop();
   return (
     <a
-      className={`fixed ${compare.length ? "bottom-24" : "bottom-6"} right-6 z-50 w-14 h-14 rounded-full bg-tertiary text-white flex items-center justify-center shadow-[0_8px_24px_-4px_rgba(37,211,102,0.55)] hover:scale-110 hover:shadow-[0_10px_28px_-2px_rgba(37,211,102,0.7)] active:scale-95 transition-all duration-150 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-tertiary`}
+      className={`fixed ${compare.length ? "bottom-20 sm:bottom-24" : "bottom-4 sm:bottom-6"} right-4 sm:right-6 z-50 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-tertiary text-white flex items-center justify-center shadow-[0_8px_24px_-4px_rgba(37,211,102,0.55)] hover:scale-105 hover:shadow-[0_10px_28px_-2px_rgba(37,211,102,0.7)] active:scale-95 transition-all duration-150 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-tertiary`}
       href={whatsappUrl("Hello MM Kitchen World, I have an enquiry regarding kitchen appliances")}
       rel="noopener noreferrer"
       target="_blank"
@@ -16,8 +16,8 @@ export default function WhatsAppFab() {
       aria-label="Chat with us on WhatsApp"
       title="Chat on WhatsApp"
     >
-      <span className="absolute inset-0 rounded-full bg-tertiary opacity-40 animate-ping motion-reduce:hidden" aria-hidden="true"></span>
-      <span className="relative [&_svg]:w-8 [&_svg]:h-8">
+      <span className="absolute inset-0 rounded-full bg-tertiary opacity-40 animate-ping motion-reduce:hidden pointer-events-none" aria-hidden="true"></span>
+      <span className="relative [&_svg]:w-7 [&_svg]:h-7 sm:[&_svg]:w-8 sm:[&_svg]:h-8">
         <WhatsAppIcon />
       </span>
     </a>

@@ -8,7 +8,7 @@ import { formatDate, getOffer, isPlaceholderPrice } from "../../utils/price";
 
 const isWarranty = (s) => s.label.toLowerCase().includes("warranty");
 
-const roundButton = "w-9 h-9 rounded-full flex items-center justify-center shadow-md border transition-colors";
+const roundButton = "w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center border transition-all";
 
 export default function ProductCard({ product: p }) {
   const { inWishlist, inCompare, toggleWishlist, toggleCompare } = useShop();
@@ -22,40 +22,60 @@ export default function ProductCard({ product: p }) {
 
   return (
     <article className="group flex flex-col h-full bg-surface-container-lowest border border-outline-variant rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-primary-container/40 transition-all duration-300">
-      {/* Uniform image stage so every card reads the same, whatever the photo */}
-      <div className="relative aspect-[4/3] bg-white border-b border-outline-variant overflow-hidden">
-        {(offer || p.tag) && (
-          <span
-            className={`absolute top-3 left-3 z-10 ${offer ? "bg-rose-600 text-white" : p.tagColor || "bg-primary text-on-primary"} font-label-sm text-label-sm px-3 py-1 rounded-full font-bold shadow-md ring-1 ring-white/40 pointer-events-none`}
-          >
-            {offer ? offer.label : p.tag}
-          </span>
-        )}
+      {/* Top Header Bar: Clean Category / Tag / Offer and Quick Actions */}
+      <div className="flex items-center justify-between gap-2 px-3 sm:px-4 py-2.5 bg-surface-container-low/50 border-b border-outline-variant/60">
+        <div className="min-w-0 flex items-center gap-1.5 flex-1">
+          {offer ? (
+            <span className="inline-flex items-center gap-1 font-label-sm text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-rose-600 text-white shadow-sm shrink-0">
+              <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" aria-hidden="true"></span>
+              {offer.label}
+            </span>
+          ) : p.tag ? (
+            <span className="inline-flex items-center font-label-sm text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20 truncate">
+              {p.tag}
+            </span>
+          ) : (
+            <span className="inline-flex items-center font-label-sm text-[11px] font-semibold px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant truncate">
+              {p.category}
+            </span>
+          )}
+        </div>
 
-        <div className="absolute top-3 right-3 z-10 flex flex-col gap-2">
+        <div className="flex items-center gap-1.5 shrink-0">
           <button
             onClick={() => toggleWishlist(p.id)}
             aria-pressed={saved}
             aria-label={saved ? `Remove ${p.title} from My List` : `Save ${p.title} to My List`}
             title={saved ? "Remove from My List" : "Save to My List"}
-            className={`${roundButton} ${saved ? "bg-rose-50 border-rose-200 text-rose-600" : "bg-white/95 border-outline-variant text-on-surface-variant hover:text-rose-600"}`}
+            className={`${roundButton} ${
+              saved
+                ? "bg-rose-50 border-rose-300 text-rose-600 shadow-sm"
+                : "bg-white border-outline-variant text-on-surface-variant hover:text-rose-600 hover:border-rose-300"
+            }`}
           >
-            <Icon name="favorite" className="text-xl" fill={saved} />
+            <Icon name="favorite" className="text-sm sm:text-base" fill={saved} />
           </button>
           <button
             onClick={() => toggleCompare(p.id)}
             aria-pressed={comparing}
             aria-label={comparing ? `Remove ${p.title} from comparison` : `Compare ${p.title}`}
             title={comparing ? "Remove from comparison" : "Add to comparison"}
-            className={`${roundButton} ${comparing ? "bg-primary border-primary text-white" : "bg-white/95 border-outline-variant text-on-surface-variant hover:text-primary"}`}
+            className={`${roundButton} ${
+              comparing
+                ? "bg-primary border-primary text-white shadow-sm"
+                : "bg-white border-outline-variant text-on-surface-variant hover:text-primary hover:border-primary"
+            }`}
           >
-            <Icon name="compare_arrows" className="text-xl" />
+            <Icon name="compare_arrows" className="text-sm sm:text-base" />
           </button>
         </div>
+      </div>
 
-        <Link to={href} tabIndex={-1} aria-hidden="true" className="block w-full h-full">
+      {/* 100% Unobstructed Pure Image Stage - No tags or buttons overlapping the appliance */}
+      <div className="relative aspect-[4/3] bg-white border-b border-outline-variant overflow-hidden flex items-center justify-center p-4">
+        <Link to={href} tabIndex={-1} aria-hidden="true" className="w-full h-full flex items-center justify-center">
           <img
-            className="w-full h-full object-contain mix-blend-multiply p-6 pt-10 group-hover:scale-105 transition-transform duration-500"
+            className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
             src={assetUrl(p.image)}
             alt={p.title}
             loading="lazy"

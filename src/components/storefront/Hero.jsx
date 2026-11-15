@@ -13,8 +13,10 @@ export default function Hero() {
   return (
     <section className="relative overflow-hidden pt-6 pb-12 sm:pt-8 sm:pb-16 lg:py-20 bg-gradient-to-br from-[#FFFBF2] via-background to-[#E8F3FF] border-b border-outline-variant" id="home">
       {/* Soft colour glows behind the content */}
-      <div aria-hidden="true" className="pointer-events-none absolute -top-32 -right-24 w-[520px] h-[520px] rounded-full bg-sky-300/30 blur-3xl"></div>
-      <div aria-hidden="true" className="pointer-events-none absolute -bottom-40 -left-32 w-[460px] h-[460px] rounded-full bg-amber-200/30 blur-3xl"></div>
+      <div aria-hidden="true" className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-32 -right-24 w-[520px] h-[520px] rounded-full bg-sky-300/30 blur-3xl"></div>
+        <div className="absolute -bottom-40 -left-32 w-[460px] h-[460px] rounded-full bg-amber-200/30 blur-3xl"></div>
+      </div>
       <div className="relative max-w-[1440px] mx-auto px-6 lg:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           {/* Left editorial copy */}

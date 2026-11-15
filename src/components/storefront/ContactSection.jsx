@@ -9,7 +9,9 @@ export default function ContactSection() {
   return (
     <section className="relative overflow-hidden py-14 sm:py-20 bg-gradient-to-br from-[#0B4F9C] via-[#08376D] to-[#052A55] text-white" id="contact">
       <div aria-hidden="true" className="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:24px_24px]"></div>
-      <div aria-hidden="true" className="pointer-events-none absolute -top-32 -left-24 w-[420px] h-[420px] rounded-full bg-sky-400/20 blur-3xl"></div>
+      <div aria-hidden="true" className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-32 -left-24 w-[420px] h-[420px] rounded-full bg-sky-400/20 blur-3xl"></div>
+      </div>
 
       <div className="relative max-w-[1200px] mx-auto px-6 lg:px-12">
         <div className="grid lg:grid-cols-5 gap-10 lg:gap-14 items-center">

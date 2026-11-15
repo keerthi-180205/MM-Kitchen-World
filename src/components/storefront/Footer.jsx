@@ -28,7 +28,9 @@ function ContactRow({ icon, children }) {
 export default function Footer() {
   return (
     <footer className="relative overflow-hidden bg-gradient-to-b from-[#08376D] to-[#041F3F] text-white border-t border-white/10">
-      <div aria-hidden="true" className="pointer-events-none absolute -top-40 -right-40 w-[480px] h-[480px] rounded-full bg-sky-400/10 blur-3xl"></div>
+      <div aria-hidden="true" className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -right-40 w-[480px] h-[480px] rounded-full bg-sky-400/10 blur-3xl"></div>
+      </div>
 
       <div className="relative w-full max-w-[1440px] mx-auto px-6 lg:px-12 pt-16 pb-24 md:pb-12">
         <div className="grid grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1.4fr] gap-x-6 gap-y-10 lg:gap-12 mb-14">

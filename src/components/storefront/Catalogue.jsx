@@ -69,7 +69,7 @@ export default function Catalogue({ activeCategory, onSelectCategory }) {
         </div>
 
         {/* Category filter chips */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-4 -mx-6 px-6 lg:mx-0 lg:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div className="w-full max-w-full flex items-center gap-2 overflow-x-auto pb-4 mb-4 -mx-6 px-6 lg:mx-0 lg:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {categories.map((cat) => {
             const count = cat === "ALL" ? published.length : published.filter((p) => p.category === cat).length;
             return (

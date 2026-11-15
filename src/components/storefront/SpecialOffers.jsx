@@ -15,7 +15,9 @@ export default function SpecialOffers() {
 
   return (
     <section className="relative overflow-hidden py-14 sm:py-20 bg-gradient-to-b from-rose-50 via-[#FFF7F7] to-background border-b border-outline-variant" id="offers">
-      <div aria-hidden="true" className="pointer-events-none absolute -top-24 right-0 w-[380px] h-[380px] rounded-full bg-rose-200/40 blur-3xl"></div>
+      <div aria-hidden="true" className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-24 right-0 w-[380px] h-[380px] rounded-full bg-rose-200/40 blur-3xl"></div>
+      </div>
       <div className="relative max-w-[1440px] mx-auto px-6 lg:px-12">
         <div className="flex items-end justify-between gap-4 mb-8 sm:mb-10">
           <div>
