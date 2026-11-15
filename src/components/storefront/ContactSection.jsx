@@ -45,11 +45,11 @@ export default function ContactSection() {
             <div className="absolute -top-24 inset-x-0 h-40 bg-gradient-to-b from-primary/10 via-sky-400/5 to-transparent pointer-events-none"></div>
 
             {/* Profile Avatar in round circle structure with glowing animated ring */}
-            <div className="relative mb-5">
+            <div className="relative mb-6">
               {/* Outer pulsing gradient aura */}
-              <div className="absolute -inset-2 rounded-full bg-gradient-to-tr from-primary via-tertiary to-rose-500 opacity-70 blur-md group-hover:opacity-100 transition-opacity animate-pulse"></div>
-              {/* Circular image container */}
-              <div className="relative w-36 h-36 sm:w-44 sm:h-44 rounded-full p-1.5 bg-white shadow-xl ring-4 ring-primary/20 overflow-hidden">
+              <div className="absolute -inset-3 rounded-full bg-gradient-to-tr from-primary via-tertiary to-rose-500 opacity-70 blur-lg group-hover:opacity-100 transition-opacity animate-pulse"></div>
+              {/* Circular image container (enlarged) */}
+              <div className="relative w-52 h-52 sm:w-64 sm:h-64 lg:w-72 lg:h-72 rounded-full p-2 bg-white shadow-2xl ring-4 ring-primary/20 overflow-hidden">
                 <img
                   src={assetUrl("assets/team/praveen-kumar.webp")}
                   alt="Praveen Kumar - Owner & Glen Appliance Specialist at MM Kitchen World"
@@ -58,24 +58,21 @@ export default function ContactSection() {
               </div>
               {/* Live consultation status pill */}
               <div
-                className="absolute bottom-2 right-2 flex items-center justify-center w-8 h-8 rounded-full bg-emerald-500 border-2 border-white shadow-md text-white"
+                className="absolute bottom-3 right-3 flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-emerald-500 border-2 border-white shadow-lg text-white"
                 title="Available for Showroom Consultation"
               >
-                <span className="w-2.5 h-2.5 rounded-full bg-white animate-ping"></span>
+                <span className="w-3 h-3 rounded-full bg-white animate-ping"></span>
               </div>
             </div>
 
-            {/* Animated name badge & details */}
+            {/* Animated name badge */}
             <div className="flex flex-col items-center">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary border border-primary/20 text-xs font-bold uppercase tracking-wider mb-2">
+              <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-primary/10 text-primary border border-primary/20 text-xs font-bold uppercase tracking-wider mb-2">
                 <Icon name="verified" className="text-sm text-primary" /> Showroom Owner &amp; Glen Specialist
               </span>
-              <h3 className="font-headline-md text-2xl sm:text-3xl font-extrabold text-on-surface tracking-tight">
+              <h3 className="font-headline-md text-2xl sm:text-3xl lg:text-4xl font-extrabold text-on-surface tracking-tight">
                 Praveen Kumar
               </h3>
-              <p className="text-xs sm:text-sm text-on-surface-variant max-w-sm mt-1 leading-relaxed">
-                Connect directly with Praveen for expert advice on chimney suction, hob dimensions, kitchen ducting, and today's store prices.
-              </p>
             </div>
 
             {/* Social media circle buttons matching the user specification */}
