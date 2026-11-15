@@ -4,7 +4,7 @@ import Icon from "../Icon";
 import HashLink from "../HashLink";
 import { useShop } from "../../context/ShopContext";
 import { trackEnquiry } from "../../lib/analytics";
-import { PHONE_TEL, whatsappUrl } from "../../constants";
+import { PHONE_TEL, whatsappUrl, assetUrl } from "../../constants";
 import { useScrollSpy } from "../../hooks/useScrollSpy";
 
 const NAV_LINKS = [
@@ -31,9 +31,9 @@ export default function Header() {
     <header className="sticky top-0 z-50 bg-white/85 backdrop-blur-md supports-[backdrop-filter]:bg-white/80 border-b border-outline-variant/70 shadow-sm">
       <div className="w-full max-w-[1440px] mx-auto px-3 sm:px-6 lg:px-12 flex items-center justify-between gap-2 sm:gap-4 h-16 sm:h-20 min-w-0">
         {/* Brand logo */}
-        <Link className="flex items-center gap-2 sm:gap-3 group min-w-0 shrink" to="/">
-          <div className="w-9 h-9 sm:w-11 sm:h-11 shrink-0 rounded-lg bg-surface-container-low border border-outline-variant flex items-center justify-center text-primary transition-transform duration-150 group-hover:scale-95">
-            <Icon name="kitchen" className="text-primary text-xl sm:text-2xl" />
+        <Link className="flex items-center gap-2.5 sm:gap-3 group min-w-0 shrink" to="/">
+          <div className="w-9 h-9 sm:w-11 sm:h-11 shrink-0 rounded-xl bg-white border border-outline-variant/80 shadow-xs flex items-center justify-center p-1 sm:p-1.5 transition-transform duration-150 group-hover:scale-95 overflow-hidden">
+            <img src={assetUrl("assets/brand/mm-logo-mark.webp")} alt="MM Kitchen World Logo" className="w-full h-full object-contain" />
           </div>
           <div className="min-w-0">
             <span className="font-headline-md text-[14px] xs:text-[16px] sm:text-[19px] xl:text-[20px] text-primary uppercase font-bold block leading-none truncate">MM Kitchen World</span>

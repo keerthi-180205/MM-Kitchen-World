@@ -26,7 +26,7 @@ export default function Hero() {
             </div>
             <h1 className="font-display-hero text-display-hero-mobile md:text-display-hero text-on-surface mb-5 sm:mb-6 tracking-tight">
               Upgrade Your Kitchen <br />
-              <span className="italic bg-gradient-to-r from-[#005bb3] via-[#0878E8] to-[#3b9bff] bg-clip-text text-transparent">with Genuine GLEN Appliances.</span>
+              <span className="italic bg-gradient-to-r from-[#005bb3] via-[#0878E8] to-[#3b9bff] bg-clip-text text-transparent">with Genuine MM KITCHEN Appliances.</span>
             </h1>
             <p className="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mb-8">
               Chimneys, hobs, gas stoves, built-in ovens, microwaves and dishwashers: 209 GLEN models under one roof. Walk in to see them live, or message us on WhatsApp for expert advice and today's store price.

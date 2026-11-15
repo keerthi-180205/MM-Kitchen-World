@@ -1,6 +1,10 @@
 export const WHATSAPP_NUMBER = "919743233729";
 export const PHONE_TEL = "+919743233729";
 
+// Social & Channel Links
+export const YOUTUBE_URL = "https://youtube.com/@glenshowroombasaveshwarnagar?si=nIo0VL64Zhvu_sU1";
+export const INSTAGRAM_URL = "https://www.instagram.com/mmkitchenworld.glenchimneyshop";
+
 // Google Business Profile: home installation photos, videos, ratings and reviews.
 // Permanent Google Maps link for the business (cid = the listing's ID), instead of a short
 // maps.app.goo.gl link that depends on a redirect and can fail in some apps.

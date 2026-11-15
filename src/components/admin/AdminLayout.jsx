@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Icon from "../Icon";
+import { assetUrl } from "../../constants";
 
 const NAV_GROUPS = [
   {
@@ -34,8 +35,8 @@ export const PAGE_TITLES = {
 function Brand() {
   return (
     <div className="flex items-center gap-3">
-      <div className="w-10 h-10 rounded-xl bg-white/15 border border-white/20 flex items-center justify-center text-white">
-        <Icon name="kitchen" className="text-2xl" />
+      <div className="w-10 h-10 rounded-xl bg-white border border-white/30 flex items-center justify-center p-1 shadow-sm overflow-hidden">
+        <img src={assetUrl("assets/brand/mm-logo-mark.webp")} alt="MM Kitchen World" className="w-full h-full object-contain" />
       </div>
       <div className="leading-tight">
         <span className="block text-[15px] font-bold tracking-wide text-white uppercase">MM Kitchen World</span>
@@ -123,7 +124,9 @@ export default function AdminLayout({ tab, onSelectTab, newLeads, onLogout, acti
       {/* Mobile / tablet top bar */}
       <div className="lg:hidden sticky top-0 z-40 bg-gradient-to-r from-[#0B4F9C] to-[#073B78] px-4 h-14 flex items-center justify-between shadow-md">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-white/15 border border-white/20 flex items-center justify-center text-white"><Icon name="kitchen" className="text-xl" /></div>
+          <div className="w-8 h-8 rounded-lg bg-white border border-white/30 flex items-center justify-center p-0.5 shadow-sm overflow-hidden">
+            <img src={assetUrl("assets/brand/mm-logo-mark.webp")} alt="MM Kitchen World" className="w-full h-full object-contain" />
+          </div>
           <span className="text-sm font-bold tracking-wide text-white uppercase">MM Kitchen World</span>
         </div>
         <button onClick={() => setDrawer(true)} aria-label="Open menu" className="relative w-10 h-10 rounded-lg text-white hover:bg-white/10 flex items-center justify-center">
