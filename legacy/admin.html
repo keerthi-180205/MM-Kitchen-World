@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Vendor Demo Admin · Product Management | MM Kitchen World</title>
+  <link href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%230878E8'/%3E%3Cpath d='M7 8h10v2H7zm0 3h10v2H7zm0 3h7v2H7z' fill='%23fff'/%3E%3C/svg%3E" rel="icon" type="image/svg+xml"/>
+
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "background": "#FAF7F0",
+            "secondary": "#295fa4",
+            "surface-dim": "#d1daee",
+            "primary-container": "#0878E8",
+            "primary": "#005bb3",
+            "on-surface-variant": "#414753",
+            "surface-container-low": "#EAF4FF",
+            "surface-container-lowest": "#ffffff",
+            "surface": "#FAF7F0",
+            "on-surface": "#202938",
+            "outline-variant": "#E2E8F0",
+            "inverse-surface": "#064A8E",
+            "tertiary": "#25D366",
+            "error": "#ba1a1a"
+          },
+          fontFamily: {
+            "headline-lg": ["Playfair Display"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "headline-sm": ["Plus Jakarta Sans"],
+            "body-md": ["Plus Jakarta Sans"],
+            "body-sm": ["Plus Jakarta Sans"],
+            "label-md": ["Plus Jakarta Sans"],
+            "label-sm": ["Plus Jakarta Sans"]
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .material-symbols-fill {
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .custom-scroll::-webkit-scrollbar {
+      height: 6px;
+      width: 6px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface antialiased font-body-md min-h-screen flex flex-col">
+
+  <!-- Admin Login Screen (Displayed when unauthenticated) -->
+  <div id="adminLoginContainer" class="min-h-screen flex flex-col justify-between p-4 sm:p-6 bg-background">
+    <!-- Top return bar -->
+    <div class="max-w-[1440px] mx-auto w-full flex items-center justify-between">
+      <a href="index.html" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface-variant hover:text-primary hover:bg-surface-container-low text-xs font-semibold transition shadow-xs">
+        <span class="material-symbols-outlined text-base">arrow_back</span>
+        <span>Back to Store</span>
+      </a>
+      <span class="text-xs font-medium text-on-surface-variant">MM Kitchen World · GLEN Exclusive Store</span>
+    </div>
+
+    <!-- Centered Login Card -->
+    <div class="max-w-md w-full mx-auto my-8">
+      <div class="bg-surface-container-lowest rounded-2xl border border-outline-variant shadow-lg p-6 sm:p-8">
+        <!-- Logo & Header -->
+        <div class="text-center mb-6">
+          <div class="w-12 h-12 rounded-xl bg-surface-container-low border border-outline-variant flex items-center justify-center text-primary mx-auto mb-3 shadow-xs">
+            <span class="material-symbols-outlined text-2xl">lock</span>
+          </div>
+          <h2 class="font-headline-md text-headline-md font-bold text-primary tracking-tight">Admin Portal Login</h2>
+          <p class="text-xs text-on-surface-variant mt-1.5">Sign in to manage showroom inventory & product catalog</p>
+        </div>
+
+        <!-- Validation Error Alert -->
+        <div id="loginErrorMessage" class="hidden mb-4 p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-xs font-medium flex items-center gap-2">
+          <span class="material-symbols-outlined text-base text-red-600">error</span>
+          <span id="loginErrorText">Invalid username or password. Please try again.</span>
+        </div>
+
+        <!-- Login Form -->
+        <form id="adminLoginForm" onsubmit="handleLoginSubmit(event)" class="space-y-4" autocomplete="off">
+          <div>
+            <label for="adminUsername" class="block text-xs font-bold uppercase tracking-wider text-on-surface-variant mb-1.5">Username / Email</label>
+            <div class="relative">
+              <span class="material-symbols-outlined absolute left-3 top-2.5 text-on-surface-variant text-base">mail</span>
+              <input type="email" id="adminUsername" required value="" autocomplete="off" placeholder="Enter username or email" class="w-full pl-9 pr-3 py-2 text-sm rounded-lg border border-outline-variant bg-background focus:bg-white focus:border-primary focus:ring-1 focus:ring-primary transition" />
+            </div>
+          </div>
+
+          <div>
+            <div class="flex items-center justify-between mb-1.5">
+              <label for="adminPassword" class="block text-xs font-bold uppercase tracking-wider text-on-surface-variant">Password</label>
+              <button type="button" onclick="togglePasswordVisibility()" class="text-[11px] text-primary hover:underline font-semibold flex items-center gap-1">
+                <span id="togglePasswordIcon" class="material-symbols-outlined text-sm">visibility</span>
+                <span id="togglePasswordText">Show</span>
+              </button>
+            </div>
+            <div class="relative">
+              <span class="material-symbols-outlined absolute left-3 top-2.5 text-on-surface-variant text-base">key</span>
+              <input type="password" id="adminPassword" required value="" autocomplete="new-password" placeholder="Enter password" class="w-full pl-9 pr-3 py-2 text-sm rounded-lg border border-outline-variant bg-background focus:bg-white focus:border-primary focus:ring-1 focus:ring-primary transition" />
+            </div>
+          </div>
+
+          <div class="pt-2">
+            <button type="submit" id="loginSubmitBtn" class="w-full py-2.5 px-4 rounded-lg bg-primary hover:bg-primary-container text-white font-semibold text-sm shadow hover:shadow-md transition-all active:scale-98 flex items-center justify-center gap-2">
+              <span class="material-symbols-outlined text-base">login</span>
+              <span>Sign In to Admin Portal</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Login Footer -->
+    <div class="text-center text-[11px] text-on-surface-variant py-2">
+      <p>© MM Kitchen World · Basaveshwara Nagar, Bangalore · Authorized GLEN Exclusive Store</p>
+    </div>
+  </div>
+
+  <!-- Wrap existing admin console in container -->
+  <div id="adminAppContainer" class="hidden flex-col flex-1 min-h-screen">
+
+  <!-- 2. Main Executive Header -->
+  <header class="sticky top-0 z-40 bg-surface-container-lowest border-b border-outline-variant shadow-sm">
+    <div class="max-w-[1440px] mx-auto px-4 sm:px-8 py-3.5 flex items-center justify-between">
+      <!-- Brand & Title -->
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-outline-variant hover:bg-surface-container-low text-xs font-semibold text-on-surface-variant hover:text-primary transition" title="Return to public storefront">
+          <span class="material-symbols-outlined text-base">arrow_back</span>
+          <span>Back to Store</span>
+        </a>
+
+        <a href="index.html#products" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-outline-variant hover:bg-surface-container-low text-xs font-semibold text-primary transition">
+          <span class="material-symbols-outlined text-base">visibility</span>
+          <span>View on Website</span>
+        </a>
+
+        <button onclick="openAddProductModal()" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-primary text-white text-xs font-semibold shadow hover:bg-primary/90 active:scale-98 transition">
+          <span class="material-symbols-outlined text-base">add_circle</span>
+          <span>Add New Product</span>
+        </button>
+
+        <button onclick="handleLogout()" class="inline-flex items-center gap-1 px-3 py-2 rounded-lg border border-red-200 bg-red-50 text-red-700 hover:bg-red-100 text-xs font-semibold transition" title="Log out of Admin Portal">
+          <span class="material-symbols-outlined text-base">logout</span>
+          <span>Logout</span>
+        </button></div>
+    </div>
+  </header>
+
+  <!-- 3. Dashboard Body -->
+  <main class="max-w-[1440px] mx-auto px-4 sm:px-8 py-8 flex-1 w-full space-y-6">
+
+    <!-- Metrics Cards Row -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="bg-surface-container-lowest p-5 rounded-xl border border-outline-variant shadow-sm flex items-center justify-between">
+        <div>
+          <span class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider block">Total Products</span>
+          <span id="statTotal" class="text-3xl font-extrabold text-primary mt-1 block">0</span>
+          <span class="text-[11px] text-emerald-600 font-medium">Ready for display</span>
+        </div>
+        <div class="w-12 h-12 rounded-xl bg-surface-container-low flex items-center justify-center text-primary">
+          <span class="material-symbols-outlined text-2xl">inventory_2</span>
+        </div>
+      </div>
+
+      <div class="bg-surface-container-lowest p-5 rounded-xl border border-outline-variant shadow-sm flex items-center justify-between">
+        <div>
+          <span class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider block">Live on Storefront</span>
+          <span id="statPublished" class="text-3xl font-extrabold text-emerald-600 mt-1 block">0</span>
+          <span class="text-[11px] text-on-surface-variant">Active in catalog</span>
+        </div>
+        <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+          <span class="material-symbols-outlined text-2xl">check_circle</span>
+        </div>
+      </div>
+
+      <div class="bg-surface-container-lowest p-5 rounded-xl border border-outline-variant shadow-sm flex items-center justify-between">
+        <div>
+          <span class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider block">In Draft Mode</span>
+          <span id="statDraft" class="text-3xl font-extrabold text-amber-600 mt-1 block">0</span>
+          <span class="text-[11px] text-on-surface-variant">Hidden from visitors</span>
+        </div>
+        <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
+          <span class="material-symbols-outlined text-2xl">unpublished</span>
+        </div>
+      </div>
+
+      <div class="bg-surface-container-lowest p-5 rounded-xl border border-outline-variant shadow-sm flex items-center justify-between">
+        <div>
+          <span class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider block">Categories</span>
+          <span id="statCategories" class="text-3xl font-extrabold text-secondary mt-1 block">0</span>
+          <span class="text-[11px] text-on-surface-variant">Chimneys, Hobs, Ovens...</span>
+        </div>
+        <div class="w-12 h-12 rounded-xl bg-blue-50 text-secondary flex items-center justify-center">
+          <span class="material-symbols-outlined text-2xl">category</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filter & Search Toolbar -->
+    <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-4 shadow-sm space-y-3">
+      <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+        <!-- Search Input -->
+        <div class="relative flex-1 max-w-md">
+          <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">search</span>
+          <input id="searchInput" oninput="renderTable()" type="text" placeholder="Search appliance title, brand, or model..." class="w-full pl-9 pr-4 py-2 bg-surface text-sm border border-outline-variant rounded-lg focus:ring-1 focus:ring-primary focus:border-primary"/>
+        </div>
+
+        <!-- Filter Controls -->
+        <div class="flex items-center gap-2 flex-wrap">
+          <select id="statusFilter" onchange="renderTable()" class="bg-surface border border-outline-variant rounded-lg py-2 px-3 text-xs font-semibold text-on-surface">
+            <option value="ALL">All Statuses</option>
+            <option value="Published">Published Only</option>
+            <option value="Draft">Draft Only</option>
+          </select>
+
+          <span id="resultCount" class="text-xs text-on-surface-variant font-medium ml-2">Showing 0 products</span>
+        </div>
+      </div>
+
+      <!-- Category Filter Pills -->
+      <div class="flex items-center gap-1.5 overflow-x-auto custom-scroll pb-1 pt-1" id="categoryChips">
+        <!-- Dynamic Category Chips -->
+      </div>
+    </div>
+
+    <!-- Products Table / Grid -->
+    <div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm">
+          <thead class="bg-surface-container-low text-xs uppercase font-bold text-on-surface-variant border-b border-outline-variant">
+            <tr>
+              <th class="py-3 px-4">Appliance</th>
+              <th class="py-3 px-4">Category & Brand</th>
+              <th class="py-3 px-4">Key Specifications</th>
+              <th class="py-3 px-4">Pricing</th>
+              <th class="py-3 px-4 text-center">Status</th>
+              <th class="py-3 px-4 text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="productsTableBody" class="divide-y divide-outline-variant">
+            <!-- Dynamic rows inserted here -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Empty State -->
+      <div id="emptyState" class="hidden py-16 text-center px-4">
+        <div class="w-16 h-16 mx-auto rounded-full bg-surface-container-low flex items-center justify-center text-primary mb-3">
+          <span class="material-symbols-outlined text-3xl">inventory_2</span>
+        </div>
+        <h3 class="text-base font-bold text-on-surface">No appliances found</h3>
+        <p class="text-xs text-on-surface-variant max-w-sm mx-auto mt-1 mb-4">Try clearing your search query or reset the catalog to default demo products.</p>
+        <button onclick="confirmResetDefaults()" class="px-4 py-2 bg-primary text-white text-xs font-semibold rounded-lg hover:bg-primary/90 transition">
+          Reset Demo Catalog
+        </button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- 4. Add / Edit Product Modal -->
+  <div id="productModal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-surface-container-lowest border border-outline-variant rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl flex flex-col">
+      <!-- Modal Header -->
+      <div class="px-6 py-4 border-b border-outline-variant flex items-center justify-between sticky top-0 bg-surface-container-lowest z-10">
+        <div>
+          <h3 id="modalTitle" class="text-lg font-bold text-primary">Add New Appliance</h3>
+          <p class="text-xs text-on-surface-variant">Fill in the details to publish or stage this appliance in the catalog</p>
+        </div>
+        <button onclick="closeProductModal()" class="w-8 h-8 rounded-lg hover:bg-surface-container-low text-on-surface-variant flex items-center justify-center">
+          <span class="material-symbols-outlined text-xl">close</span>
+        </button>
+      </div>
+
+      <!-- Modal Form -->
+      <form id="productForm" onsubmit="handleProductFormSubmit(event)" class="p-6 space-y-4 text-sm">
+        <input type="hidden" id="productId"/>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <!-- Title -->
+          <div class="sm:col-span-2">
+            <label class="block text-xs font-bold text-on-surface uppercase mb-1">Product Title *</label>
+            <input id="formTitle" required type="text" placeholder="e.g. Glen 90cm BLDC Auto-Clean Chimney" class="w-full px-3 py-2 bg-surface border border-outline-variant rounded-lg text-sm focus:ring-1 focus:ring-primary focus:border-primary"/>
+          </div>
+
+          <!-- Category -->
+          <div>
+            <label class="block text-xs font-bold text-on-surface uppercase mb-1">Category *</label>
+            <select id="formCategory" required onchange="checkDuplicateModel()" class="w-full px-3 py-2 bg-surface border border-outline-variant rounded-lg text-sm focus:ring-1 focus:ring-primary focus:border-primary">
+              <option value="Chimneys">Chimneys</option>
+              <option value="Ovens">Ovens</option>
+              <option value="Microwaves">Microwaves</option>
+              <option value="Gas Stoves">Gas Stoves</option>
+              <option value="Hobs">Hobs</option>
+              <option value="Dishwashers">Dishwashers</option>
+            </select>
+          </div>
+
+          <!-- Subcategory -->
+          <div>
+            <label class="block text-xs font-bold text-on-surface uppercase mb-1">Subcategory</label>
+            <input id="formSubcategory" type="text" placeholder="e.g. Cooking Range, BLDC Chimneys, DFVS" class="w-full px-3 py-2 bg-surface border border-outline-variant rounded-lg text-sm focus:ring-1 focus:ring-primary focus:border-primary"/>
+            <p class="text-[10px] text-on-surface-variant mt-0.5">For Gas Stoves, use "Cooking Range" to keep it in its own labelled section, separate from regular cooktops.</p>
+          </div>
+
+          <!-- Brand -->
+          <div>
+            <label class="block text-xs font-bold text-on-surface uppercase mb-1">Brand / Series</label>
+            <input id="formBrand" type="text" placeholder="e.g. GLEN APPLIANCES" class="w-full px-3 py-2 bg-surface border border-outline-variant rounded-lg text-sm focus:ring-1 focus:ring-primary focus:border-primary"/>
+          </div>
+
+          <!-- Model / SKU -->
+          <div>
+            <label class="block text-xs font-bold text-on-surface uppercase mb-1">Model / SKU *</label>
+            <input id="formModel" required type="text" oninput="checkDuplicateModel()" placeholder="e.g. CH 1022 BL MS IS" class="w-full px-3 py-2 bg-surface border border-outline-variant rounded-lg text-sm focus:ring-1 focus:ring-primary focus:border-primary"/>
+            <p id="duplicateModelWarning" class="hidden text-[11px] text-error font-semibold mt-1">⚠ This model number already exists on another product. Choose a different model number to save.</p>
+          </div>
+
+          <!-- Tag / Badge -->
+          <div>
+            <label class="block text-xs font-bold text-on-surface uppercase mb-1">Showcase Badge</label>
+            <input id="formTag" list="formTagOptions" placeholder="e.g. New Arrival, Bestseller, or a subcategory name" class="w-full px-3 py-2 bg-surface border border-outline-variant rounded-lg text-sm focus:ring-1 focus:ring-primary focus:border-primary"/>
+            <datalist id="formTagOptions">
+              <option value="New Arrival"></option>
+              <option value="Bestseller"></option>
+              <option value="Flagship"></option>
+              <option value="Showroom Pick"></option>
+              <option value="Special Offer"></option>
+            </datalist>
+          </div>
+
+          <!-- Pricing -->
+          <div>
+            <label class="block text-xs font-bold text-on-surface uppercase mb-1">Price Display</label>
+            <input id="formPrice" type="text" value="Contact showroom for price" placeholder="e.g. Contact showroom for price or ₹18,990" class="w-full px-3 py-2 bg-surface border border-outline-variant rounded-lg text-sm focus:ring-1 focus:ring-primary focus:border-primary"/>
+          </div>
+
+          <!-- Status -->
+          <div>
+            <label class="block text-xs font-bold text-on-surface uppercase mb-1">Catalog Status</label>
+            <select id="formStatus" class="w-full px-3 py-2 bg-surface border border-outline-variant rounded-lg text-sm focus:ring-1 focus:ring-primary focus:border-primary">
+              <option value="Published">Published (Live on Website)</option>
+              <option value="Draft">Draft (Internal Only)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Image Selection: Presets or URL -->
+        <div class="pt-2 border-t border-outline-variant">
+          <label class="block text-xs font-bold text-on-surface uppercase mb-1.5">Appliance Image *</label>
+          
+          <!-- Image Presets Selector for quick demo convenience -->
+          <div class="mb-2">
+            <span class="text-[11px] text-on-surface-variant block mb-1">Quick Select Demo Preset:</span>
+            <div class="grid grid-cols-4 sm:grid-cols-6 gap-2" id="presetImageSelector">
+              <!-- Preset Thumbnails inserted here -->
+            </div>
+          </div>
+
+          <!-- Custom URL / Preview -->
+          <div class="flex items-center gap-3 mt-2">
+            <div class="w-16 h-16 rounded-lg bg-surface border border-outline-variant overflow-hidden shrink-0 flex items-center justify-center">
+              <img id="formImagePreview" src="" class="w-full h-full object-contain" alt="Preview"/>
+            </div>
+            <div class="flex-1 space-y-1">
+              <input id="formImageUrl" required type="text" placeholder="Or paste an image URL / relative path" oninput="updateImagePreview(this.value)" class="w-full px-3 py-1.5 bg-surface border border-outline-variant rounded-lg text-xs focus:ring-1 focus:ring-primary focus:border-primary"/>
+              <label class="inline-block text-[11px] text-primary hover:underline cursor-pointer">
+                <span>Or upload file from computer</span>
+                <input type="file" accept="image/*" class="hidden" onchange="handleFileUpload(event)"/>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Specifications Matrix (3 Key Specs) -->
+        <div class="pt-2 border-t border-outline-variant space-y-2">
+          <label class="block text-xs font-bold text-on-surface uppercase">Key Specifications (Displays on Product Card)</label>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            <div>
+              <input id="spec1Label" placeholder="Spec 1 Label (e.g. Suction)" class="w-full px-2.5 py-1.5 bg-surface border border-outline-variant rounded text-xs"/>
+              <input id="spec1Val" placeholder="Value (e.g. 1350 m³/hr)" class="w-full px-2.5 py-1.5 bg-surface border border-outline-variant rounded text-xs mt-1 font-semibold"/>
+            </div>
+            <div>
+              <input id="spec2Label" placeholder="Spec 2 Label (e.g. Controls)" class="w-full px-2.5 py-1.5 bg-surface border border-outline-variant rounded text-xs"/>
+              <input id="spec2Val" placeholder="Value (e.g. Motion Wave)" class="w-full px-2.5 py-1.5 bg-surface border border-outline-variant rounded text-xs mt-1 font-semibold"/>
+            </div>
+            <div>
+              <input id="spec3Label" placeholder="Spec 3 Label (e.g. Warranty)" class="w-full px-2.5 py-1.5 bg-surface border border-outline-variant rounded text-xs"/>
+              <input id="spec3Val" placeholder="Value (e.g. 7-Yr Motor)" class="w-full px-2.5 py-1.5 bg-surface border border-outline-variant rounded text-xs mt-1 font-semibold"/>
+            </div>
+          </div>
+        </div>
+
+        <!-- Brief Description -->
+        <div>
+          <label class="block text-xs font-bold text-on-surface uppercase mb-1">Product Description / Features</label>
+          <textarea id="formDescription" rows="2" placeholder="Brief technical summary..." class="w-full px-3 py-2 bg-surface border border-outline-variant rounded-lg text-xs"></textarea>
+        </div>
+
+        <!-- Footer Actions -->
+        <div class="pt-4 border-t border-outline-variant flex items-center justify-end gap-3">
+          <button type="button" onclick="closeProductModal()" class="px-4 py-2 border border-outline-variant rounded-lg text-sm text-on-surface-variant hover:bg-surface-container-low transition">
+            Cancel
+          </button>
+          <button type="submit" id="saveProductBtn" class="px-6 py-2 bg-primary text-white rounded-lg text-sm font-semibold hover:bg-primary/90 transition shadow flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-base">save</span>
+            <span>Save Appliance</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 5. Toast Notification -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 bg-on-surface text-white px-4 py-3 rounded-xl shadow-xl flex items-center gap-3 text-sm transform translate-y-20 opacity-0 transition-all duration-300">
+    <span class="material-symbols-outlined text-emerald-400" id="toastIcon">check_circle</span>
+    <span id="toastMsg">Operation successful!</span>
+  </div>
+
+  <!-- Shared Products Store Script -->
+  <script src="products-store.js"></script>
+
+  <!-- Admin Controller Logic -->
+  <script>
+    let currentCategoryFilter = "ALL";
+
+    document.addEventListener("DOMContentLoaded", () => {
+      initPresetImageThumbnails();
+      renderCategoryChips();
+      renderTable();
+
+      // Listen to cross-tab updates
+      window.addEventListener("catalog-updated", () => {
+        renderCategoryChips();
+        renderTable();
+      });
+    });
+
+    function showToast(message, isError = false) {
+      const toast = document.getElementById("toast");
+      const toastMsg = document.getElementById("toastMsg");
+      const toastIcon = document.getElementById("toastIcon");
+
+      toastMsg.textContent = message;
+      toastIcon.textContent = isError ? "error" : "check_circle";
+      toastIcon.className = isError ? "material-symbols-outlined text-rose-400" : "material-symbols-outlined text-emerald-400";
+
+      toast.classList.remove("translate-y-20", "opacity-0");
+      setTimeout(() => {
+        toast.classList.add("translate-y-20", "opacity-0");
+      }, 3000);
+    }
+
+    function initPresetImageThumbnails() {
+      const container = document.getElementById("presetImageSelector");
+      container.innerHTML = "";
+      ProductsStore.IMAGE_PRESETS.forEach((preset, idx) => {
+        const div = document.createElement("button");
+        div.type = "button";
+        div.className = "p-1 rounded border border-outline-variant hover:border-primary bg-surface flex flex-col items-center group text-left";
+        div.onclick = () => {
+          document.getElementById("formImageUrl").value = preset.url;
+          updateImagePreview(preset.url);
+        };
+        div.innerHTML = `
+          <img src="${preset.url}" class="w-full h-10 object-contain rounded" alt="${preset.label}"/>
+          <span class="text-[9px] text-on-surface-variant truncate w-full text-center mt-1">${preset.label}</span>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function updateImagePreview(url) {
+      const img = document.getElementById("formImagePreview");
+      if (url) {
+        img.src = url;
+      }
+    }
+
+    function handleFileUpload(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          document.getElementById("formImageUrl").value = event.target.result;
+          updateImagePreview(event.target.result);
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function renderCategoryChips() {
+      const products = ProductsStore.getAll();
+      const categories = ["ALL", ...new Set(products.map(p => p.category))];
+      const container = document.getElementById("categoryChips");
+
+      container.innerHTML = categories.map(cat => {
+        const count = cat === "ALL" ? products.length : products.filter(p => p.category === cat).length;
+        const isActive = currentCategoryFilter === cat;
+        return `
+          <button onclick="setCategoryFilter('${cat}')" class="px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap transition-colors ${
+            isActive 
+              ? "bg-primary text-white" 
+              : "bg-surface text-on-surface-variant border border-outline-variant hover:border-primary"
+          }">
+            ${cat === "ALL" ? "All Categories" : cat} (${count})
+          </button>
+        `;
+      }).join("");
+    }
+
+    function setCategoryFilter(cat) {
+      currentCategoryFilter = cat;
+      renderCategoryChips();
+      renderTable();
+    }
+
+    function renderTable() {
+      const products = ProductsStore.getAll();
+      const searchQuery = document.getElementById("searchInput").value.trim().toLowerCase();
+      const statusFilter = document.getElementById("statusFilter").value;
+
+      // Update metrics
+      document.getElementById("statTotal").textContent = products.length;
+      document.getElementById("statPublished").textContent = products.filter(p => p.status === "Published").length;
+      document.getElementById("statDraft").textContent = products.filter(p => p.status === "Draft").length;
+      document.getElementById("statCategories").textContent = new Set(products.map(p => p.category)).size;
+
+      // Filter products
+      const filtered = products.filter(p => {
+        const matchesCategory = currentCategoryFilter === "ALL" || p.category === currentCategoryFilter;
+        const matchesStatus = statusFilter === "ALL" || p.status === statusFilter;
+        const matchesSearch = !searchQuery || 
+          p.title.toLowerCase().includes(searchQuery) || 
+          p.model.toLowerCase().includes(searchQuery) ||
+          p.brand.toLowerCase().includes(searchQuery) ||
+          p.category.toLowerCase().includes(searchQuery);
+
+        return matchesCategory && matchesStatus && matchesSearch;
+      });
+
+      document.getElementById("resultCount").textContent = `Showing ${filtered.length} of ${products.length} appliances`;
+
+      const tbody = document.getElementById("productsTableBody");
+      const emptyState = document.getElementById("emptyState");
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = "";
+        emptyState.classList.remove("hidden");
+        return;
+      }
+
+      emptyState.classList.add("hidden");
+      tbody.innerHTML = filtered.map(p => {
+        const isPublished = p.status === "Published";
+        const tagBadge = p.tag ? `
+          <span class="inline-block text-[10px] font-bold px-2 py-0.5 rounded-full ${p.tagColor || 'bg-primary text-white'}">
+            ${p.tag}
+          </span>
+        ` : '';
+
+        const specsHtml = (p.specs || []).map(s => `
+          <div class="flex justify-between gap-2 text-xs">
+            <span class="text-on-surface-variant">${s.label}:</span>
+            <span class="font-medium text-on-surface">${s.value}</span>
+          </div>
+        `).join("");
+
+        const waText = encodeURIComponent(`Hello MM Kitchen World, I am interested in the GLEN ${p.title}, Model ${p.model}. Please share the price and availability.`);
+
+        return `
+          <tr class="hover:bg-surface-container-low/40 transition-colors">
+            <!-- Appliance & Image -->
+            <td class="py-3.5 px-4">
+              <div class="flex items-center gap-3">
+                <div class="w-16 h-16 rounded-lg bg-surface border border-outline-variant p-1 flex items-center justify-center shrink-0">
+                  <img src="${p.image}" alt="${p.title}" class="max-h-full max-w-full object-contain"/>
+                </div>
+                <div>
+                  <div class="flex items-center gap-1.5 mb-1">
+                    ${tagBadge}
+                    <span class="text-[11px] font-mono text-on-surface-variant font-semibold">${p.model || ''}</span>
+                  </div>
+                  <h4 class="font-bold text-sm text-on-surface leading-tight max-w-xs">${p.title}</h4>
+                  <p class="text-xs text-on-surface-variant mt-0.5">${p.brand}</p>
+                </div>
+              </div>
+            </td>
+
+            <!-- Category -->
+            <td class="py-3.5 px-4 text-xs">
+              <span class="font-semibold text-primary block">${p.category}</span>
+              <span class="text-on-surface-variant">${p.brand}</span>
+            </td>
+
+            <!-- Specs -->
+            <td class="py-3.5 px-4 min-w-[200px]">
+              <div class="space-y-0.5 py-1">
+                ${specsHtml}
+              </div>
+            </td>
+
+            <!-- Pricing -->
+            <td class="py-3.5 px-4 text-xs font-bold text-primary whitespace-nowrap">
+              ${p.price || 'Contact showroom for price'}
+            </td>
+
+            <!-- Status Toggle -->
+            <td class="py-3.5 px-4 text-center whitespace-nowrap">
+              <button onclick="toggleProductStatus('${p.id}')" title="Click to toggle status" class="inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-1 rounded-full border transition cursor-pointer ${
+                isPublished 
+                  ? 'bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100' 
+                  : 'bg-amber-50 text-amber-700 border-amber-200 hover:bg-amber-100'
+              }">
+                <span class="w-1.5 h-1.5 rounded-full ${isPublished ? 'bg-emerald-600' : 'bg-amber-600'}"></span>
+                <span>${p.status}</span>
+              </button>
+            </td>
+
+            <!-- Actions -->
+            <td class="py-3.5 px-4 text-right whitespace-nowrap">
+              <div class="flex items-center justify-end gap-1.5">
+                <a href="https://wa.me/919743233729?text=${waText}" target="_blank" title="Test WhatsApp Enquiry Link" class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 hover:bg-emerald-100 flex items-center justify-center transition">
+                  <span class="material-symbols-outlined text-base">chat</span>
+                </a>
+
+                <button onclick="openEditProductModal('${p.id}')" title="Edit Product" class="w-8 h-8 rounded-lg bg-surface hover:bg-surface-container-low border border-outline-variant text-primary flex items-center justify-center transition">
+                  <span class="material-symbols-outlined text-base">edit</span>
+                </button>
+
+                <button onclick="deleteProductPrompt('${p.id}', '${p.title.replace(/'/g, "\\'")}')" title="Delete / Remove Product" class="w-8 h-8 rounded-lg bg-red-50 hover:bg-red-100 border border-red-200 text-error flex items-center justify-center transition">
+                  <span class="material-symbols-outlined text-base">delete</span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    function toggleProductStatus(id) {
+      const p = ProductsStore.getById(id);
+      if (!p) return;
+      const newStatus = p.status === "Published" ? "Draft" : "Published";
+      ProductsStore.update(id, { status: newStatus });
+      showToast(`Status updated to "${newStatus}"!`);
+      renderTable();
+    }
+
+    function deleteProductPrompt(id, title) {
+      if (confirm(`Are you sure you want to delete "${title}"?\nIt will be permanently removed from the website.`)) {
+        ProductsStore.delete(id);
+        showToast(`Appliance removed from catalog.`);
+        renderCategoryChips();
+        renderTable();
+      }
+    }
+
+    function confirmResetDefaults() {
+      if (confirm("Reset catalog back to initial demonstration appliances? This will restore default items.")) {
+        ProductsStore.resetToDefaults();
+        showToast("Demo catalog reset to defaults!");
+        renderCategoryChips();
+        renderTable();
+      }
+    }
+
+    // Modal Operations
+    function openAddProductModal() {
+      document.getElementById("modalTitle").textContent = "Add New Appliance to Catalog";
+      document.getElementById("productId").value = "";
+      document.getElementById("productForm").reset();
+      document.getElementById("formPrice").value = "Contact showroom for price";
+      document.getElementById("formStatus").value = "Published";
+      document.getElementById("duplicateModelWarning").classList.add("hidden");
+      document.getElementById("saveProductBtn").disabled = false;
+      document.getElementById("formImageUrl").value = ProductsStore.IMAGE_PRESETS[0].url;
+      updateImagePreview(ProductsStore.IMAGE_PRESETS[0].url);
+
+      // Default specs
+      document.getElementById("spec1Label").value = "Suction / Power";
+      document.getElementById("spec1Val").value = "1250 m³/hr";
+      document.getElementById("spec2Label").value = "Controls";
+      document.getElementById("spec2Val").value = "Touch / Wave Sensor";
+      document.getElementById("spec3Label").value = "Warranty";
+      document.getElementById("spec3Val").value = "5 Years Official";
+
+      document.getElementById("productModal").classList.remove("hidden");
+      document.getElementById("productModal").classList.add("flex");
+    }
+
+    function openEditProductModal(id) {
+      const p = ProductsStore.getById(id);
+      if (!p) return;
+
+      document.getElementById("modalTitle").textContent = "Edit Appliance Details";
+      document.getElementById("productId").value = p.id;
+      document.getElementById("formTitle").value = p.title || "";
+      document.getElementById("formCategory").value = p.category || "Chimneys";
+      document.getElementById("formSubcategory").value = p.subcategory || "";
+      document.getElementById("formBrand").value = p.brand || "";
+      document.getElementById("formModel").value = p.model || "";
+      document.getElementById("formTag").value = p.tag || "";
+      document.getElementById("formPrice").value = p.price || "Contact showroom for price";
+      document.getElementById("formStatus").value = p.status || "Published";
+      document.getElementById("formImageUrl").value = p.image || "";
+      document.getElementById("formDescription").value = p.description || "";
+      updateImagePreview(p.image);
+      document.getElementById("duplicateModelWarning").classList.add("hidden");
+      document.getElementById("saveProductBtn").disabled = false;
+
+      const specs = p.specs || [];
+      document.getElementById("spec1Label").value = specs[0]?.label || "";
+      document.getElementById("spec1Val").value = specs[0]?.value || "";
+      document.getElementById("spec2Label").value = specs[1]?.label || "";
+      document.getElementById("spec2Val").value = specs[1]?.value || "";
+      document.getElementById("spec3Label").value = specs[2]?.label || "";
+      document.getElementById("spec3Val").value = specs[2]?.value || "";
+
+      document.getElementById("productModal").classList.remove("hidden");
+      document.getElementById("productModal").classList.add("flex");
+    }
+
+    function closeProductModal() {
+      document.getElementById("productModal").classList.add("hidden");
+      document.getElementById("productModal").classList.remove("flex");
+    }
+
+    function checkDuplicateModel() {
+      const id = document.getElementById("productId").value;
+      const model = document.getElementById("formModel").value.trim();
+      const warning = document.getElementById("duplicateModelWarning");
+      const saveBtn = document.getElementById("saveProductBtn");
+      const isDup = model && ProductsStore.isDuplicateModel(model, id || undefined);
+      warning.classList.toggle("hidden", !isDup);
+      saveBtn.disabled = !!isDup;
+      saveBtn.classList.toggle("opacity-50", isDup);
+      saveBtn.classList.toggle("cursor-not-allowed", isDup);
+      return isDup;
+    }
+
+    function handleProductFormSubmit(e) {
+      e.preventDefault();
+
+      const id = document.getElementById("productId").value;
+
+      // Hard block: a duplicate model number anywhere in the catalog (any
+      // category) refuses the save outright -- no silent overwrite, no
+      // "just a warning".
+      if (checkDuplicateModel()) {
+        showToast("Cannot save: this model number already exists on another product.", true);
+        return;
+      }
+
+      const tag = document.getElementById("formTag").value.trim();
+      const KNOWN_BADGE_COLORS = {
+        "Bestseller": "bg-primary text-white",
+        "New Arrival": "bg-secondary text-white",
+        "Flagship": "bg-inverse-surface text-white",
+        "Showroom Pick": "bg-surface-container-high text-primary",
+        "Special Offer": "bg-rose-600 text-white"
+      };
+      const tagColor = KNOWN_BADGE_COLORS[tag] || "bg-surface-container-high text-primary";
+
+      const specs = [];
+      const s1L = document.getElementById("spec1Label").value.trim();
+      const s1V = document.getElementById("spec1Val").value.trim();
+      if (s1L && s1V) specs.push({ label: s1L, value: s1V });
+
+      const s2L = document.getElementById("spec2Label").value.trim();
+      const s2V = document.getElementById("spec2Val").value.trim();
+      if (s2L && s2V) specs.push({ label: s2L, value: s2V });
+
+      const s3L = document.getElementById("spec3Label").value.trim();
+      const s3V = document.getElementById("spec3Val").value.trim();
+      if (s3L && s3V) specs.push({ label: s3L, value: s3V });
+
+      const payload = {
+        title: document.getElementById("formTitle").value.trim(),
+        category: document.getElementById("formCategory").value,
+        subcategory: document.getElementById("formSubcategory").value.trim(),
+        brand: document.getElementById("formBrand").value.trim() || "GLEN APPLIANCES",
+        model: document.getElementById("formModel").value.trim(),
+        tag: tag,
+        tagColor: tagColor,
+        price: document.getElementById("formPrice").value.trim() || "Contact showroom for price",
+        status: document.getElementById("formStatus").value,
+        image: document.getElementById("formImageUrl").value.trim() || ProductsStore.IMAGE_PRESETS[0].url,
+        description: document.getElementById("formDescription").value.trim(),
+        specs: specs.length ? specs : [
+          { label: "Warranty", value: "Official Store Warranty" },
+          { label: "Grade", value: "Showroom Certified" }
+        ]
+      };
+
+      if (id) {
+        ProductsStore.update(id, payload);
+        showToast("Appliance updated successfully!");
+      } else {
+        ProductsStore.add(payload);
+        showToast("New appliance added and published!");
+      }
+
+      closeProductModal();
+      renderCategoryChips();
+      renderTable();
+    }
+
+  </script>
+  </div>
+
+  <!-- Admin Authentication Prototype Script -->
+  <script>
+    const AUTH_SESSION_KEY = "mm_admin_authenticated";
+    const PROTO_USER = "mmkitchenworld@admin.com";
+    const PROTO_PASS = "admin@mm123";
+
+    function checkAuthStatus() {
+      const isAuth = sessionStorage.getItem(AUTH_SESSION_KEY) === "true";
+      const loginBox = document.getElementById("adminLoginContainer");
+      const appBox = document.getElementById("adminAppContainer");
+
+      if (isAuth) {
+        if (loginBox) loginBox.classList.add("hidden");
+        if (appBox) {
+          appBox.classList.remove("hidden");
+          appBox.classList.add("flex");
+        }
+      } else {
+        if (appBox) {
+          appBox.classList.add("hidden");
+          appBox.classList.remove("flex");
+        }
+        if (loginBox) {
+          loginBox.classList.remove("hidden");
+          const userField = document.getElementById("adminUsername");
+          const passField = document.getElementById("adminPassword");
+          if (userField) userField.value = "";
+          if (passField) passField.value = "";
+        }
+      }
+    }
+
+    function handleLoginSubmit(e) {
+      e.preventDefault();
+      const userField = document.getElementById("adminUsername");
+      const passField = document.getElementById("adminPassword");
+      const errBox = document.getElementById("loginErrorMessage");
+      const errText = document.getElementById("loginErrorText");
+
+      const enteredUser = (userField ? userField.value : "").trim();
+      const enteredPass = passField ? passField.value : "";
+
+      if (enteredUser === PROTO_USER && enteredPass === PROTO_PASS) {
+        if (errBox) errBox.classList.add("hidden");
+        sessionStorage.setItem(AUTH_SESSION_KEY, "true");
+        checkAuthStatus();
+        showToast("Logged in successfully!");
+      } else {
+        if (errBox) {
+          errBox.classList.remove("hidden");
+          if (enteredUser !== PROTO_USER) {
+            errText.textContent = "Unrecognized username. Please enter the valid admin email.";
+          } else {
+            errText.textContent = "Incorrect password. Please verify your credentials.";
+          }
+        }
+      }
+    }
+
+    function handleLogout() {
+      sessionStorage.removeItem(AUTH_SESSION_KEY);
+      const userField = document.getElementById("adminUsername");
+      const passField = document.getElementById("adminPassword");
+      if (userField) userField.value = "";
+      if (passField) passField.value = "";
+      const errBox = document.getElementById("loginErrorMessage");
+      if (errBox) errBox.classList.add("hidden");
+      checkAuthStatus();
+      showToast("Logged out of Admin Portal.");
+    }
+
+    function togglePasswordVisibility() {
+      const passField = document.getElementById("adminPassword");
+      const icon = document.getElementById("togglePasswordIcon");
+      const label = document.getElementById("togglePasswordText");
+      if (!passField) return;
+
+      if (passField.type === "password") {
+        passField.type = "text";
+        if (icon) icon.textContent = "visibility_off";
+        if (label) label.textContent = "Hide";
+      } else {
+        passField.type = "password";
+        if (icon) icon.textContent = "visibility";
+        if (label) label.textContent = "Show";
+      }
+    }
+
+    // Run auth check immediately on DOM content loaded
+    window.addEventListener("DOMContentLoaded", () => {
+      checkAuthStatus();
+    });
+  </script>
+
+</body>
+</html>

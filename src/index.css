@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Visible keyboard focus everywhere (mouse clicks don't trigger it). */
+a:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible,
+summary:focus-visible {
+  outline: 2px solid #0878E8;
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+
+section[id] {
+  scroll-margin-top: 85px;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.custom-scroll::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+.custom-scroll::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+/* Section eyebrow: small accent line before the label. */
+.section-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.section-eyebrow::before {
+  content: "";
+  width: 28px;
+  height: 3px;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, #0878e8, #7fb8ff);
+}
+.section-eyebrow.is-centered {
+  justify-content: center;
+}
+
+/* Gentle floating motion for hero cards. */
+@keyframes floaty {
+  0%, 100% { transform: translateY(0) rotate(var(--tilt, 0deg)); }
+  50% { transform: translateY(-8px) rotate(var(--tilt, 0deg)); }
+}
+.floaty {
+  animation: floaty 6s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .floaty { animation: none; }
+}
+
+/* Soft shine across a primary button on hover. */
+.btn-shine {
+  position: relative;
+  overflow: hidden;
+}
+.btn-shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.35) 50%, transparent 65%);
+  transform: translateX(-120%);
+  transition: transform 0.7s ease;
+}
+.btn-shine:hover::after {
+  transform: translateX(120%);
+}

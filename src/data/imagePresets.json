@@ -1,0 +1,62 @@
+[
+  {
+    "label": "Auto Clean Chimneys — CH 6052 DI BL AC",
+    "category": "Chimneys",
+    "url": "assets/products/chimneys/chimneys-ch-6052-di-bl-ac.webp"
+  },
+  {
+    "label": "Auto Clean Chimneys — CH 6052 HSR BL AC",
+    "category": "Chimneys",
+    "url": "assets/products/chimneys/chimneys-ch-6052-hsr-bl-ac.webp"
+  },
+  {
+    "label": "Built-in Ovens — BO 651 MR+TURBO BLACK",
+    "category": "Ovens",
+    "url": "assets/products/ovens/ovens-bo-651-mr-turbo-black.webp"
+  },
+  {
+    "label": "Built-in Ovens — BO 652 TOUCH MR+TURBO BLACK",
+    "category": "Ovens",
+    "url": "assets/products/ovens/ovens-bo-652-touch-mr-turbo-black.webp"
+  },
+  {
+    "label": "Built-in Microwaves — MO 671",
+    "category": "Microwaves",
+    "url": "assets/products/microwaves/microwaves-mo-671.webp"
+  },
+  {
+    "label": "Built-in Microwaves — MO 674 BLACK",
+    "category": "Microwaves",
+    "url": "assets/products/microwaves/microwaves-mo-674-black.webp"
+  },
+  {
+    "label": "Cooking Range — CR 2011 SS TR",
+    "category": "Gas Stoves",
+    "url": "assets/products/gas-stoves/gas-stoves-cr-2011-ss-tr.webp"
+  },
+  {
+    "label": "Cooking Range — CR 2012 PL TR CB AI",
+    "category": "Gas Stoves",
+    "url": "assets/products/gas-stoves/gas-stoves-cr-2012-pl-tr-cb-ai.webp"
+  },
+  {
+    "label": "Built-in Induction Hobs — BH 1014 IC 4Z",
+    "category": "Hobs",
+    "url": "assets/products/hobs/hobs-bh-1014-ic-4z.webp"
+  },
+  {
+    "label": "Built-in Induction Hobs — BH 1015 IC 2Z",
+    "category": "Hobs",
+    "url": "assets/products/hobs/hobs-bh-1015-ic-2z.webp"
+  },
+  {
+    "label": "Free-standing — DW 5201 FS",
+    "category": "Dishwashers",
+    "url": "assets/products/dishwashers/dishwashers-dw-5201-fs.webp"
+  },
+  {
+    "label": "Semi Built-in — DW 7735 M",
+    "category": "Dishwashers",
+    "url": "assets/products/dishwashers/dishwashers-dw-7735-m.webp"
+  }
+]
