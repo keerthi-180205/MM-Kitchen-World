@@ -16,7 +16,7 @@ All four have a free plan. Screens and menu names change from time to time, so i
 - **Render free sleeps after about 15 minutes without visitors.** The next visitor waits up to about a minute for the API to wake. The website itself opens instantly; only prices/offers, call-back requests and the admin wait. The site shows the built-in catalogue meanwhile and pings the API as soon as a page opens, so most visitors never notice.
 - Render's free disk is wiped on every restart, which is why the database lives on Turso and photos on Cloudinary. Nothing important is stored on Render.
 - Turso and Cloudinary free plans are far above what one showroom catalogue needs. Check each provider's current limits before you rely on this.
-- If the owner later wants zero wake-up delay, Render's cheapest paid plan removes it. Nothing else has to change.
+- The wake-up delay is avoided by the free uptime monitor in step 3. If that ever stops working, Render's cheapest paid plan removes sleeping. Nothing else has to change.
 
 ## 0. Before you start
 
@@ -67,6 +67,16 @@ Keep it for step 3. Uploaded photos are automatically served in a compressed, fa
 3. Deploy. When it is live, open `https://<your-service>.onrender.com/api/health`. You should see `{"status":"ok", ...}`. Note this address, it is `API_URL` below.
 
 If a browser later complains about CORS, the address in the browser's address bar is missing from `ALLOWED_ORIGINS`.
+
+### Keep the API awake (stops the slow first visit)
+
+Render's free API sleeps after about 15 minutes with no visitors. A free monitor that opens `/api/health` every 5 minutes keeps it awake.
+
+1. Sign up at uptimerobot.com (free plan).
+2. **Add New Monitor** → type **HTTP(s)** → URL `https://<your-service>.onrender.com/api/health` → interval **5 minutes** → create.
+3. Wait 20 minutes, then open the admin. It should respond at once.
+
+Render's free plan allows about 750 running hours a month, which covers one service running all month. Do not run a second free service on the same Render account. Free-plan terms can change, so recheck Render's terms now and then. If keeping it awake ever stops working, Render's cheapest paid plan removes sleeping entirely and nothing else needs to change.
 
 ## 4. Website: Cloudflare Pages
 
@@ -127,6 +137,7 @@ TURSO_DATABASE_URL=libsql://... TURSO_AUTH_TOKEN=... npm run migrate:turso -- --
 ## 8. Final checklist
 
 - [ ] `https://<api>/api/health` returns ok
+- [ ] The UptimeRobot monitor shows "Up"
 - [ ] Website opens on your domain with HTTPS, and on the `www` and bare addresses
 - [ ] Admin login works; a test product can be added with a photo
 - [ ] The "Request a call back" form on a product page shows up under Admin → Call-backs
