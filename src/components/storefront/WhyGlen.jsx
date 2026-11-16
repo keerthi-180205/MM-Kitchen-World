@@ -68,6 +68,21 @@ export default function WhyGlen() {
               MM Kitchen World is an authorised Glen Exclusive Store. Every appliance sold comes with an authentic manufacturer warranty, genuine spare parts, and certified technician installation support.
             </p>
           </div>
+
+          {/* 3D Animated Brand Highlight Block */}
+          <div className="hidden lg:flex flex-col items-center justify-center p-2.5 px-4 rounded-2xl bg-gradient-to-br from-[#EAF4FF] via-white to-[#F0F7FF] border border-primary/20 shadow-sm shrink-0 group hover:shadow-md hover:border-primary/50 transition-all">
+            <div className="w-16 h-16 shrink-0 animate-float-3d flex items-center justify-center">
+              <img
+                src={assetUrl("assets/brand/mm-3d-emblem-transparent.webp")}
+                alt="MM Kitchen World 3D Emblem"
+                className="w-16 h-16 max-h-16 max-w-16 object-contain group-hover:scale-110 transition-transform duration-300"
+              />
+            </div>
+            <span className="text-[10px] font-extrabold uppercase tracking-wider text-primary mt-1 text-center">
+              MM Kitchen World
+            </span>
+          </div>
+
           <a
             href="#showroom"
             className="shrink-0 px-5 py-2.5 rounded-lg border border-primary text-primary hover:bg-primary hover:text-white transition-colors font-label-md text-sm font-semibold whitespace-nowrap"

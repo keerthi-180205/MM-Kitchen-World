@@ -86,8 +86,26 @@ section[id] {
 .floaty {
   animation: floaty 6s ease-in-out infinite;
 }
+
+/* 3D Levitation float with dynamic shadow for brand emblem */
+@keyframes float3d {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+    filter: drop-shadow(0 10px 18px rgba(8, 120, 232, 0.20));
+  }
+  50% {
+    transform: translateY(-9px) rotate(1.5deg);
+    filter: drop-shadow(0 20px 26px rgba(8, 120, 232, 0.32));
+  }
+}
+.animate-float-3d {
+  animation: float3d 4.5s ease-in-out infinite;
+  will-change: transform, filter;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .floaty { animation: none; }
+  .floaty,
+  .animate-float-3d { animation: none !important; }
 }
 
 /* Soft shine across a primary button on hover. */

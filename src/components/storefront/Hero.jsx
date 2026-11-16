@@ -20,9 +20,18 @@ export default function Hero() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           {/* Left editorial copy */}
           <div className="lg:col-span-7 flex flex-col justify-center">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-container-low border border-outline-variant w-fit mb-6">
-              <span className="w-2 h-2 rounded-full bg-primary-container"></span>
-              <span className="font-label-sm text-label-sm text-primary tracking-widest uppercase">BANGALORE'S GLEN EXCLUSIVE STORE · BASAVESHWARA NAGAR</span>
+            <div className="flex items-center gap-3.5 mb-6">
+              <div className="w-14 h-14 sm:w-16 sm:h-16 shrink-0 animate-float-3d">
+                <img
+                  src={assetUrl("assets/brand/mm-3d-emblem-transparent.webp")}
+                  alt="MM Kitchen World 3D Brand Emblem"
+                  className="w-full h-full object-contain hover:scale-110 transition-transform duration-300"
+                />
+              </div>
+              <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-surface-container-low border border-outline-variant w-fit shadow-xs">
+                <span className="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
+                <span className="font-label-sm text-label-sm text-primary font-bold tracking-widest uppercase">BANGALORE'S GLEN EXCLUSIVE STORE · BASAVESHWARA NAGAR</span>
+              </div>
             </div>
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[50px] font-extrabold text-slate-900 tracking-tight leading-[1.14] mb-3">
               Your Dream Kitchen <br />

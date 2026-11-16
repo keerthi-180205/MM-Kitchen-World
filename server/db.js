@@ -162,7 +162,7 @@ export function seedAdmin() {
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(adminPassword, salt);
     db.prepare(`
-      INSERT INTO users (id, email, password_hash, role)
+      INSERT OR REPLACE INTO users (id, email, password_hash, role)
       VALUES (?, ?, ?, 'admin')
     `).run("usr-admin-1", adminEmail, hash);
     console.log(`[Database] Seeded initial admin account: ${adminEmail}`);

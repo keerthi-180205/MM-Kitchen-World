@@ -27,15 +27,17 @@ async function runTests() {
 
     // 3. Auth login with valid credentials
     console.log("Test 3: Admin login with valid credentials...");
+    const testEmail = (process.env.ADMIN_EMAIL || "mmkitchenworld@admin.com").trim().toLowerCase();
+    const testPassword = process.env.ADMIN_PASSWORD || "admin@mm123";
     const loginRes = await fetch(`${BASE}/api/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: "mmkitchenworld@admin.com", password: "admin@mm123" }),
+      body: JSON.stringify({ email: testEmail, password: testPassword }),
     });
     assert.strictEqual(loginRes.status, 200);
     const loginData = await loginRes.json();
     assert.ok(loginData.token, "Expected JWT token");
-    assert.strictEqual(loginData.user.email, "mmkitchenworld@admin.com");
+    assert.strictEqual(loginData.user.email, testEmail);
     console.log("✓ Valid login passed with JWT token generated");
 
     const token = loginData.token;
@@ -45,7 +47,7 @@ async function runTests() {
     const badLoginRes = await fetch(`${BASE}/api/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: "mmkitchenworld@admin.com", password: "wrongpassword" }),
+      body: JSON.stringify({ email: testEmail, password: "wrongpassword" }),
     });
     assert.strictEqual(badLoginRes.status, 401);
     console.log("✓ Invalid login correctly rejected with 401");
@@ -57,7 +59,7 @@ async function runTests() {
     });
     assert.strictEqual(meRes.status, 200);
     const meData = await meRes.json();
-    assert.strictEqual(meData.user.email, "mmkitchenworld@admin.com");
+    assert.strictEqual(meData.user.email, testEmail);
     console.log("✓ /api/auth/me session validated");
 
     // 6. Create product via POST /api/products
