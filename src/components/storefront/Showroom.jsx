@@ -45,7 +45,7 @@ export default function Showroom() {
             <div className="relative rounded-2xl overflow-hidden border border-outline-variant bg-surface-container-lowest shadow-md">
               <img
                 key={current.src}
-                className="w-full h-[280px] sm:h-[380px] lg:h-[460px] object-cover transition-opacity duration-300"
+                className="w-full h-auto aspect-[16/9] object-cover transition-opacity duration-300"
                 alt={current.caption}
                 src={assetUrl(current.src)}
                 loading="lazy"

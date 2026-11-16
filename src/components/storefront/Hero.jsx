@@ -6,6 +6,8 @@ const TRUST_BADGES = [
   { icon: "verified", title: "Expert Guidance", text: "Find appliances that suit your lifestyle" },
   { icon: "shield", title: "Authorised Exclusive Store", text: "GLEN manufacturer warranty" },
   { icon: "handyman", title: "Installation Support", text: "Doorstep fitting & site visits" },
+  { icon: "home_repair_service", title: "Site Visit Service", text: "Kitchen layout & ducting check" },
+  { icon: "videocam", title: "Online Consultancy", text: "1-on-1 video guidance & demo" },
 ];
 
 export default function Hero() {
@@ -60,20 +62,6 @@ export default function Hero() {
                 <span>Visit Our Showroom</span>
               </a>
             </div>
-            {/* Trust badges */}
-            <div className="pt-8 border-t border-outline-variant grid grid-cols-1 sm:grid-cols-3 gap-4">
-              {TRUST_BADGES.map((b) => (
-                <div key={b.title} className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-white shadow-sm border border-outline-variant flex items-center justify-center text-primary">
-                    <Icon name={b.icon} className="text-lg" />
-                  </div>
-                  <div>
-                    <p className="font-label-md text-label-md text-on-surface font-bold">{b.title}</p>
-                    <p className="font-body-sm text-body-sm text-on-surface-variant">{b.text}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
 
           {/* Right hero visual */}
@@ -123,7 +111,7 @@ export default function Hero() {
             {/* 100% Unobstructed Full Showroom Photo (inner_image) */}
             <div className="relative rounded-3xl overflow-hidden border border-outline-variant/80 bg-surface-container-lowest shadow-xl shadow-slate-900/10">
               <img
-                className="w-full h-[280px] sm:h-[360px] lg:h-[440px] object-cover"
+                className="w-full h-auto aspect-[16/9] object-cover"
                 alt="MM Kitchen World - GLEN Exclusive Showroom Interior with live consultation counter, built-in appliances, and display counters"
                 src={assetUrl("assets/hero/hero-inner.webp")}
                 loading="eager"
@@ -152,6 +140,21 @@ export default function Hero() {
                 <Icon name="arrow_outward" className="text-xl" />
               </a>
             </div>
+          </div>
+
+          {/* 5 Service & Trust Highlights (Text + Icon only, zero buttons) spanning directly below */}
+          <div className="lg:col-span-12 pt-8 border-t border-outline-variant grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 xl:gap-5">
+            {TRUST_BADGES.map((b) => (
+              <div key={b.title} className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-white shadow-xs border border-outline-variant flex items-center justify-center text-primary shrink-0">
+                  <Icon name={b.icon} className="text-xl" />
+                </div>
+                <div className="min-w-0">
+                  <p className="font-label-md text-xs sm:text-sm text-on-surface font-bold leading-tight">{b.title}</p>
+                  <p className="font-body-sm text-[11px] sm:text-xs text-on-surface-variant leading-snug mt-0.5">{b.text}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
