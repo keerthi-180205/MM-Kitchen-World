@@ -5,7 +5,6 @@ import ProductsTable from "./ProductsTable";
 import ProductFormModal from "./ProductFormModal";
 import BulkEditModal from "./BulkEditModal";
 import OffersPanel from "./OffersPanel";
-import LeadsPanel from "./LeadsPanel";
 import EnquiriesPanel from "./EnquiriesPanel";
 import AccountPanel from "./AccountPanel";
 import { api } from "../../lib/api";
@@ -33,14 +32,6 @@ export default function Dashboard({ onLogout, showToast }) {
   const [categoryFilter, setCategoryFilter] = useState("ALL");
   const [refreshing, setRefreshing] = useState(false);
   const [tab, setTab] = useState("products");
-  const [newLeads, setNewLeads] = useState(0);
-
-  // Badge: how many call-back requests are still marked "New".
-  useEffect(() => {
-    api("/api/leads", { auth: true })
-      .then((list) => setNewLeads(list.filter((l) => l.status === "New").length))
-      .catch(() => {});
-  }, []);
   // null = closed, { product: null } = adding, { product } = editing
   const [formState, setFormState] = useState(null);
   const [bulkOpen, setBulkOpen] = useState(false);
@@ -163,9 +154,8 @@ export default function Dashboard({ onLogout, showToast }) {
     ) : null;
 
   return (
-    <AdminLayout tab={tab} onSelectTab={setTab} newLeads={newLeads} onLogout={onLogout} actions={actions}>
+    <AdminLayout tab={tab} onSelectTab={setTab} onLogout={onLogout} actions={actions}>
       {tab === "offers" && <OffersPanel showToast={showToast} />}
-      {tab === "leads" && <LeadsPanel showToast={showToast} onCount={setNewLeads} />}
       {tab === "enquiries" && <EnquiriesPanel showToast={showToast} />}
       {tab === "account" && <AccountPanel showToast={showToast} />}
 

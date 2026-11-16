@@ -20,7 +20,7 @@ const FAQS = [
   },
   {
     q: "How do I find out the price?",
-    a: "Prices change, so we share today's store price on request. Tap Enquire on any product to message us on WhatsApp, or request a call back. Models with a current offer show the offer price right on the card.",
+    a: "Prices change, so we share today's store price on request. Tap Enquire on any product to message us on WhatsApp, or call the showroom. Models with a current offer show the offer price right on the card.",
   },
   {
     q: "Can I see the appliances before buying?",
@@ -77,7 +77,7 @@ export default function Faq() {
           <a href={whatsappUrl("Hello MM Kitchen World, I have a question.")} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-3 rounded-lg bg-tertiary text-white font-bold shadow-sm hover:brightness-105">
             <span className="[&_svg]:w-5 [&_svg]:h-5"><WhatsAppIcon /></span> Chat on WhatsApp
           </a>
-          <Link to="/#callback" className="inline-flex items-center gap-2 px-5 py-3 rounded-lg border border-outline-variant text-primary font-bold hover:bg-white">Request a call back</Link>
+          <a href="tel:+919743233729" className="inline-flex items-center gap-2 px-5 py-3 rounded-lg border border-outline-variant text-primary font-bold hover:bg-white">Call +91 97432 33729</a>
         </div>
       </div>
     </InfoPage>

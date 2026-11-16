@@ -3,7 +3,6 @@ import { Link, useParams } from "react-router-dom";
 import Icon from "../components/Icon";
 import { WhatsAppIcon } from "../components/BrandIcons";
 import ProductCard from "../components/storefront/ProductCard";
-import CallbackForm from "../components/storefront/CallbackForm";
 import { CATALOGUE_PDF_BY_CATEGORY, PHONE_TEL, assetUrl, productEnquiryUrl, whatsappUrl } from "../constants";
 import { useShop } from "../context/ShopContext";
 import { useProducts } from "../hooks/useProducts";
@@ -251,11 +250,6 @@ export default function ProductPage() {
                   <span>{shareNote || "Share"}</span>
                 </button>
               </div>
-            </div>
-
-            <div className="mt-4 p-4 sm:p-5 rounded-xl bg-white border border-slate-200/90 shadow-2xs">
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-2">Request a call back</span>
-              <CallbackForm productId={p.id} productTitle={p.title} source="product-page" />
             </div>
 
             {/* Description / Summary Box (Fills right side neatly) */}

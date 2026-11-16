@@ -18,20 +18,16 @@ export function Privacy() {
 
       <h2 className={h2}>What we collect</h2>
       <ul className={ul}>
-        <li><strong>Call-back requests.</strong> If you use "Request a Call Back", we store the name and mobile number you enter, your optional message and, if relevant, the product you were viewing.</li>
         <li><strong>Enquiry taps.</strong> When you tap a WhatsApp or enquiry button, we record which product and button it was, without your name, number or any other personal detail.</li>
         <li><strong>Your saved list and comparison.</strong> "My List" and "Compare" are saved in your own browser and are not sent to us until you choose to message us.</li>
         <li><strong>Website analytics.</strong> If enabled, we may use Google Analytics with IP anonymisation to understand which pages are visited. This uses cookies set by Google.</li>
       </ul>
 
       <h2 className={h2}>How we use it</h2>
-      <p className={p}>We use call-back details only to contact you about your request, and enquiry and analytics data only to improve the website and the products we stock. We do not sell your information.</p>
+      <p className={p}>We use enquiry and analytics data only to improve the website and the products we stock. We do not sell your information.</p>
 
       <h2 className={h2}>WhatsApp and third parties</h2>
       <p className={p}>When you message us on WhatsApp, the conversation is handled by WhatsApp under its own terms and privacy policy. Links to Google Maps, Instagram and our Google Business Profile open services run by those companies.</p>
-
-      <h2 className={h2}>How long we keep it</h2>
-      <p className={p}>We keep call-back requests for as long as needed to respond to you and to keep a record of enquiries, and delete them on request.</p>
 
       <h2 className={h2}>Your choices</h2>
       <p className={p}>You can ask us to see, correct or delete the information we hold about you by contacting us using the details above.</p>
@@ -59,7 +55,7 @@ export function Terms() {
       </ul>
 
       <h2 className={h2}>Enquiries are not orders</h2>
-      <p className={p}>Messaging us, saving a product to My List or requesting a call back is an enquiry only. A sale is made only when we confirm the product, price and terms with you.</p>
+      <p className={p}>Messaging us, saving a product to My List or calling us is an enquiry only. A sale is made only when we confirm the product, price and terms with you.</p>
 
       <h2 className={h2}>Warranty</h2>
       <p className={p}>Warranty on GLEN products is provided by the manufacturer on its own terms. Ask our team for the warranty details for your model.</p>

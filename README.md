@@ -58,7 +58,6 @@ A modern, full-stack showroom web application and vendor administration console 
 │       ├── auth.js            # Admin authentication & token verification
 │       ├── products.js        # Product CRUD, category filters, CSV bulk sync, catalog reset
 │       ├── offers.js          # Scheduled promotional banner endpoints
-│       ├── leads.js           # Consultation enquiry records
 │       ├── enquiries.js       # Product interest analytics
 │       └── upload.js          # Appliance photo uploads via Multer
 ├── src/

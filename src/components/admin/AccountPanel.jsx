@@ -15,14 +15,13 @@ export default function AccountPanel({ showToast }) {
   async function backup() {
     setBackingUp(true);
     try {
-      const [products, offers, leads] = await Promise.all([
+      const [products, offers] = await Promise.all([
         api("/api/products", { auth: true }),
         api("/api/offers/all", { auth: true }),
-        api("/api/leads", { auth: true }),
       ]);
       const date = new Date().toISOString().slice(0, 10);
-      downloadFile(`mm-kitchen-backup-${date}.json`, JSON.stringify({ exportedAt: new Date().toISOString(), products, offers, leads }, null, 2), "application/json");
-      showToast(`Backup saved: ${products.length} products, ${offers.length} offers, ${leads.length} call-back requests.`);
+      downloadFile(`mm-kitchen-backup-${date}.json`, JSON.stringify({ exportedAt: new Date().toISOString(), products, offers }, null, 2), "application/json");
+      showToast(`Backup saved: ${products.length} products, ${offers.length} offers.`);
     } catch (err) {
       showToast(err.message, true);
     } finally {
@@ -58,7 +57,7 @@ export default function AccountPanel({ showToast }) {
       </form>
       <div className="pt-4">
         <h2 className="text-lg font-bold text-slate-900">Backup</h2>
-        <p className="text-sm text-slate-500 mb-3">Download a copy of your products, offers and call-back requests. Keep it somewhere safe, for example in your email or Google Drive.</p>
+        <p className="text-sm text-slate-500 mb-3">Download a copy of your products and offers. Keep it somewhere safe, for example in your email or Google Drive.</p>
         <button onClick={backup} disabled={backingUp} className="inline-flex items-center gap-2 h-11 px-5 rounded-xl border border-slate-300 bg-white text-sm font-semibold text-slate-700 hover:border-primary hover:text-primary disabled:opacity-60 transition-colors">
           <Icon name="cloud_download" className="text-xl" /> {backingUp ? "Preparing…" : "Download backup"}
         </button>

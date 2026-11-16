@@ -14,7 +14,6 @@ const NAV_GROUPS = [
   {
     label: "Customers",
     items: [
-      { key: "leads", label: "Call-backs", icon: "call" },
       { key: "enquiries", label: "Enquiries", icon: "query_stats" },
     ],
   },
@@ -27,7 +26,6 @@ const NAV_GROUPS = [
 export const PAGE_TITLES = {
   products: { title: "Products", subtitle: "Manage the appliances shown on your website." },
   offers: { title: "Offers", subtitle: "Banners and announcements for your customers." },
-  leads: { title: "Call-back requests", subtitle: "Customers who asked you to call them." },
   enquiries: { title: "Enquiries", subtitle: "What customers are asking about." },
   account: { title: "Account", subtitle: "Keep your admin login secure." },
 };
@@ -46,7 +44,7 @@ function Brand() {
   );
 }
 
-function NavList({ tab, onSelect, newLeads }) {
+function NavList({ tab, onSelect }) {
   return (
     <nav className="space-y-6" aria-label="Admin sections">
       {NAV_GROUPS.map((group) => (
@@ -68,9 +66,6 @@ function NavList({ tab, onSelect, newLeads }) {
                   >
                     <Icon name={item.icon} className="text-xl" fill={active} />
                     <span className="flex-1 text-left">{item.label}</span>
-                    {item.key === "leads" && newLeads > 0 && (
-                      <span className={`min-w-[22px] h-[22px] px-1.5 rounded-full text-[11px] font-bold flex items-center justify-center ${active ? "bg-rose-600 text-white" : "bg-rose-500 text-white"}`}>{newLeads}</span>
-                    )}
                   </button>
                 </li>
               );
@@ -96,7 +91,7 @@ function SidebarFooter({ onLogout }) {
 }
 
 /** Dashboard shell: sidebar on large screens, slide-over menu on small ones, page header with actions. */
-export default function AdminLayout({ tab, onSelectTab, newLeads, onLogout, actions, children }) {
+export default function AdminLayout({ tab, onSelectTab, onLogout, actions, children }) {
   const [drawer, setDrawer] = useState(false);
   const page = PAGE_TITLES[tab];
 
@@ -117,7 +112,7 @@ export default function AdminLayout({ tab, onSelectTab, newLeads, onLogout, acti
       {/* Desktop sidebar */}
       <aside className="hidden lg:flex fixed inset-y-0 left-0 w-64 flex-col bg-gradient-to-b from-[#0B4F9C] to-[#073B78] px-4 py-6 gap-8 overflow-y-auto">
         <Brand />
-        <div className="flex-1"><NavList tab={tab} onSelect={select} newLeads={newLeads} /></div>
+        <div className="flex-1"><NavList tab={tab} onSelect={select} /></div>
         <SidebarFooter onLogout={onLogout} />
       </aside>
 
@@ -129,9 +124,8 @@ export default function AdminLayout({ tab, onSelectTab, newLeads, onLogout, acti
           </div>
           <span className="text-sm font-bold tracking-wide text-white uppercase">MM Kitchen World</span>
         </div>
-        <button onClick={() => setDrawer(true)} aria-label="Open menu" className="relative w-10 h-10 rounded-lg text-white hover:bg-white/10 flex items-center justify-center">
+        <button onClick={() => setDrawer(true)} aria-label="Open menu" className="w-10 h-10 rounded-lg text-white hover:bg-white/10 flex items-center justify-center">
           <Icon name="menu" className="text-2xl" />
-          {newLeads > 0 && <span className="absolute top-1.5 right-1.5 w-2.5 h-2.5 rounded-full bg-rose-400 ring-2 ring-[#0B4F9C]"></span>}
         </button>
       </div>
 
@@ -143,7 +137,7 @@ export default function AdminLayout({ tab, onSelectTab, newLeads, onLogout, acti
               <Brand />
               <button onClick={() => setDrawer(false)} aria-label="Close menu" className="w-9 h-9 rounded-lg text-white/80 hover:bg-white/10 flex items-center justify-center"><Icon name="close" /></button>
             </div>
-            <div className="flex-1"><NavList tab={tab} onSelect={select} newLeads={newLeads} /></div>
+            <div className="flex-1"><NavList tab={tab} onSelect={select} /></div>
             <SidebarFooter onLogout={onLogout} />
           </aside>
         </div>

@@ -1,5 +1,5 @@
 /**
- * Integration test for offers, call-back requests, enquiry tracking, password change and SEO routes.
+ * Integration test for offers, enquiry tracking, password change and SEO routes.
  * Runs the Express app in-process against a throwaway SQLite database.
  *     node scripts/test_features.mjs
  */
@@ -74,27 +74,9 @@ await test("product offer price round-trips and can be cleared", async () => {
   assert.equal(cleared.json.offerPrice, null);
 });
 
-await test("leads: validation, honeypot, product link", async () => {
-  assert.equal((await call("POST", "/api/leads", { name: "", phone: "9876543210" })).status, 400);
-  assert.equal((await call("POST", "/api/leads", { name: "Ravi", phone: "12345" })).status, 400);
-  const ok = await call("POST", "/api/leads", { name: "Ravi", phone: "98765 43210", message: "Need a 90cm chimney", productId });
-  assert.equal(ok.status, 201);
-  assert.equal((await call("POST", "/api/leads", { name: "Bot", phone: "9876543210", website: "http://spam" })).status, 201); // silently dropped
-  const list = await call("GET", "/api/leads", null, token);
-  assert.equal(list.json.length, 1);
-  assert.equal(list.json[0].phone, "9876543210"); assert.ok(list.json[0].productTitle);
-  assert.equal((await call("GET", "/api/leads")).status, 401);
-});
-await test("leads: status update and delete", async () => {
-  const id = (await call("GET", "/api/leads", null, token)).json[0].id;
-  assert.equal((await call("PATCH", `/api/leads/${id}`, { status: "Contacted" }, token)).status, 200);
-  assert.equal((await call("PATCH", `/api/leads/${id}`, { status: "Hacked" }, token)).status, 400);
-  assert.equal((await call("DELETE", `/api/leads/${id}`, null, token)).status, 200);
-});
-await test("leads: rate limited per IP", async () => {
-  let last;
-  for (let i = 0; i < 8; i++) last = await call("POST", "/api/leads", { name: "Spam", phone: "9876543210" });
-  assert.equal(last.status, 429);
+await test("call-back requests are removed: the leads API no longer exists", async () => {
+  assert.equal((await call("POST", "/api/leads", { name: "Ravi", phone: "9876543210" })).status, 404);
+  assert.equal((await call("GET", "/api/leads", null, token)).status, 404);
 });
 
 await test("enquiries: tracked without personal data, summarised for admin", async () => {

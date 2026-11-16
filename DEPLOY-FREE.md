@@ -4,8 +4,8 @@ Setup used: **Cloudflare Pages** (website) + **Render** (API) + **Turso** (datab
 
 ```
 Customer's browser ──► Cloudflare Pages   www.yourdomain.com      (the React website, always fast)
-                  └──► Render             mm-kitchen-api.onrender.com   (the API: login, products, call-backs)
-                                            ├──► Turso        (the database: products, offers, leads)
+                  └──► Render             mm-kitchen-api.onrender.com   (the API: login, products, offers)
+                                            ├──► Turso        (the database: products, offers)
                                             └──► Cloudinary   (product photos uploaded in the admin)
 ```
 
@@ -13,7 +13,7 @@ All four have a free plan. Screens and menu names change from time to time, so i
 
 ## What to expect from the free plans
 
-- **Render free sleeps after about 15 minutes without visitors.** The next visitor waits up to about a minute for the API to wake. The website itself opens instantly; only prices/offers, call-back requests and the admin wait. The site shows the built-in catalogue meanwhile and pings the API as soon as a page opens, so most visitors never notice.
+- **Render free sleeps after about 15 minutes without visitors.** The next visitor waits up to about a minute for the API to wake. The website itself opens instantly; only prices, offers and the admin wait. The site shows the built-in catalogue meanwhile and pings the API as soon as a page opens, so most visitors never notice.
 - Render's free disk is wiped on every restart, which is why the database lives on Turso and photos on Cloudinary. Nothing important is stored on Render.
 - Turso and Cloudinary free plans are far above what one showroom catalogue needs. Check each provider's current limits before you rely on this.
 - The wake-up delay is avoided by the free uptime monitor in step 3. If that ever stops working, Render's cheapest paid plan removes sleeping. Nothing else has to change.
@@ -116,7 +116,7 @@ Optional, for a tidy API address: in Render add `api.yourdomain.com` as a custom
 
 When the domain is live, make sure `SITE_URL` and `ALLOWED_ORIGINS` on Render match it exactly, then use **Manual Deploy → Deploy latest commit** if you changed them.
 
-## 6. Move your existing products, offers and call-backs
+## 6. Move your existing products and offers
 
 The new database starts with the built-in GLEN catalogue. To copy what is in your local development database instead (price changes, offers, enquiries), run this on your computer once:
 
@@ -141,7 +141,7 @@ TURSO_DATABASE_URL=libsql://... TURSO_AUTH_TOKEN=... npm run migrate:turso -- --
 - [ ] The UptimeRobot monitor shows "Up"
 - [ ] Website opens on your domain with HTTPS, and on the `www` and bare addresses
 - [ ] Admin login works; a test product can be added with a photo
-- [ ] The "Request a call back" form on a product page shows up under Admin → Call-backs
+- [ ] The "Call Store" button on a product page opens the phone dialler, and "Enquire on WhatsApp" opens WhatsApp
 - [ ] `https://yourdomain.com/sitemap.xml` lists your products
 - [ ] Email on the domain still works (if used)
 - [ ] The default admin password was changed

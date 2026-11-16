@@ -10,7 +10,6 @@ import authRoutes from "./routes/auth.js";
 import productRoutes from "./routes/products.js";
 import uploadRoutes from "./routes/upload.js";
 import offerRoutes from "./routes/offers.js";
-import leadRoutes from "./routes/leads.js";
 import enquiryRoutes from "./routes/enquiries.js";
 import { db } from "./db.js";
 import { ALLOWED_ORIGINS, IS_PRODUCTION, SITE_URL } from "./config.js";
@@ -65,7 +64,6 @@ app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/offers", offerRoutes);
-app.use("/api/leads", leadRoutes);
 app.use("/api/enquiries", enquiryRoutes);
 
 // ---- SEO: robots.txt and sitemap.xml ---------------------------------------
