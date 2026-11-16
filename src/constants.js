@@ -36,22 +36,78 @@ export function assetUrl(path) {
   return import.meta.env.BASE_URL + resolved;
 }
 
+export const ORDERED_CATEGORIES = [
+  "Chimneys",
+  "Gas Stoves",
+  "Hobs",
+  "Water Heaters",
+  "Sinks",
+  "Ovens",
+  "Microwaves",
+  "Dishwashers",
+  "Cooking Range",
+  "Small Appliances",
+];
+
+export const CATEGORY_ALIASES = {
+  chimney: "Chimneys",
+  chimneys: "Chimneys",
+  stove: "Gas Stoves",
+  stoves: "Gas Stoves",
+  "gas stove": "Gas Stoves",
+  "gas stoves": "Gas Stoves",
+  hob: "Hobs",
+  hobs: "Hobs",
+  geyser: "Water Heaters",
+  geysers: "Water Heaters",
+  "geyser & water heater": "Water Heaters",
+  "geysers & water heaters": "Water Heaters",
+  "water heater": "Water Heaters",
+  "water heaters": "Water Heaters",
+  sink: "Sinks",
+  sinks: "Sinks",
+  oven: "Ovens",
+  ovens: "Ovens",
+  "micro oven": "Microwaves",
+  microwave: "Microwaves",
+  microwaves: "Microwaves",
+  dishwasher: "Dishwashers",
+  dishwashers: "Dishwashers",
+  "cooking range": "Cooking Range",
+  "small appliance": "Small Appliances",
+  "small appliances": "Small Appliances",
+};
+
+export function normalizeCategory(cat) {
+  if (!cat) return "ALL";
+  const key = cat.trim().toLowerCase();
+  return CATEGORY_ALIASES[key] || cat;
+}
+
 export const CATALOGUE_PDF_BY_CATEGORY = {
   Chimneys: "catalogues/MM-Kitchen-World-GLEN-Chimney-Catalogue.pdf",
-  Ovens: "catalogues/MM-Kitchen-World-GLEN-Oven-Microwave-Catalogue.pdf",
-  Microwaves: "catalogues/MM-Kitchen-World-GLEN-Oven-Microwave-Catalogue.pdf",
   "Gas Stoves": "catalogues/MM-Kitchen-World-GLEN-Gas-Stove-Catalogue.pdf",
   Hobs: "catalogues/MM-Kitchen-World-GLEN-Hob-Catalogue.pdf",
+  Geysers: "catalogues/MM-Kitchen-World-GLEN-Water-Heater-Catalogue.pdf",
+  Sinks: "catalogues/MM-Kitchen-World-GLEN-Sink-Catalogue.pdf",
+  Ovens: "catalogues/MM-Kitchen-World-GLEN-Oven-Microwave-Catalogue.pdf",
+  Microwaves: "catalogues/MM-Kitchen-World-GLEN-Oven-Microwave-Catalogue.pdf",
+  "Water Heaters": "catalogues/MM-Kitchen-World-GLEN-Water-Heater-Catalogue.pdf",
   Dishwashers: "catalogues/MM-Kitchen-World-GLEN-Dishwasher-Catalogue.pdf",
+  "Cooking Range": "catalogues/MM-Kitchen-World-GLEN-Gas-Stove-Catalogue.pdf",
+  "Small Appliances": "catalogues/MM-Kitchen-World-GLEN-Small-Appliances-Catalogue.pdf",
 };
 
 /** Every catalogue PDF, for the "download all" row shown when no category is selected. */
 export const CATALOGUE_DOWNLOADS = [
   { label: "Chimneys", file: CATALOGUE_PDF_BY_CATEGORY.Chimneys },
-  { label: "Ovens & Microwaves", file: CATALOGUE_PDF_BY_CATEGORY.Ovens },
   { label: "Gas Stoves", file: CATALOGUE_PDF_BY_CATEGORY["Gas Stoves"] },
   { label: "Hobs", file: CATALOGUE_PDF_BY_CATEGORY.Hobs },
+  { label: "Geysers & Water Heaters", file: CATALOGUE_PDF_BY_CATEGORY["Water Heaters"] },
+  { label: "Kitchen Sinks & Faucets", file: CATALOGUE_PDF_BY_CATEGORY.Sinks },
+  { label: "Built-in Ovens & Microwaves", file: CATALOGUE_PDF_BY_CATEGORY.Ovens },
   { label: "Dishwashers", file: CATALOGUE_PDF_BY_CATEGORY.Dishwashers },
+  { label: "Small Appliances", file: CATALOGUE_PDF_BY_CATEGORY["Small Appliances"] },
 ];
 
 export const productPath = (p) => `/product/${p.id}`;

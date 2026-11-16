@@ -9,7 +9,7 @@ import Showroom from "../components/storefront/Showroom";
 import ContactSection from "../components/storefront/ContactSection";
 import SpecialOffers from "../components/storefront/SpecialOffers";
 import Reveal from "../components/Reveal";
-import { GMB_URL } from "../constants";
+import { GMB_URL, normalizeCategory } from "../constants";
 import { useSeo } from "../hooks/useSeo";
 
 const LOCAL_BUSINESS = {
@@ -17,7 +17,7 @@ const LOCAL_BUSINESS = {
   "@type": "HomeGoodsStore",
   name: "MM Kitchen World",
   alternateName: "MM Kitchen World - GLEN Exclusive Store",
-  description: "GLEN Exclusive Store in Basaveshwara Nagar, Bangalore: chimneys, hobs, gas stoves, ovens, microwaves and dishwashers.",
+  description: "GLEN Exclusive Store in Basaveshwara Nagar, Bangalore: chimneys, gas stoves, hobs, geysers, sinks, ovens, microwaves, water heaters, dishwashers, cooking range and small appliances.",
   telephone: ["+91 97432 33729", "+91 96630 78780"],
   email: "mmkitchenworld.glen@gmail.com",
   address: {
@@ -42,32 +42,43 @@ const LOCAL_BUSINESS = {
 };
 
 export default function Storefront() {
-  const [params] = useSearchParams();
-  const [activeCategory, setActiveCategory] = useState(params.get("category") || "ALL");
+  const [params, setParams] = useSearchParams();
+  const rawRequested = params.get("category");
+  const [activeCategory, setActiveCategory] = useState(normalizeCategory(rawRequested) || "ALL");
 
-  // Deep links such as /?category=Chimneys#products (footer, guides) pick the category.
-  const requested = params.get("category");
+  // Keep active category in sync with URL search params
   useEffect(() => {
-    if (requested) setActiveCategory(requested);
-  }, [requested]);
+    setActiveCategory(normalizeCategory(rawRequested) || "ALL");
+  }, [rawRequested]);
+
+  const handleSelectCategory = (cat) => {
+    setActiveCategory(cat);
+    const newParams = new URLSearchParams(params);
+    if (cat === "ALL") {
+      newParams.delete("category");
+    } else {
+      newParams.set("category", cat);
+    }
+    setParams(newParams, { replace: true });
+  };
 
   useSeo({
     jsonLd: LOCAL_BUSINESS,
     description:
-      "Shop 209+ genuine GLEN chimneys, hobs, gas stoves, ovens, microwaves and dishwashers at MM Kitchen World, the GLEN Exclusive Store in Basaveshwara Nagar, Bangalore. See them live or enquire on WhatsApp.",
+      "Shop 283+ genuine GLEN chimneys, gas stoves, hobs, water heaters, sinks, ovens, microwaves, dishwashers, cooking range and small appliances at MM Kitchen World, the GLEN Exclusive Store in Basaveshwara Nagar, Bangalore. See them live or enquire on WhatsApp.",
   });
 
   return (
     <>
       <Hero />
       <Reveal>
-        <Categories onSelectCategory={setActiveCategory} />
+        <Categories onSelectCategory={handleSelectCategory} />
       </Reveal>
       <Reveal>
         <SpecialOffers />
       </Reveal>
       <Reveal>
-        <Catalogue activeCategory={activeCategory} onSelectCategory={setActiveCategory} />
+        <Catalogue activeCategory={activeCategory} onSelectCategory={handleSelectCategory} />
       </Reveal>
       <Reveal>
         <Installations />

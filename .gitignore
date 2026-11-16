@@ -1,13 +1,50 @@
-__pycache__/
-*.pyc
-qa-screenshots/
-
-dist/
+# Dependencies
 node_modules/
 
-# Local database and environment
-*.db
-*.db-journal
-*.db-wal
+# Production build output
+dist/
+
+# Python cache & virtual environments
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Environment files and credentials
 .env
 .env.local
+.env.*
+!.env.example
+
+# Local SQLite databases and WAL runtime files
+*.db
+*.db-*
+*.db-journal
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+
+# Runtime user uploads (directory preserved via .gitkeep)
+public/uploads/*
+!public/uploads/.gitkeep
+
+# Large raw source PDFs & offline data pipelines (not needed for deployment)
+data/*.pdf
+data/product-images-original/
+product-images/
+data/models/
+data/screenshot_*.png
+
+# Intermediate PNG working files (storefront uses high-efficiency .webp)
+public/assets/products/**/*.png
+
+# Test artifacts and debug logs
+qa-screenshots/
+*.log
+
+# OS & Editor metadata
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

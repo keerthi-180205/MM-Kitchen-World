@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Icon from "../Icon";
-import { assetUrl, whatsappUrl } from "../../constants";
+import { assetUrl, whatsappUrl, INSTAGRAM_URL, YOUTUBE_URL } from "../../constants";
 
 const DIRECTIONS_URL =
   "https://www.google.com/maps/search/?api=1&query=No.+MIG-45+KHB+Colony+2nd+Stage+near+Pavithra+Paradise+opposite+IndusInd+Bank+Basaveshwara+Nagar+Bangalore+560079";
@@ -91,10 +91,21 @@ export default function Showroom() {
 
           {/* Details & booking */}
           <div className="lg:col-span-5">
-            <span className="font-label-sm text-label-sm text-primary uppercase tracking-widest font-bold section-eyebrow mb-2">Visit Us in Person</span>
-            <h2 className="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-4">See It. Touch It. Test It Live.</h2>
-            <p className="font-body-md text-body-md text-on-surface-variant mb-8">
-              Watch burner flames, compare noise levels and see chimney suction in action with our GLEN product specialists, before you decide.
+            <span className="font-label-sm text-label-sm text-primary uppercase tracking-widest font-bold section-eyebrow mb-2">MM Kitchen World · Showroom Experience</span>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight mb-4">See It. Explore It. Experience It.</h2>
+            <p className="font-body-md text-body-md text-slate-700 mb-3 leading-relaxed">
+              Visit our Basaveshwara Nagar showroom and explore our collection of kitchen appliances in person. Experience product demonstrations, compare features and get personalised guidance from our team.
+            </p>
+            <p className="font-body-md text-xs sm:text-sm text-slate-500 mb-6 leading-relaxed">
+              Chimney specialists providing live hands-on demos, expert guidance, and site visit services*. Watch unboxings &amp; reviews on our{" "}
+              <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="text-primary font-semibold hover:underline">
+                Instagram Reels
+              </a>{" "}
+              &amp;{" "}
+              <a href={YOUTUBE_URL} target="_blank" rel="noopener noreferrer" className="text-primary font-semibold hover:underline">
+                YouTube
+              </a>
+              , as we help homeowners, home chefs, corporate bulk &amp; wholesale buyers choose the best appliances for modern homes.
             </p>
             <div className="space-y-4 mb-8">
               <InfoRow icon="location_on">

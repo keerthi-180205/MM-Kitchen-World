@@ -15,10 +15,15 @@ export default function ContactSection() {
       <div className="relative max-w-[1200px] mx-auto px-6 lg:px-12">
         <div className="grid lg:grid-cols-5 gap-10 lg:gap-14 items-center">
           <div className="lg:col-span-2">
-            <span className="font-label-sm text-label-sm text-sky-300 uppercase tracking-widest font-bold section-eyebrow mb-3">Need help choosing?</span>
-            <h2 className="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-white mb-4">Tell Us About Your Kitchen. We'll Help You Pick the Perfect Fit.</h2>
-            <p className="text-white/80 mb-8 leading-relaxed">
-              Share your kitchen layout or wish-list for fitment guidance, ducting advice and special showroom rates. Bulk orders and corporate gifting are welcome too.
+            <span className="font-label-sm text-label-sm text-sky-300 uppercase tracking-widest font-bold section-eyebrow mb-3">Contact Us</span>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mb-4 tracking-tight leading-snug">
+              Let's Build Your Perfect Kitchen Together.
+            </h2>
+            <p className="text-white/85 mb-4 leading-relaxed text-sm sm:text-base">
+              Tell us about your kitchen layout and appliance requirements. Our team will help you discover suitable products, understand installation requirements and find the right solutions at competitive showroom prices.
+            </p>
+            <p className="text-xs sm:text-sm font-semibold text-sky-200 mb-8 tracking-wide">
+              Bulk orders and corporate gifting welcome.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
               <a

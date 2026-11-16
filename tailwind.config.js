@@ -76,40 +76,52 @@ export default {
       },
       "fontFamily": {
         "headline-lg": [
-          "Playfair Display"
+          "Plus Jakarta Sans",
+          "sans-serif"
         ],
         "body-md": [
-          "Plus Jakarta Sans"
+          "Plus Jakarta Sans",
+          "sans-serif"
         ],
         "label-sm": [
-          "Plus Jakarta Sans"
+          "Plus Jakarta Sans",
+          "sans-serif"
         ],
         "label-md": [
-          "Plus Jakarta Sans"
+          "Plus Jakarta Sans",
+          "sans-serif"
         ],
         "body-sm": [
-          "Plus Jakarta Sans"
+          "Plus Jakarta Sans",
+          "sans-serif"
         ],
         "body-lg": [
-          "Plus Jakarta Sans"
+          "Plus Jakarta Sans",
+          "sans-serif"
         ],
         "headline-md": [
-          "Plus Jakarta Sans"
+          "Plus Jakarta Sans",
+          "sans-serif"
         ],
         "display-hero-mobile": [
-          "Playfair Display"
+          "Plus Jakarta Sans",
+          "sans-serif"
         ],
         "label-lg": [
-          "Plus Jakarta Sans"
+          "Plus Jakarta Sans",
+          "sans-serif"
         ],
         "display-hero": [
-          "Playfair Display"
+          "Plus Jakarta Sans",
+          "sans-serif"
         ],
         "headline-lg-mobile": [
-          "Playfair Display"
+          "Plus Jakarta Sans",
+          "sans-serif"
         ],
         "headline-sm": [
-          "Plus Jakarta Sans"
+          "Plus Jakarta Sans",
+          "sans-serif"
         ]
       },
       "fontSize": {

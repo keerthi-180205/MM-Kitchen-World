@@ -289,8 +289,10 @@ def product_card(p):
     except Exception:
         img = Spacer(42 * mm, 42 * mm)
 
-    lines = [Paragraph(p["model"], styles["model"]),
-             Paragraph(f"GLEN &middot; {p['subcategory']}", styles["subcat"])]
+    lines = [
+        Paragraph(p.get("title") or p["model"], styles["model"]),
+        Paragraph(f"<b>Model:</b> {p['model']} &nbsp;&nbsp;|&nbsp;&nbsp; <b>GLEN</b> &middot; {p['subcategory']}", styles["subcat"]),
+    ]
 
     specs = p.get("specs") or []
     if specs:

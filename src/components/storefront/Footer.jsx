@@ -8,10 +8,15 @@ const headingClass = "text-xs font-bold uppercase tracking-[0.16em] text-sky-300
 
 const CATEGORY_LINKS = [
   { label: "Chimneys", category: "Chimneys" },
-  { label: "Ovens & Microwaves", category: "Ovens" },
-  { label: "Gas Stoves & Cooking Range", category: "Gas Stoves" },
+  { label: "Gas Stoves", category: "Gas Stoves" },
   { label: "Hobs (Gas & Induction)", category: "Hobs" },
+  { label: "Water Heaters & Geysers", category: "Water Heaters" },
+  { label: "Kitchen Sinks & Faucets", category: "Sinks" },
+  { label: "Built-in Ovens", category: "Ovens" },
+  { label: "Built-in Microwaves", category: "Microwaves" },
   { label: "Dishwashers", category: "Dishwashers" },
+  { label: "Cooking Range", category: "Cooking Range" },
+  { label: "Small Appliances", category: "Small Appliances" },
 ];
 
 function ContactRow({ icon, children }) {
@@ -44,7 +49,7 @@ export default function Footer() {
               </div>
             </div>
             <p className="text-sm text-white/70 max-w-sm leading-relaxed mb-6">
-              Bangalore's GLEN Exclusive Store in Basaveshwara Nagar: chimneys, hobs, gas stoves, ovens, microwaves and dishwashers for a happier home.
+              Bangalore's GLEN Exclusive Store in Basaveshwara Nagar: chimneys, gas stoves, hobs, water heaters, sinks, ovens, microwaves, dishwashers, cooking range and small appliances.
             </p>
             <a
               href={whatsappUrl("Hello MM Kitchen World, I am interested in bulk orders and corporate gifting. Please share the available products, pricing, and details.")}

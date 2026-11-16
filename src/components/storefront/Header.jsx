@@ -1,4 +1,4 @@
-import { useState } from "react";
+ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import Icon from "../Icon";
 import HashLink from "../HashLink";
@@ -12,7 +12,7 @@ const NAV_LINKS = [
   { href: "#products", label: "Products" },
   { href: "#categories", label: "Categories" },
   { href: "#installations", label: "Our Work" },
-  { href: "#brands", label: "Brands" },
+  { href: "#brands", label: "Why Us" },
   { href: "#showroom", label: "Showroom" },
   { href: "#contact", label: "Contact" },
 ];
@@ -42,13 +42,13 @@ export default function Header() {
         </Link>
 
         {/* Desktop navigation */}
-        <nav className="hidden xl:flex items-center gap-5 2xl:gap-8 min-w-0" id="desktopNav">
+        <nav className="hidden xl:flex items-center gap-3.5 2xl:gap-6 min-w-0 mx-3 2xl:mx-8 shrink-0" id="desktopNav">
           {NAV_LINKS.map(({ href, label }) => (
             <HashLink
               key={href}
               to={href}
               onClick={() => activate(href)}
-              className={`nav-link whitespace-nowrap font-label-md text-label-md pb-1 border-b-2 transition-all duration-150 ${
+              className={`nav-link whitespace-nowrap text-xs 2xl:text-sm font-semibold pb-1 border-b-2 transition-all duration-150 ${
                 active === href
                   ? "text-primary font-bold border-primary"
                   : "text-on-surface-variant hover:text-primary border-transparent"
@@ -60,10 +60,15 @@ export default function Header() {
         </nav>
 
         {/* Trailing action cluster */}
-        <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
-          <a aria-label="Call us on 97432 33729" title="Call: 97432 33729" className="hidden xl:flex items-center justify-center gap-2 w-11 h-11 2xl:w-auto 2xl:h-auto 2xl:px-4 2xl:py-2.5 rounded-lg border border-outline-variant text-on-surface hover:bg-surface-container-low transition-colors duration-150 font-label-md text-label-md" href={`tel:${PHONE_TEL}`}>
-            <Icon name="call" className="text-primary text-lg" />
-            <span className="hidden 2xl:inline whitespace-nowrap">Call Us: 97432 33729</span>
+        <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0 ml-auto">
+          <a
+            aria-label="Call us on 97432 33729"
+            title="Call: 97432 33729"
+            className="hidden xl:inline-flex items-center justify-center gap-2 px-3 py-2 2xl:px-3.5 2xl:py-2.5 rounded-xl border border-outline-variant bg-white text-slate-800 hover:bg-slate-50 hover:border-slate-400 transition-colors duration-150 text-xs 2xl:text-sm font-semibold shadow-2xs shrink-0"
+            href={`tel:${PHONE_TEL}`}
+          >
+            <Icon name="call" className="text-primary text-base" />
+            <span className="hidden 2xl:inline whitespace-nowrap">Call: 97432 33729</span>
           </a>
           <Link
             to="/wishlist"

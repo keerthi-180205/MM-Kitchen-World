@@ -43,7 +43,18 @@ router.get("/", (req, res) => {
       params.push(q, q, q, q, q);
     }
 
-    query += " ORDER BY created_at DESC, id DESC";
+    query += ` ORDER BY CASE category
+      WHEN 'Chimneys' THEN 1
+      WHEN 'Gas Stoves' THEN 2
+      WHEN 'Hobs' THEN 3
+      WHEN 'Water Heaters' THEN 4
+      WHEN 'Sinks' THEN 5
+      WHEN 'Ovens' THEN 6
+      WHEN 'Microwaves' THEN 7
+      WHEN 'Dishwashers' THEN 8
+      WHEN 'Cooking Range' THEN 9
+      WHEN 'Small Appliances' THEN 10
+      ELSE 99 END, subcategory ASC, title ASC`;
 
     const rows = db.prepare(query).all(...params);
     const products = rows.map(rowToProduct);

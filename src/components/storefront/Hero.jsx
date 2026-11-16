@@ -3,9 +3,9 @@ import { assetUrl, whatsappUrl, GMB_URL } from "../../constants";
 import { trackEnquiry } from "../../lib/analytics";
 
 const TRUST_BADGES = [
-  { icon: "verified", title: "Expert Kitchen Guidance", text: "The right size, the right fit" },
-  { icon: "shield", title: "100% Genuine GLEN", text: "Authorised store, GLEN warranty" },
-  { icon: "handyman", title: "Installation Support", text: "Seamless, hassle-free fitting" },
+  { icon: "verified", title: "Expert Guidance", text: "Find appliances that suit your lifestyle" },
+  { icon: "shield", title: "Authorised Exclusive Store", text: "GLEN manufacturer warranty" },
+  { icon: "handyman", title: "Installation Support", text: "Doorstep fitting & site visits" },
 ];
 
 export default function Hero() {
@@ -24,16 +24,22 @@ export default function Hero() {
               <span className="w-2 h-2 rounded-full bg-primary-container"></span>
               <span className="font-label-sm text-label-sm text-primary tracking-widest uppercase">BANGALORE'S GLEN EXCLUSIVE STORE · BASAVESHWARA NAGAR</span>
             </div>
-            <h1 className="font-display-hero text-display-hero-mobile md:text-display-hero text-on-surface mb-5 sm:mb-6 tracking-tight">
-              Upgrade Your Kitchen <br />
-              <span className="italic bg-gradient-to-r from-[#005bb3] via-[#0878E8] to-[#3b9bff] bg-clip-text text-transparent">with Genuine MM KITCHEN Appliances.</span>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[50px] font-extrabold text-slate-900 tracking-tight leading-[1.14] mb-3">
+              Your Dream Kitchen <br />
+              <span>Starts Here.</span> <br />
+              <span className="text-[#0878E8]">Discover Quality Kitchen Appliances with </span> <br className="hidden sm:inline" />
+              <span className="text-[#0878E8]">MM Kitchen World.</span>
             </h1>
-            <p className="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mb-8">
-              Chimneys, hobs, gas stoves, built-in ovens, microwaves and dishwashers: 209 GLEN models under one roof. Walk in to see them live, or message us on WhatsApp for expert advice and today's store price.
+            <div className="w-16 h-1 bg-[#0878E8] rounded-full mb-6"></div>
+            <p className="font-body-lg text-body-lg text-slate-600 max-w-2xl mb-4 leading-relaxed">
+              Explore a wide range of kitchen appliances, including chimneys, gas stoves, hobs, water heaters, sinks, ovens, microwaves, dishwashers, cooking ranges and small appliances. Discover 283 products under one roof, with expert guidance to help you find the right fit for your kitchen.
+            </p>
+            <p className="text-sm sm:text-base font-medium text-slate-700 max-w-2xl mb-8 leading-relaxed">
+              Visit our Basaveshwara Nagar showroom or connect with us on WhatsApp for expert assistance and the latest prices.
             </p>
             <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-3 sm:gap-4 mb-8 sm:mb-10">
               <a className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl bg-gradient-to-r from-[#0878E8] to-[#005bb3] text-white font-label-lg text-label-lg shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 hover:-translate-y-0.5 btn-shine transition-all duration-200 active:scale-98" href="#products">
-                <span>Browse 209 Models</span>
+                <span>Explore 283 Products</span>
                 <Icon name="arrow_forward" className="text-lg" />
               </a>
               <a className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-tertiary text-on-tertiary font-label-lg text-label-lg shadow-lg shadow-tertiary/30 hover:brightness-105 hover:-translate-y-0.5 transition-all duration-200 active:scale-98" onClick={() => trackEnquiry(null, "hero")} href={whatsappUrl()} rel="noopener noreferrer" target="_blank">

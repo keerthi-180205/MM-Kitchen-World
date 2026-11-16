@@ -4,78 +4,61 @@ import { WhatsAppIcon } from "../BrandIcons";
 import { assetUrl, productEnquiryUrl, productPath } from "../../constants";
 import { useShop } from "../../context/ShopContext";
 import { trackEnquiry } from "../../lib/analytics";
-import { formatDate, getOffer, isPlaceholderPrice } from "../../utils/price";
 
 const isWarranty = (s) => s.label.toLowerCase().includes("warranty");
-
-const roundButton = "w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center border transition-all";
 
 export default function ProductCard({ product: p }) {
   const { inWishlist, inCompare, toggleWishlist, toggleCompare } = useShop();
   const allSpecs = p.specs || [];
-  const techSpecs = allSpecs.filter((s) => !isWarranty(s)).slice(0, 4);
+  const techSpecs = allSpecs.filter((s) => !isWarranty(s)).slice(0, 3);
   const warranty = allSpecs.find(isWarranty)?.value || p.warranty;
-  const offer = getOffer(p);
   const saved = inWishlist(p.id);
   const comparing = inCompare(p.id);
   const href = productPath(p);
 
   return (
-    <article className="group flex flex-col h-full bg-surface-container-lowest border border-outline-variant rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-primary-container/40 transition-all duration-300">
-      {/* Top Header Bar: Clean Category / Tag / Offer and Quick Actions */}
-      <div className="flex items-center justify-between gap-2 px-3 sm:px-4 py-2.5 bg-surface-container-low/50 border-b border-outline-variant/60">
-        <div className="min-w-0 flex items-center gap-1.5 flex-1">
-          {offer ? (
-            <span className="inline-flex items-center gap-1 font-label-sm text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-rose-600 text-white shadow-sm shrink-0">
-              <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" aria-hidden="true"></span>
-              {offer.label}
-            </span>
-          ) : p.tag ? (
-            <span className="inline-flex items-center font-label-sm text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20 truncate">
-              {p.tag}
-            </span>
-          ) : (
-            <span className="inline-flex items-center font-label-sm text-[11px] font-semibold px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant truncate">
-              {p.category}
-            </span>
-          )}
-        </div>
+    <article className="group flex flex-col h-full bg-white border border-slate-200/90 rounded-xl overflow-hidden shadow-2xs hover:shadow-md hover:-translate-y-0.5 hover:border-slate-400 transition-all duration-200">
+      {/* Top Header: Tag & Quick Actions */}
+      <div className="flex items-center justify-between gap-1.5 px-3 py-1.5 bg-slate-50/90 border-b border-slate-100 text-xs">
+        <span className="inline-flex items-center text-[10px] font-semibold text-slate-600 truncate max-w-[70%]">
+          {p.subcategory || p.category}
+        </span>
 
-        <div className="flex items-center gap-1.5 shrink-0">
+        <div className="flex items-center gap-1 shrink-0">
           <button
             onClick={() => toggleWishlist(p.id)}
             aria-pressed={saved}
             aria-label={saved ? `Remove ${p.title} from My List` : `Save ${p.title} to My List`}
             title={saved ? "Remove from My List" : "Save to My List"}
-            className={`${roundButton} ${
+            className={`w-6 h-6 rounded-full flex items-center justify-center border transition-colors ${
               saved
-                ? "bg-rose-50 border-rose-300 text-rose-600 shadow-sm"
-                : "bg-white border-outline-variant text-on-surface-variant hover:text-rose-600 hover:border-rose-300"
+                ? "bg-rose-50 border-rose-300 text-rose-600"
+                : "bg-white border-slate-200 text-slate-400 hover:text-rose-600 hover:border-rose-200"
             }`}
           >
-            <Icon name="favorite" className="text-sm sm:text-base" fill={saved} />
+            <Icon name="favorite" className="text-[13px]" fill={saved} />
           </button>
           <button
             onClick={() => toggleCompare(p.id)}
             aria-pressed={comparing}
             aria-label={comparing ? `Remove ${p.title} from comparison` : `Compare ${p.title}`}
             title={comparing ? "Remove from comparison" : "Add to comparison"}
-            className={`${roundButton} ${
+            className={`w-6 h-6 rounded-full flex items-center justify-center border transition-colors ${
               comparing
-                ? "bg-primary border-primary text-white shadow-sm"
-                : "bg-white border-outline-variant text-on-surface-variant hover:text-primary hover:border-primary"
+                ? "bg-primary border-primary text-white"
+                : "bg-white border-slate-200 text-slate-400 hover:text-primary hover:border-primary/40"
             }`}
           >
-            <Icon name="compare_arrows" className="text-sm sm:text-base" />
+            <Icon name="compare_arrows" className="text-[13px]" />
           </button>
         </div>
       </div>
 
-      {/* 100% Unobstructed Pure Image Stage - No tags or buttons overlapping the appliance */}
-      <div className="relative aspect-[4/3] bg-white border-b border-outline-variant overflow-hidden flex items-center justify-center p-4">
+      {/* Compact Product Image Stage */}
+      <div className="relative h-36 sm:h-40 bg-white p-3 flex items-center justify-center border-b border-slate-100 overflow-hidden">
         <Link to={href} tabIndex={-1} aria-hidden="true" className="w-full h-full flex items-center justify-center">
           <img
-            className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
+            className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-300"
             src={assetUrl(p.image)}
             alt={p.title}
             loading="lazy"
@@ -84,81 +67,61 @@ export default function ProductCard({ product: p }) {
         </Link>
       </div>
 
-      <div className="flex flex-col flex-1 p-5">
-        <div className="flex items-center justify-between gap-3 mb-2">
-          <span className="font-label-sm text-label-sm text-primary font-bold uppercase tracking-wider truncate">{p.brand || "GLEN APPLIANCES"}</span>
-          {p.model && p.model.trim().toLowerCase() !== (p.title || "").trim().toLowerCase() && (
-            <span className="shrink-0 font-mono text-[11px] font-semibold text-on-surface-variant bg-surface-container-low border border-outline-variant rounded px-2 py-0.5">{p.model}</span>
-          )}
-        </div>
-        <h3 className="font-headline-sm text-headline-sm text-on-surface font-semibold line-clamp-2 min-h-[3.5rem]">
+      {/* Content & Details Area (Amazon Style) */}
+      <div className="flex flex-col flex-1 p-3 sm:p-3.5">
+        <h3 className="text-xs sm:text-sm font-bold text-slate-900 leading-snug line-clamp-2 min-h-[2.25rem]">
           <Link to={href} className="hover:text-primary transition-colors">{p.title}</Link>
         </h3>
 
-        {(techSpecs.length > 0 || warranty) && (
-          <dl className="mt-3 divide-y divide-outline-variant/70 border-y border-outline-variant/70">
-            {techSpecs.map((s) => (
-              <div key={s.label} className="flex items-baseline justify-between gap-4 py-2 text-[13px] leading-5">
-                <dt className="text-on-surface-variant shrink-0">{s.label}</dt>
-                <dd className="text-on-surface font-semibold text-right">{s.value}</dd>
-              </div>
-            ))}
-            {warranty && (
-              <div className="flex items-baseline justify-between gap-4 py-2 text-[13px] leading-5">
-                <dt className="text-on-surface-variant shrink-0 inline-flex items-center gap-1.5">
-                  <Icon name="verified_user" className="text-base text-primary" />
-                  Warranty
-                </dt>
-                <dd className="text-on-surface font-semibold text-right">{warranty}</dd>
-              </div>
-            )}
-          </dl>
+        {p.model && p.model.trim().toLowerCase() !== (p.title || "").trim().toLowerCase() && (
+          <div className="mt-1">
+            <span className="font-mono text-[10px] font-semibold text-slate-600 bg-slate-100 border border-slate-200/80 rounded px-1.5 py-0.5">
+              Model: {p.model}
+            </span>
+          </div>
         )}
 
-        <div className="mt-auto pt-4">
-          {offer ? (
-            <div>
-              <div className="flex items-baseline flex-wrap gap-x-2 gap-y-1">
-                <span className="text-xl font-bold text-rose-600 leading-tight">{offer.price}</span>
-                {offer.original && <span className="text-sm text-on-surface-variant line-through">{offer.original}</span>}
-                {offer.save && <span className="text-[11px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-full px-2 py-0.5">Save {offer.save}</span>}
-              </div>
-              {offer.ends && <span className="block text-[11px] text-on-surface-variant mt-0.5">Offer valid till {formatDate(offer.ends)}</span>}
-            </div>
-          ) : isPlaceholderPrice(p.price) ? (
-            <div className="flex items-center gap-2 text-on-surface-variant">
-              <Icon name="sell" className="text-lg text-primary" />
-              <span className="text-[13px] leading-4">
-                <strong className="block text-on-surface font-semibold">Price on request</strong>
-                Ask for today's store rate
+        {/* Amazon-style Product Details / Key Features Bullets */}
+        <ul className="my-2.5 pt-2 border-t border-slate-100 space-y-1 text-[11px] text-slate-600 flex-1">
+          {techSpecs.map((s, i) => (
+            <li key={i} className="flex items-start gap-1.5 leading-tight">
+              <span className="text-slate-400 font-bold shrink-0">•</span>
+              <span className="line-clamp-1 text-slate-700">
+                {s.label && s.label !== "Feature" ? (
+                  <strong className="font-semibold text-slate-800">{s.label}: </strong>
+                ) : null}
+                {s.value}
               </span>
-            </div>
-          ) : (
-            <div>
-              <span className="block font-label-sm text-[11px] text-on-surface-variant uppercase tracking-wider font-semibold">Price</span>
-              <span className="block text-xl font-bold text-primary leading-tight">{p.price}</span>
-            </div>
+            </li>
+          ))}
+          {warranty && (
+            <li className="flex items-start gap-1.5 leading-tight text-slate-700">
+              <span className="text-emerald-600 font-bold shrink-0">•</span>
+              <span className="line-clamp-1 font-medium">{warranty}</span>
+            </li>
           )}
+        </ul>
 
-          <div className="mt-4 grid grid-cols-2 gap-2.5">
-            <Link
-              to={href}
-              className="px-3 py-2.5 rounded-lg border border-outline-variant font-label-md text-label-md text-on-surface font-semibold hover:border-primary hover:text-primary hover:bg-surface-container-low transition-colors text-center"
-            >
-              View Details
-            </Link>
-            <a
-              className="px-3 py-2.5 rounded-lg bg-tertiary text-white font-label-md text-label-md flex items-center justify-center gap-2 font-semibold shadow-sm hover:brightness-105 hover:shadow-md transition-all"
-              href={productEnquiryUrl(p)}
-              rel="noopener noreferrer"
-              target="_blank"
-              onClick={() => trackEnquiry(p.id, "card")}
-              aria-label={`Enquire about ${p.title} on WhatsApp`}
-            >
-              <span className="[&_svg]:w-4 [&_svg]:h-4"><WhatsAppIcon /></span>
-              <span>Enquire</span>
-            </a>
-          </div>
+        {/* Bottom Actions: WhatsApp Enquiry & Specs */}
+        <div className="mt-auto pt-2 border-t border-slate-100/80 flex flex-col gap-1.5">
+          <a
+            className="w-full py-2 px-3 rounded-lg bg-[#075e54] hover:bg-[#128c7e] text-white text-xs font-semibold flex items-center justify-center gap-1.5 shadow-2xs hover:shadow-xs transition-colors text-center"
+            href={productEnquiryUrl(p)}
+            rel="noopener noreferrer"
+            target="_blank"
+            onClick={() => trackEnquiry(p.id, "card")}
+            aria-label={`Enquire about ${p.title} on WhatsApp`}
+          >
+            <span className="[&_svg]:w-3.5 [&_svg]:h-3.5 shrink-0"><WhatsAppIcon /></span>
+            <span className="truncate">Enquire on WhatsApp</span>
+          </a>
+
+          <Link
+            to={href}
+            className="text-[11px] font-semibold text-slate-500 hover:text-primary transition-colors text-center py-0.5"
+          >
+            View Details &amp; Dimensions →
+          </Link>
         </div>
       </div>
     </article>

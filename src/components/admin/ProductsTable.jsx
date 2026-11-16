@@ -109,7 +109,7 @@ export default function ProductsTable({ products, total, onToggleStatus, onEdit,
         </div>
         <h3 className="text-base font-semibold text-slate-900">{catalogueEmpty ? "Your catalogue is empty" : "No products match your search"}</h3>
         <p className="text-sm text-slate-500 max-w-sm mx-auto mt-1 mb-5">
-          {catalogueEmpty ? "Add your first product, or restore the 209 verified GLEN models." : "Try a different word, or clear the filters to see everything again."}
+          {catalogueEmpty ? "Add your first product, or restore the 283 verified GLEN models." : "Try a different word, or clear the filters to see everything again."}
         </p>
         {catalogueEmpty ? (
           <button onClick={onResetCatalog} className="px-5 h-11 rounded-xl bg-primary text-white text-sm font-semibold hover:bg-primary-container transition-colors">Restore GLEN catalogue</button>

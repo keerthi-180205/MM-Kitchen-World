@@ -106,10 +106,10 @@ export default function Dashboard({ onLogout, showToast }) {
   }
 
   async function resetCatalog() {
-    if (window.confirm("Reset catalog back to initial 209 verified GLEN appliances? This will restore default items.")) {
+    if (window.confirm("Reset catalog back to initial 283 verified GLEN appliances? This will restore default items.")) {
       try {
         await ProductsStore.resetToDefaults();
-        showToast("Catalog reset to 209 verified GLEN appliances!");
+        showToast("Catalog reset to 283 verified GLEN appliances!");
       } catch (err) {
         showToast(err.message || "Failed to reset catalog", true);
       }

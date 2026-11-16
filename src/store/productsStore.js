@@ -11,7 +11,7 @@ import imagePresets from "../data/imagePresets.json";
 export const DEFAULT_PRODUCTS = defaultProducts;
 export const IMAGE_PRESETS = imagePresets;
 
-const STORAGE_KEY = "mm_kitchen_world_catalog_v3";
+const STORAGE_KEY = "mm_kitchen_world_catalog_v7";
 const TOKEN_KEY = "mm_admin_token";
 const UPDATE_EVENT = "catalog-updated";
 

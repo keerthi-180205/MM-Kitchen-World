@@ -15,10 +15,12 @@ export default function Installations() {
       <div className="max-w-[1440px] mx-auto px-6 lg:px-12 relative z-10">
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           <div>
-            <span className="font-label-sm text-label-sm text-inverse-primary uppercase tracking-widest font-bold section-eyebrow mb-3">Real Homes, Real Kitchens</span>
-            <h2 className="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-white mb-4">See Our Home Installations</h2>
-            <p className="font-body-lg text-body-lg text-inverse-on-surface/85 mb-8 max-w-xl">
-              Don't just take our word for it. Browse photos and videos of GLEN appliances installed in real homes, right on our Google profile.
+            <span className="font-label-sm text-label-sm text-inverse-primary uppercase tracking-widest font-bold section-eyebrow mb-3">Our Work</span>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mb-4 tracking-tight leading-snug">
+              Beautiful Kitchens. Smart Appliances. Better Living.
+            </h2>
+            <p className="font-body-lg text-body-lg text-inverse-on-surface/85 mb-8 max-w-xl leading-relaxed">
+              Explore real kitchen installations, product displays and customer experiences. Get inspiration for your kitchen and discover how the right appliances can enhance your everyday cooking.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
               <a
