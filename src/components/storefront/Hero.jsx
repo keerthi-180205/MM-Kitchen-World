@@ -108,10 +108,10 @@ export default function Hero() {
               </div>
             </a>
 
-            {/* 100% Unobstructed Full Showroom Photo (inner_image) */}
+            {/* 100% Unobstructed Full Showroom Photo (inner_image) - Enlarged vertically */}
             <div className="relative rounded-3xl overflow-hidden border border-outline-variant/80 bg-surface-container-lowest shadow-xl shadow-slate-900/10">
               <img
-                className="w-full h-auto aspect-[16/9] object-cover"
+                className="w-full h-[320px] sm:h-[420px] lg:h-[480px] xl:h-[500px] object-cover object-[65%_center]"
                 alt="MM Kitchen World - GLEN Exclusive Showroom Interior with live consultation counter, built-in appliances, and display counters"
                 src={assetUrl("assets/hero/hero-inner.webp")}
                 loading="eager"
