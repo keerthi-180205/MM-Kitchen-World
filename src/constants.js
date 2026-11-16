@@ -1,3 +1,5 @@
+import { API_BASE } from "./lib/apiBase";
+
 export const WHATSAPP_NUMBER = "919743233729";
 export const PHONE_TEL = "+919743233729";
 
@@ -30,6 +32,8 @@ export function productEnquiryUrl(p) {
 
 /** Resolve a catalog image/PDF path: absolute URLs and data URIs pass through, relative paths hit /public. */
 export function assetUrl(path) {
+  // Photos uploaded to the API server's own disk (development) are served by the API host.
+  if (API_BASE && /^\/?uploads\//.test(path || "")) return `${API_BASE}/${path.replace(/^\//, "")}`;
   if (!path || /^(https?:|data:|blob:|\/)/.test(path)) return path;
   // Catalogues saved in a browser before the image clean-up still point at the old .png crops.
   const resolved = path.replace(/^(assets\/products\/.+)\.png$/, "$1.webp");

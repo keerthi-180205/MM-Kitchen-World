@@ -7,12 +7,14 @@ import TrustBar from "./storefront/TrustBar";
 import CompareBar from "./storefront/CompareBar";
 import WhatsAppFab from "./storefront/WhatsAppFab";
 import { initAnalytics, trackPageView } from "../lib/analytics";
+import { warmUpApi } from "../lib/apiBase";
 
 /** Chrome shared by every customer-facing page. */
 export default function SiteLayout() {
   const { pathname } = useLocation();
 
   useEffect(() => initAnalytics(), []);
+  useEffect(() => warmUpApi(), []);
   useEffect(() => trackPageView(pathname), [pathname]);
 
   return (

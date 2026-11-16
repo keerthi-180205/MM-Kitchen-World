@@ -1,0 +1,12 @@
+# Cloudflare Pages: security headers and caching for the static website.
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+
+/assets/*
+  Cache-Control: public, max-age=604800
+
+/catalogues/*
+  Cache-Control: public, max-age=86400

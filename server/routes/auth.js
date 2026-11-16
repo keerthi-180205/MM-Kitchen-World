@@ -9,7 +9,7 @@ import { rateLimit } from "../lib/rateLimit.js";
 const router = Router();
 
 // 10 attempts per 15 minutes per IP slows down password guessing.
-router.post("/login", rateLimit({ windowMs: 15 * 60 * 1000, max: 10, message: "Too many login attempts. Please wait a few minutes and try again." }), (req, res) => {
+router.post("/login", rateLimit({ windowMs: 15 * 60 * 1000, max: 10, message: "Too many login attempts. Please wait a few minutes and try again." }), async (req, res) => {
   const { username, email, password } = req.body;
   const identifier = (email || username || "").trim().toLowerCase();
 
@@ -17,7 +17,7 @@ router.post("/login", rateLimit({ windowMs: 15 * 60 * 1000, max: 10, message: "T
     return res.status(400).json({ error: "Username/Email and password are required." });
   }
 
-  const user = db.prepare("SELECT * FROM users WHERE email = ?").get(identifier);
+  const user = (await db.prepare("SELECT * FROM users WHERE email = ?").get(identifier));
   if (!user) {
     return res.status(401).json({ error: "Unrecognized username or email." });
   }
@@ -43,15 +43,15 @@ router.post("/login", rateLimit({ windowMs: 15 * 60 * 1000, max: 10, message: "T
   });
 });
 
-router.get("/me", requireAuth, (req, res) => {
-  const user = db.prepare("SELECT id, email, role, created_at FROM users WHERE id = ?").get(req.user.userId);
+router.get("/me", requireAuth, async (req, res) => {
+  const user = (await db.prepare("SELECT id, email, role, created_at FROM users WHERE id = ?").get(req.user.userId));
   if (!user) {
     return res.status(404).json({ error: "User not found." });
   }
   return res.json({ user });
 });
 
-router.post("/change-password", requireAuth, rateLimit({ windowMs: 15 * 60 * 1000, max: 10 }), (req, res) => {
+router.post("/change-password", requireAuth, rateLimit({ windowMs: 15 * 60 * 1000, max: 10 }), async (req, res) => {
   const { currentPassword, newPassword } = req.body || {};
   if (!currentPassword || !newPassword) {
     return res.status(400).json({ error: "Current and new password are required." });
@@ -59,12 +59,12 @@ router.post("/change-password", requireAuth, rateLimit({ windowMs: 15 * 60 * 100
   if (String(newPassword).length < 10) {
     return res.status(400).json({ error: "The new password must be at least 10 characters long." });
   }
-  const user = db.prepare("SELECT * FROM users WHERE id = ?").get(req.user.userId);
+  const user = (await db.prepare("SELECT * FROM users WHERE id = ?").get(req.user.userId));
   if (!user || !bcrypt.compareSync(currentPassword, user.password_hash)) {
     return res.status(401).json({ error: "Your current password is incorrect." });
   }
   const hash = bcrypt.hashSync(String(newPassword), 10);
-  db.prepare("UPDATE users SET password_hash = ? WHERE id = ?").run(hash, user.id);
+  await db.prepare("UPDATE users SET password_hash = ? WHERE id = ?").run(hash, user.id);
   return res.json({ success: true });
 });
 

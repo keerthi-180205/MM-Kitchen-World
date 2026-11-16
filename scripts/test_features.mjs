@@ -183,6 +183,61 @@ await test("responses carry security headers and don't reveal the framework", as
   assert.equal(res.headers.get("referrer-policy"), "strict-origin-when-cross-origin");
 });
 
+// ---- photo hosting (Cloudinary) and CORS -----------------------------------------------------------
+const { cloudinaryConfig, signParams, optimisedUrl } = await import("../server/lib/cloudinary.js");
+const { isOriginAllowed } = await import("../server/lib/cors.js");
+
+await test("cloudinary: signature matches Cloudinary's documented example", async () => {
+  const sig = signParams({ eager: "w_400,h_300,c_pad|w_260,h_200,c_crop", public_id: "sample_image", timestamp: 1315060510 }, "abcd");
+  assert.equal(sig, "bfd09f95f331f558cbd1320e67aa8d488770583e");
+});
+await test("cloudinary: reads CLOUDINARY_URL and rejects junk", async () => {
+  assert.deepEqual(cloudinaryConfig({ CLOUDINARY_URL: "cloudinary://123:sec_ret@mycloud" }), { apiKey: "123", apiSecret: "sec_ret", cloudName: "mycloud" });
+  assert.equal(cloudinaryConfig({}), null);
+  assert.equal(cloudinaryConfig({ CLOUDINARY_URL: "https://nope" }), null);
+  assert.equal(optimisedUrl("https://res.cloudinary.com/c/image/upload/v1/a.jpg"), "https://res.cloudinary.com/c/image/upload/f_auto,q_auto,w_1200,c_limit/v1/a.jpg");
+});
+await test("upload route: sends a signed upload to Cloudinary and returns the hosted URL", async () => {
+  process.env.CLOUDINARY_URL = "cloudinary://key123:secret456@democloud";
+  const realFetch = globalThis.fetch;
+  let seen = null;
+  globalThis.fetch = async (url, init) => {
+    if (String(url).startsWith("https://api.cloudinary.com/")) {
+      seen = { url: String(url), form: init.body };
+      return new Response(JSON.stringify({ secure_url: "https://res.cloudinary.com/democloud/image/upload/v1/mm-kitchen-world/abc.png", bytes: 1234 }), { status: 200, headers: { "Content-Type": "application/json" } });
+    }
+    return realFetch(url, init);
+  };
+  try {
+    const form = new FormData();
+    form.append("image", new Blob([Buffer.from("fake-image-bytes")], { type: "image/png" }), "photo.png");
+    const res = await realFetch(`${base}/api/upload`, { method: "POST", headers: { Authorization: `Bearer ${token}` }, body: form });
+    const json = await res.json();
+    assert.equal(res.status, 200, JSON.stringify(json));
+    assert.equal(json.url, "https://res.cloudinary.com/democloud/image/upload/f_auto,q_auto,w_1200,c_limit/v1/mm-kitchen-world/abc.png");
+    assert.equal(seen.url, "https://api.cloudinary.com/v1_1/democloud/image/upload");
+    assert.equal(seen.form.get("api_key"), "key123");
+    assert.equal(seen.form.get("folder"), "mm-kitchen-world");
+    assert.equal(seen.form.get("signature"), signParams({ folder: "mm-kitchen-world", timestamp: seen.form.get("timestamp") }, "secret456"));
+    assert.equal(seen.form.get("api_secret"), null, "the secret must never be sent");
+    // no login, no upload
+    const anon = await realFetch(`${base}/api/upload`, { method: "POST", body: form });
+    assert.equal(anon.status, 401);
+  } finally {
+    globalThis.fetch = realFetch;
+    delete process.env.CLOUDINARY_URL;
+  }
+});
+await test("cors: in production only the listed websites may call the API", async () => {
+  const allowed = new Set(["https://www.example.com", "https://shop.pages.dev"]);
+  const prod = { production: true, allowed };
+  assert.equal(isOriginAllowed("https://www.example.com", prod), true);
+  assert.equal(isOriginAllowed("https://www.example.com/", prod), true);
+  assert.equal(isOriginAllowed("https://evil.example.net", prod), false);
+  assert.equal(isOriginAllowed(undefined, prod), true);        // curl / same-origin
+  assert.equal(isOriginAllowed("http://localhost:5173", { production: false, allowed }), true);
+});
+
 console.log(`\n${passed} checks passed${process.exitCode ? ", some FAILED" : ""}`);
 server.close(); fs.rmSync(tmp, { recursive: true, force: true });
 setTimeout(() => process.exit(process.exitCode || 0), 100);

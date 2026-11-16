@@ -18,3 +18,10 @@ if (!process.env.JWT_SECRET) {
 }
 
 export const SITE_URL = (process.env.SITE_URL || "").replace(/\/+$/, "");
+
+// Websites allowed to call this API from a browser (production). Comma-separated list, plus SITE_URL.
+export const ALLOWED_ORIGINS = new Set(
+  [process.env.SITE_URL, ...(process.env.ALLOWED_ORIGINS || "").split(",")]
+    .map((o) => (o || "").trim().replace(/\/+$/, ""))
+    .filter(Boolean)
+);

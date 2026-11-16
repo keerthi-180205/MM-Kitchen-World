@@ -10,7 +10,7 @@ const STATUSES = ["New", "Contacted", "Closed"];
 router.post(
   "/",
   rateLimit({ windowMs: 60 * 60 * 1000, max: 6, message: "You've sent several requests already. Please call us on 97432 33729." }),
-  (req, res) => {
+  async (req, res) => {
     const body = req.body || {};
 
     // Honeypot: real visitors never fill this hidden field, bots usually do. Pretend success.
@@ -27,10 +27,10 @@ router.post(
     let productTitle = null;
     const productId = body.productId ? String(body.productId).slice(0, 80) : null;
     if (productId) {
-      productTitle = db.prepare("SELECT title FROM products WHERE id = ?").get(productId)?.title || null;
+      productTitle = (await db.prepare("SELECT title FROM products WHERE id = ?").get(productId))?.title || null;
     }
 
-    db.prepare(
+    await db.prepare(
       `INSERT INTO leads (name, phone, message, product_id, product_title, source)
        VALUES (?, ?, ?, ?, ?, ?)`
     ).run(name, phone, String(body.message || "").trim().slice(0, 500), productTitle ? productId : null, productTitle, String(body.source || "website").slice(0, 40));
@@ -39,8 +39,8 @@ router.post(
   }
 );
 
-router.get("/", requireAuth, (req, res) => {
-  const rows = db.prepare("SELECT * FROM leads ORDER BY created_at DESC, id DESC LIMIT 500").all();
+router.get("/", requireAuth, async (req, res) => {
+  const rows = (await db.prepare("SELECT * FROM leads ORDER BY created_at DESC, id DESC LIMIT 500").all());
   res.json(
     rows.map((r) => ({
       id: r.id,
@@ -56,16 +56,16 @@ router.get("/", requireAuth, (req, res) => {
   );
 });
 
-router.patch("/:id", requireAuth, (req, res) => {
+router.patch("/:id", requireAuth, async (req, res) => {
   const status = req.body?.status;
   if (!STATUSES.includes(status)) return res.status(400).json({ error: "Invalid status." });
-  const info = db.prepare("UPDATE leads SET status = ? WHERE id = ?").run(status, req.params.id);
+  const info = (await db.prepare("UPDATE leads SET status = ? WHERE id = ?").run(status, req.params.id));
   if (!info.changes) return res.status(404).json({ error: "Request not found." });
   res.json({ success: true });
 });
 
-router.delete("/:id", requireAuth, (req, res) => {
-  const info = db.prepare("DELETE FROM leads WHERE id = ?").run(req.params.id);
+router.delete("/:id", requireAuth, async (req, res) => {
+  const info = (await db.prepare("DELETE FROM leads WHERE id = ?").run(req.params.id));
   if (!info.changes) return res.status(404).json({ error: "Request not found." });
   res.json({ success: true });
 });

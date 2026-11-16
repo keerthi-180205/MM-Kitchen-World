@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 import Icon from "../Icon";
 import ProductCard from "../storefront/ProductCard";
-import { assetUrl } from "../../constants";
+import { ORDERED_CATEGORIES, assetUrl } from "../../constants";
 import { fileToOptimizedDataUrl } from "../../utils/image";
 import { IMAGE_PRESETS, isDuplicateModel, uploadImage } from "../../store/productsStore";
 
-const CATEGORIES = ["Chimneys", "Ovens", "Microwaves", "Gas Stoves", "Hobs", "Dishwashers"];
+const CATEGORIES = ORDERED_CATEGORIES;
 const BADGE_OPTIONS = ["New Arrival", "Bestseller", "Flagship", "Showroom Pick", "Special Offer"];
 const KNOWN_BADGE_COLORS = {
   Bestseller: "bg-primary text-white",
@@ -29,11 +29,16 @@ const SPEC_LABELS = {
   "Gas Stoves": ["Burners", "Body", "Warranty"],
   Hobs: ["Burners", "Type", "Warranty"],
   Dishwashers: ["Place Settings", "Type", "Warranty"],
+  "Water Heaters": ["Capacity", "Type", "Warranty"],
+  Sinks: ["Size", "Material", "Warranty"],
+  "Cooking Range": ["Burners", "Body", "Warranty"],
+  "Small Appliances": ["Type", "Power", "Warranty"],
 };
 const labelsToSpecs = (category) => (SPEC_LABELS[category] || SPEC_LABELS.Chimneys).map((label) => ({ label, value: "" }));
 const SPEC_PLACEHOLDERS = {
   Size: "60 / 90 cm", Airflow: "1200 m³/h", Capacity: "45 L", Controls: "Touch", Type: "Convection",
   Burners: "4 Brass", Body: "Stainless Steel", "Place Settings": "14", Warranty: "7 Years on Motor",
+  Material: "Stainless Steel", Power: "750 W",
 };
 
 function initialForm(product) {

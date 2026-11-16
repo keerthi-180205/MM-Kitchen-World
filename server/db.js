@@ -1,4 +1,4 @@
-import Database from "better-sqlite3";
+import { createClient } from "@libsql/client";
 import bcrypt from "bcryptjs";
 import path from "path";
 import fs from "fs";
@@ -11,18 +11,64 @@ dotenv.config();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const dbPath = process.env.DB_PATH || path.join(__dirname, "../data/kitchen_world.db");
-const dbDir = path.dirname(dbPath);
-if (!fs.existsSync(dbDir)) {
-  fs.mkdirSync(dbDir, { recursive: true });
+/**
+ * Database: Turso (hosted SQLite) when TURSO_DATABASE_URL is set, otherwise a local SQLite file.
+ * Both use the same client and SQL, so development, tests and production run the same code.
+ */
+const remoteUrl = process.env.TURSO_DATABASE_URL;
+let clientConfig;
+if (remoteUrl) {
+  clientConfig = { url: remoteUrl, authToken: process.env.TURSO_AUTH_TOKEN };
+} else {
+  const dbPath = path.resolve(process.env.DB_PATH || path.join(__dirname, "../data/kitchen_world.db"));
+  fs.mkdirSync(path.dirname(dbPath), { recursive: true });
+  clientConfig = { url: `file:${dbPath}` };
+}
+const client = createClient(clientConfig);
+
+// Accept both positional values (prepare(sql).get(a, b)) and one object of named values.
+const clean = (v) => (v === undefined ? null : v);
+function normaliseArgs(args) {
+  if (args.length === 1 && args[0] && typeof args[0] === "object" && !Array.isArray(args[0])) {
+    return Object.fromEntries(Object.entries(args[0]).map(([k, v]) => [k, clean(v)]));
+  }
+  return args.map(clean);
 }
 
-export const db = new Database(dbPath);
-db.pragma("journal_mode = WAL");
-db.pragma("foreign_keys = ON");
+/** Small promise-based wrapper that keeps the routes' db.prepare(sql).get/all/run(...) style. */
+export const db = {
+  prepare(sql) {
+    return {
+      async get(...args) {
+        const r = await client.execute({ sql, args: normaliseArgs(args) });
+        return r.rows[0] ? { ...r.rows[0] } : undefined;
+      },
+      async all(...args) {
+        const r = await client.execute({ sql, args: normaliseArgs(args) });
+        return r.rows.map((row) => ({ ...row }));
+      },
+      async run(...args) {
+        const r = await client.execute({ sql, args: normaliseArgs(args) });
+        return { changes: r.rowsAffected, lastInsertRowid: r.lastInsertRowid };
+      },
+    };
+  },
+  /** Run several statements as one atomic transaction: [{ sql, args }]. */
+  batch(statements) {
+    // args may be a list of values or one object of named values.
+    const argsFor = (a) => (Array.isArray(a) ? a.map(clean) : a ? normaliseArgs([a]) : []);
+    return client.batch(
+      statements.map((s) => ({ sql: s.sql, args: argsFor(s.args) })),
+      "write"
+    );
+  },
+  exec(script) {
+    return client.executeMultiple(script);
+  },
+};
 
 // Initialize tables
-db.exec(`
+await db.exec(`
   CREATE TABLE IF NOT EXISTS users (
     id TEXT PRIMARY KEY,
     email TEXT UNIQUE NOT NULL,
@@ -60,7 +106,7 @@ db.exec(`
 `);
 
 // ---- Offers, call-back requests and enquiry tracking -------------------------
-db.exec(`
+await db.exec(`
   CREATE TABLE IF NOT EXISTS offers (
     id TEXT PRIMARY KEY,
     title TEXT NOT NULL,
@@ -98,13 +144,13 @@ db.exec(`
   CREATE INDEX IF NOT EXISTS idx_enquiries_product ON enquiries(product_id);
 `);
 
-function addColumnIfMissing(table, column, definition) {
-  const exists = db.prepare(`PRAGMA table_info(${table})`).all().some((c) => c.name === column);
-  if (!exists) db.exec(`ALTER TABLE ${table} ADD COLUMN ${column} ${definition}`);
+async function addColumnIfMissing(table, column, definition) {
+  const columns = await db.prepare(`PRAGMA table_info(${table})`).all();
+  if (!columns.some((c) => c.name === column)) await db.exec(`ALTER TABLE ${table} ADD COLUMN ${column} ${definition}`);
 }
-addColumnIfMissing("products", "offer_price", "TEXT");
-addColumnIfMissing("products", "offer_label", "TEXT");
-addColumnIfMissing("products", "offer_ends", "TEXT");
+await addColumnIfMissing("products", "offer_price", "TEXT");
+await addColumnIfMissing("products", "offer_label", "TEXT");
+await addColumnIfMissing("products", "offer_ends", "TEXT");
 
 /** Maps a database row to the frontend product object format */
 export function rowToProduct(row) {
@@ -150,18 +196,18 @@ export function rowToProduct(row) {
 }
 
 /** Seed Admin User */
-export function seedAdmin() {
+export async function seedAdmin() {
   const adminEmail = (process.env.ADMIN_EMAIL || "mmkitchenworld@admin.com").trim().toLowerCase();
   const adminPassword = process.env.ADMIN_PASSWORD || (IS_PRODUCTION ? "" : "admin@mm123");
 
-  const existing = db.prepare("SELECT * FROM users WHERE email = ?").get(adminEmail);
+  const existing = await db.prepare("SELECT * FROM users WHERE email = ?").get(adminEmail);
   if (!existing) {
     if (!adminPassword) {
       throw new Error("Set ADMIN_PASSWORD in the environment to create the first admin account in production.");
     }
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(adminPassword, salt);
-    db.prepare(`
+    await db.prepare(`
       INSERT OR REPLACE INTO users (id, email, password_hash, role)
       VALUES (?, ?, ?, 'admin')
     `).run("usr-admin-1", adminEmail, hash);
@@ -169,9 +215,20 @@ export function seedAdmin() {
   }
 }
 
+const INSERT_PRODUCT = `
+  INSERT OR REPLACE INTO products (
+    id, title, category, subcategory, brand, model, tag, tag_color,
+    image, price, specs, features, warranty, dimensions, status,
+    description, source_pdf, source_page, updated_at
+  ) VALUES (
+    @id, @title, @category, @subcategory, @brand, @model, @tag, @tag_color,
+    @image, @price, @specs, @features, @warranty, @dimensions, @status,
+    @description, @source_pdf, @source_page, CURRENT_TIMESTAMP
+  )`;
+
 /** Seed Products from default JSON file if empty */
-export function seedProducts(force = false) {
-  const countRow = db.prepare("SELECT COUNT(*) as count FROM products").get();
+export async function seedProducts(force = false) {
+  const countRow = await db.prepare("SELECT COUNT(*) as count FROM products").get();
   if (countRow.count > 0 && !force) {
     return;
   }
@@ -185,51 +242,41 @@ export function seedProducts(force = false) {
   const defaultProducts = JSON.parse(fs.readFileSync(defaultProductsPath, "utf-8"));
   console.log(`[Database] Seeding ${defaultProducts.length} verified GLEN products into database...`);
 
-  const insert = db.prepare(`
-    INSERT OR REPLACE INTO products (
-      id, title, category, subcategory, brand, model, tag, tag_color,
-      image, price, specs, features, warranty, dimensions, status,
-      description, source_pdf, source_page, updated_at
-    ) VALUES (
-      @id, @title, @category, @subcategory, @brand, @model, @tag, @tag_color,
-      @image, @price, @specs, @features, @warranty, @dimensions, @status,
-      @description, @source_pdf, @source_page, CURRENT_TIMESTAMP
-    )
-  `);
+  const statements = defaultProducts.map((p) => ({
+    sql: INSERT_PRODUCT,
+    args: {
+      id: p.id,
+      title: p.title || "Untitled Product",
+      category: p.category || "Chimneys",
+      subcategory: p.subcategory || "",
+      brand: p.brand || "GLEN APPLIANCES",
+      model: p.model || "",
+      tag: p.tag || "",
+      tag_color: p.tagColor || "bg-primary text-on-primary",
+      image: p.image || "",
+      price: p.price || "Contact showroom for price",
+      specs: JSON.stringify(p.specs || []),
+      features: JSON.stringify(p.features || []),
+      warranty: p.warranty || null,
+      dimensions: p.dimensions || null,
+      status: p.status || "Published",
+      description: p.description || "",
+      source_pdf: p.sourcePdf || null,
+      source_page: p.sourcePage || null,
+    },
+  }));
 
-  const insertMany = db.transaction((products) => {
-    if (force) {
-      db.prepare("DELETE FROM products").run();
-    }
-    for (const p of products) {
-      insert.run({
-        id: p.id,
-        title: p.title || "Untitled Product",
-        category: p.category || "Chimneys",
-        subcategory: p.subcategory || "",
-        brand: p.brand || "GLEN APPLIANCES",
-        model: p.model || "",
-        tag: p.tag || "",
-        tag_color: p.tagColor || "bg-primary text-on-primary",
-        image: p.image || "",
-        price: p.price || "Contact showroom for price",
-        specs: JSON.stringify(p.specs || []),
-        features: JSON.stringify(p.features || []),
-        warranty: p.warranty || null,
-        dimensions: p.dimensions || null,
-        status: p.status || "Published",
-        description: p.description || "",
-        source_pdf: p.sourcePdf || null,
-        source_page: p.sourcePage || null,
-      });
-    }
-  });
-
-  insertMany(defaultProducts);
+  // Sent in chunks so one request never gets too large for a hosted database.
+  // A reset clears the table in the first chunk; if a later chunk failed, running the reset again repairs it.
+  const CHUNK = 60;
+  for (let i = 0; i < statements.length; i += CHUNK) {
+    const chunk = statements.slice(i, i + CHUNK);
+    if (force && i === 0) chunk.unshift({ sql: "DELETE FROM products", args: [] });
+    await db.batch(chunk);
+  }
   console.log(`[Database] Successfully seeded ${defaultProducts.length} products!`);
 }
 
 // Run initial seed checks
-seedAdmin();
-seedProducts();
-
+await seedAdmin();
+await seedProducts();

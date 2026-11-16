@@ -2,6 +2,7 @@ import Icon from "../Icon";
 import { WhatsAppIcon, InstagramIcon, YouTubeIcon } from "../BrandIcons";
 import { PHONE_TEL, whatsappUrl, assetUrl, GMB_URL, YOUTUBE_URL, INSTAGRAM_URL } from "../../constants";
 import { trackEnquiry } from "../../lib/analytics";
+import CallbackForm from "./CallbackForm";
 
 /** Contact CTA & Praveen Kumar Showroom Specialist Profile Card */
 export default function ContactSection() {
@@ -137,6 +138,18 @@ export default function ContactSection() {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Call-back request: saved to the owner's admin */}
+        <div id="callback" className="mt-10 lg:mt-14 scroll-mt-24 bg-white text-on-surface rounded-3xl p-6 sm:p-9 shadow-2xl shadow-black/30 grid lg:grid-cols-5 gap-8 lg:gap-12 items-start">
+          <div className="lg:col-span-2">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider mb-3">
+              <Icon name="call" className="text-sm" /> Request a call back
+            </span>
+            <h3 className="text-xl sm:text-2xl font-extrabold tracking-tight mb-2">Prefer we call you?</h3>
+            <p className="text-sm text-on-surface-variant leading-relaxed">Leave your name and mobile number. We'll call you back during showroom hours with today's price and availability.</p>
+          </div>
+          <div className="lg:col-span-3"><CallbackForm source="home" /></div>
         </div>
       </div>
     </section>

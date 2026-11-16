@@ -7,6 +7,7 @@
  */
 import defaultProducts from "../data/defaultProducts.json";
 import imagePresets from "../data/imagePresets.json";
+import { apiUrl } from "../lib/apiBase";
 
 export const DEFAULT_PRODUCTS = defaultProducts;
 export const IMAGE_PRESETS = imagePresets;
@@ -103,7 +104,7 @@ export function isDuplicateModel(model, excludeId) {
 /** Fetch latest products from Node.js backend */
 export async function fetchProducts() {
   try {
-    const res = await fetch("/api/products");
+    const res = await fetch(apiUrl("/api/products"));
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
     if (Array.isArray(data) && data.length > 0) {
@@ -129,7 +130,7 @@ async function mutate(path, { method, body } = {}) {
 
   let res;
   try {
-    res = await fetch(path, { method, headers, body: body !== undefined ? JSON.stringify(body) : undefined });
+    res = await fetch(apiUrl(path), { method, headers, body: body !== undefined ? JSON.stringify(body) : undefined });
   } catch {
     throw new Error("Could not reach the server, so nothing was saved. Check that it is running and try again.");
   }
@@ -202,7 +203,7 @@ export async function uploadImage(file) {
   const headers = {};
   if (token) headers["Authorization"] = `Bearer ${token}`;
 
-  const res = await fetch("/api/upload", {
+  const res = await fetch(apiUrl("/api/upload"), {
     method: "POST",
     headers,
     body: formData,

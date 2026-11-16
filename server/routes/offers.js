@@ -29,9 +29,9 @@ function rowToOffer(r) {
 }
 
 // Public: offers that are switched on and currently within their date window.
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
   const today = new Date().toISOString().slice(0, 10);
-  const rows = db
+  const rows = (await db
     .prepare(
       `SELECT * FROM offers
        WHERE active = 1
@@ -39,13 +39,13 @@ router.get("/", (req, res) => {
          AND (ends_at IS NULL OR ends_at = '' OR ends_at >= ?)
        ORDER BY created_at DESC`
     )
-    .all(today, today);
+    .all(today, today));
   res.json(rows.map(rowToOffer));
 });
 
 // Admin: every offer, including expired and switched-off ones.
-router.get("/all", requireAuth, (req, res) => {
-  res.json(db.prepare("SELECT * FROM offers ORDER BY created_at DESC").all().map(rowToOffer));
+router.get("/all", requireAuth, async (req, res) => {
+  res.json((await db.prepare("SELECT * FROM offers ORDER BY created_at DESC").all()).map(rowToOffer));
 });
 
 function validate(body) {
@@ -70,31 +70,31 @@ function validate(body) {
   };
 }
 
-router.post("/", requireAuth, (req, res) => {
+router.post("/", requireAuth, async (req, res) => {
   const { error, value } = validate(req.body || {});
   if (error) return res.status(400).json({ error });
   const id = "off-" + Date.now();
-  db.prepare(
+  await db.prepare(
     `INSERT INTO offers (id, title, message, link_label, link_url, starts_at, ends_at, active)
      VALUES (@id, @title, @message, @link_label, @link_url, @starts_at, @ends_at, @active)`
   ).run({ id, ...value });
-  res.status(201).json(rowToOffer(db.prepare("SELECT * FROM offers WHERE id = ?").get(id)));
+  res.status(201).json(rowToOffer((await db.prepare("SELECT * FROM offers WHERE id = ?").get(id))));
 });
 
-router.put("/:id", requireAuth, (req, res) => {
-  const existing = db.prepare("SELECT id FROM offers WHERE id = ?").get(req.params.id);
+router.put("/:id", requireAuth, async (req, res) => {
+  const existing = (await db.prepare("SELECT id FROM offers WHERE id = ?").get(req.params.id));
   if (!existing) return res.status(404).json({ error: "Offer not found." });
   const { error, value } = validate(req.body || {});
   if (error) return res.status(400).json({ error });
-  db.prepare(
+  await db.prepare(
     `UPDATE offers SET title=@title, message=@message, link_label=@link_label, link_url=@link_url,
        starts_at=@starts_at, ends_at=@ends_at, active=@active WHERE id=@id`
   ).run({ id: req.params.id, ...value });
-  res.json(rowToOffer(db.prepare("SELECT * FROM offers WHERE id = ?").get(req.params.id)));
+  res.json(rowToOffer((await db.prepare("SELECT * FROM offers WHERE id = ?").get(req.params.id))));
 });
 
-router.delete("/:id", requireAuth, (req, res) => {
-  const info = db.prepare("DELETE FROM offers WHERE id = ?").run(req.params.id);
+router.delete("/:id", requireAuth, async (req, res) => {
+  const info = (await db.prepare("DELETE FROM offers WHERE id = ?").run(req.params.id));
   if (!info.changes) return res.status(404).json({ error: "Offer not found." });
   res.json({ success: true });
 });

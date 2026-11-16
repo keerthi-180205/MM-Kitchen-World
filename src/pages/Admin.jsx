@@ -3,6 +3,7 @@ import LoginScreen from "../components/admin/LoginScreen";
 import Dashboard from "../components/admin/Dashboard";
 import Toast from "../components/admin/Toast";
 import { useToast } from "../hooks/useToast";
+import { apiUrl } from "../lib/apiBase";
 import { clearAuthToken, getAuthToken, setAuthToken } from "../store/productsStore";
 
 export default function Admin() {
@@ -22,7 +23,7 @@ export default function Admin() {
     // Validate existing token with backend on mount
     const token = getAuthToken();
     if (token) {
-      fetch("/api/auth/me", {
+      fetch(apiUrl("/api/auth/me"), {
         headers: { Authorization: `Bearer ${token}` },
       })
         .then((res) => {
@@ -40,7 +41,7 @@ export default function Admin() {
   /** Returns an error message, or null on success. */
   async function handleLogin(username, password) {
     try {
-      const res = await fetch("/api/auth/login", {
+      const res = await fetch(apiUrl("/api/auth/login"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: username, password }),

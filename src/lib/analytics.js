@@ -3,6 +3,8 @@
  *  - Google Analytics loads only if VITE_GA_ID is set (e.g. G-XXXXXXXXXX), with IP anonymisation.
  *  - Enquiry taps are counted on our own server (no personal data) so the owner sees what customers ask about.
  */
+import { apiUrl } from "./apiBase";
+
 const GA_ID = import.meta.env.VITE_GA_ID;
 
 export function initAnalytics() {
@@ -27,7 +29,7 @@ export function trackPageView(path) {
 /** Record a WhatsApp / enquiry tap. Never blocks or breaks the click it belongs to. */
 export function trackEnquiry(productId, source = "other") {
   try {
-    fetch("/api/enquiries", {
+    fetch(apiUrl("/api/enquiries"), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ productId: productId || null, source }),

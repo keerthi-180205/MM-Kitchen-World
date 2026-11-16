@@ -3,7 +3,7 @@
 A modern, full-stack showroom web application and vendor administration console for **MM Kitchen World**, an authorized **GLEN Exclusive Store** located in Basaveshwara Nagar, Bangalore.
 
 - **Frontend**: React 19 single-page application built with Vite and Tailwind CSS.
-- **Backend**: Node.js + Express 5 REST API with high-performance SQLite persistence (`better-sqlite3` in WAL mode), JWT authentication, rate limiting, and gzip compression.
+- **Backend**: Node.js + Express 5 REST API with SQLite persistence through libSQL (a local file in development, Turso in production), JWT authentication, rate limiting, and gzip compression.
 - **Product Catalog**: **283 verified GLEN appliances** unified across **10 product categories** with comprehensive technical specifications, dimensions, high-efficiency WebP imagery, and downloadable category catalogues.
 
 ---
@@ -74,7 +74,7 @@ A modern, full-stack showroom web application and vendor administration console 
 │   └── uploads/               # Admin-uploaded appliance images
 ├── scripts/
 │   ├── test_fullstack.js      # Fullstack integration test suite (10 checks)
-│   ├── test_features.mjs      # Feature & security test suite (19 checks)
+│   ├── test_features.mjs      # Feature & security test suite (23 checks)
 │   └── generate_catalogues.py # Automated PDF catalogue compilation pipeline
 └── package.json
 ```
@@ -121,10 +121,14 @@ npm run dev
 ### 4. Run Automated Tests
 ```bash
 npm test              # Fullstack API, auth, SQLite CRUD & SPA routing (10/10)
-npm run test:features # Security, rate-limiting, CSV import & analytics (19/19)
+npm run test:features # Security, rate-limiting, CSV import & analytics (23/23)
 ```
 
 ---
+
+## Free Hosting
+
+A complete, no-cost setup (Cloudflare Pages + Render + Turso + Cloudinary, with a Hostinger domain) is described step by step in [DEPLOY-FREE.md](DEPLOY-FREE.md).
 
 ## Production Deployment
 

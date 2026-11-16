@@ -13,7 +13,8 @@ import offerRoutes from "./routes/offers.js";
 import leadRoutes from "./routes/leads.js";
 import enquiryRoutes from "./routes/enquiries.js";
 import { db } from "./db.js";
-import { SITE_URL } from "./config.js";
+import { ALLOWED_ORIGINS, IS_PRODUCTION, SITE_URL } from "./config.js";
+import { isOriginAllowed } from "./lib/cors.js";
 
 dotenv.config();
 
@@ -41,7 +42,13 @@ app.use((req, res, next) => {
 
 // Gzip text responses (HTML, JS, CSS, JSON); already-compressed images/PDFs are skipped automatically.
 app.use(compression());
-app.use(cors());
+app.use(
+  cors({
+    origin(origin, callback) {
+      callback(null, isOriginAllowed(origin, { production: IS_PRODUCTION, allowed: ALLOWED_ORIGINS }));
+    },
+  })
+);
 app.use(express.json({ limit: "15mb" }));
 app.use(express.urlencoded({ extended: true, limit: "15mb" }));
 
@@ -65,14 +72,14 @@ app.use("/api/enquiries", enquiryRoutes);
 const xmlEscape = (v) => String(v).replace(/[<>&'"]/g, (c) => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;", "'": "&apos;", '"': "&quot;" }[c]));
 const siteBase = (req) => SITE_URL || `${req.protocol}://${req.get("host")}`;
 
-app.get("/robots.txt", (req, res) => {
+app.get("/robots.txt", async (req, res) => {
   res.type("text/plain").send(`User-agent: *\nAllow: /\nDisallow: /admin\nDisallow: /api/\n\nSitemap: ${siteBase(req)}/sitemap.xml\n`);
 });
 
-app.get("/sitemap.xml", (req, res) => {
+app.get("/sitemap.xml", async (req, res) => {
   const base = siteBase(req);
   const pages = ["/", "/guides/chimney-size", "/faq", "/privacy", "/terms"];
-  const products = db.prepare("SELECT id, updated_at FROM products WHERE status = 'Published'").all();
+  const products = (await db.prepare("SELECT id, updated_at FROM products WHERE status = 'Published'").all());
   const urls = [
     ...pages.map((p) => `<url><loc>${xmlEscape(base + p)}</loc></url>`),
     ...products.map((p) => `<url><loc>${xmlEscape(`${base}/product/${p.id}`)}</loc><lastmod>${xmlEscape((p.updated_at || "").slice(0, 10))}</lastmod></url>`),
@@ -80,7 +87,7 @@ app.get("/sitemap.xml", (req, res) => {
   res.type("application/xml").send(`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.join("\n")}\n</urlset>\n`);
 });
 
-app.get("/api/health", (req, res) => {
+app.get("/api/health", async (req, res) => {
   res.json({
     status: "ok",
     service: "MM Kitchen World API",

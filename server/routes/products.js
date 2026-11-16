@@ -5,17 +5,17 @@ import { requireAuth } from "../middleware/auth.js";
 const router = Router();
 
 /** Save the optional per-product offer fields (empty string clears them). */
-function applyOffer(id, body) {
+async function applyOffer(id, body) {
   const fields = { offer_price: body.offerPrice, offer_label: body.offerLabel, offer_ends: body.offerEnds };
   const entries = Object.entries(fields).filter(([, v]) => v !== undefined);
   if (!entries.length) return;
   const set = entries.map(([col]) => `${col} = ?`).join(", ");
   const values = entries.map(([, v]) => (typeof v === "string" && v.trim() ? v.trim().slice(0, 80) : null));
-  db.prepare(`UPDATE products SET ${set} WHERE id = ?`).run(...values, id);
+  await db.prepare(`UPDATE products SET ${set} WHERE id = ?`).run(...values, id);
 }
 
 // GET /api/products - list all products with optional filters
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const { status, category, search } = req.query;
     let query = "SELECT * FROM products WHERE 1=1";
@@ -56,7 +56,7 @@ router.get("/", (req, res) => {
       WHEN 'Small Appliances' THEN 10
       ELSE 99 END, subcategory ASC, title ASC`;
 
-    const rows = db.prepare(query).all(...params);
+    const rows = (await db.prepare(query).all(...params));
     const products = rows.map(rowToProduct);
     return res.json(products);
   } catch (err) {
@@ -66,9 +66,9 @@ router.get("/", (req, res) => {
 });
 
 // GET /api/products/:id - single product
-router.get("/:id", (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
-    const row = db.prepare("SELECT * FROM products WHERE id = ?").get(req.params.id);
+    const row = (await db.prepare("SELECT * FROM products WHERE id = ?").get(req.params.id));
     if (!row) {
       return res.status(404).json({ error: "Product not found." });
     }
@@ -80,7 +80,7 @@ router.get("/:id", (req, res) => {
 });
 
 // POST /api/products - add product (protected)
-router.post("/", requireAuth, (req, res) => {
+router.post("/", requireAuth, async (req, res) => {
   try {
     const p = req.body;
     const model = (p.model || "").trim();
@@ -90,9 +90,9 @@ router.post("/", requireAuth, (req, res) => {
     }
 
     if (model) {
-      const dup = db
+      const dup = (await db
         .prepare("SELECT id FROM products WHERE UPPER(TRIM(model)) = UPPER(TRIM(?))")
-        .get(model);
+        .get(model));
       if (dup) {
         return res
           .status(409)
@@ -104,7 +104,7 @@ router.post("/", requireAuth, (req, res) => {
     const specs = JSON.stringify(p.specs || []);
     const features = JSON.stringify(p.features || []);
 
-    db.prepare(`
+    await db.prepare(`
       INSERT INTO products (
         id, title, category, subcategory, brand, model, tag, tag_color,
         image, price, specs, features, warranty, dimensions, status,
@@ -135,8 +135,8 @@ router.post("/", requireAuth, (req, res) => {
       p.sourcePage || null
     );
 
-    applyOffer(id, p);
-    const created = db.prepare("SELECT * FROM products WHERE id = ?").get(id);
+    await applyOffer(id, p);
+    const created = (await db.prepare("SELECT * FROM products WHERE id = ?").get(id));
     return res.status(201).json(rowToProduct(created));
   } catch (err) {
     console.error("[Products API] Error creating product:", err);
@@ -145,10 +145,10 @@ router.post("/", requireAuth, (req, res) => {
 });
 
 // PUT /api/products/:id - update product (protected)
-router.put("/:id", requireAuth, (req, res) => {
+router.put("/:id", requireAuth, async (req, res) => {
   try {
     const { id } = req.params;
-    const existing = db.prepare("SELECT * FROM products WHERE id = ?").get(id);
+    const existing = (await db.prepare("SELECT * FROM products WHERE id = ?").get(id));
     if (!existing) {
       return res.status(404).json({ error: "Product not found." });
     }
@@ -157,9 +157,9 @@ router.put("/:id", requireAuth, (req, res) => {
     const model = (p.model !== undefined ? p.model : existing.model || "").trim();
 
     if (model) {
-      const dup = db
+      const dup = (await db
         .prepare("SELECT id FROM products WHERE UPPER(TRIM(model)) = UPPER(TRIM(?)) AND id != ?")
-        .get(model, id);
+        .get(model, id));
       if (dup) {
         return res
           .status(409)
@@ -170,7 +170,7 @@ router.put("/:id", requireAuth, (req, res) => {
     const specs = p.specs !== undefined ? JSON.stringify(p.specs) : existing.specs;
     const features = p.features !== undefined ? JSON.stringify(p.features) : existing.features;
 
-    db.prepare(`
+    await db.prepare(`
       UPDATE products SET
         title = ?,
         category = ?,
@@ -208,8 +208,8 @@ router.put("/:id", requireAuth, (req, res) => {
       id
     );
 
-    applyOffer(id, p);
-    const updated = db.prepare("SELECT * FROM products WHERE id = ?").get(id);
+    await applyOffer(id, p);
+    const updated = (await db.prepare("SELECT * FROM products WHERE id = ?").get(id));
     return res.json(rowToProduct(updated));
   } catch (err) {
     console.error("[Products API] Error updating product:", err);
@@ -218,15 +218,15 @@ router.put("/:id", requireAuth, (req, res) => {
 });
 
 // DELETE /api/products/:id - delete product (protected)
-router.delete("/:id", requireAuth, (req, res) => {
+router.delete("/:id", requireAuth, async (req, res) => {
   try {
     const { id } = req.params;
-    const existing = db.prepare("SELECT id, title FROM products WHERE id = ?").get(id);
+    const existing = (await db.prepare("SELECT id, title FROM products WHERE id = ?").get(id));
     if (!existing) {
       return res.status(404).json({ error: "Product not found." });
     }
 
-    db.prepare("DELETE FROM products WHERE id = ?").run(id);
+    await db.prepare("DELETE FROM products WHERE id = ?").run(id);
     return res.json({ success: true, id, message: `Product ${id} deleted.` });
   } catch (err) {
     console.error("[Products API] Error deleting product:", err);
@@ -244,7 +244,7 @@ const DEFAULT_PRICE = "Contact showroom for price";
 const IMPORT_STATUSES = { published: "Published", live: "Published", draft: "Draft" };
 const isoDate = /^\d{4}-\d{2}-\d{2}$/;
 
-router.post("/import", requireAuth, (req, res) => {
+router.post("/import", requireAuth, async (req, res) => {
   const rows = req.body?.rows;
   const apply = req.body?.apply === true;
   if (!Array.isArray(rows) || rows.length === 0) {
@@ -254,8 +254,10 @@ router.post("/import", requireAuth, (req, res) => {
     return res.status(400).json({ error: "A sheet can have at most 1000 rows." });
   }
 
-  const byId = db.prepare("SELECT * FROM products WHERE id = ?");
-  const byModel = db.prepare("SELECT * FROM products WHERE UPPER(TRIM(model)) = UPPER(TRIM(?))");
+  // One query for the whole catalogue (a hosted database is a network call away), then look rows up in memory.
+  const catalogue = await db.prepare("SELECT * FROM products").all();
+  const byId = new Map(catalogue.map((p) => [p.id, p]));
+  const byModel = new Map(catalogue.filter((p) => p.model).map((p) => [p.model.trim().toUpperCase(), p]));
   const clean = (v) => (v === undefined || v === null ? "" : String(v).trim());
 
   const errors = [];
@@ -263,18 +265,19 @@ router.post("/import", requireAuth, (req, res) => {
   let unchanged = 0;
   const seen = new Set();
 
-  rows.forEach((row, i) => {
+  for (let i = 0; i < rows.length; i++) {
+    const row = rows[i];
     const line = i + 2; // spreadsheet line (row 1 is the header)
     const id = clean(row.id);
     const model = clean(row.model);
-    const existing = (id && byId.get(id)) || (model && byModel.get(model)) || null;
+    const existing = (id && byId.get(id)) || (model && byModel.get(model.toUpperCase())) || null;
     if (!existing) {
       errors.push({ row: line, message: `No product found for ${id || model || "an empty row"}.` });
-      return;
+      continue;
     }
     if (seen.has(existing.id)) {
       errors.push({ row: line, message: `${existing.title} appears twice in the sheet.` });
-      return;
+      continue;
     }
     seen.add(existing.id);
 
@@ -285,10 +288,10 @@ router.post("/import", requireAuth, (req, res) => {
     const statusText = clean(row.status);
     const status = statusText ? IMPORT_STATUSES[statusText.toLowerCase()] : existing.status;
 
-    if (!status) return errors.push({ row: line, message: `Status "${statusText}" must be Published or Draft.` });
-    if (price.length > 100) return errors.push({ row: line, message: "Price is too long (100 characters at most)." });
-    if (offerPrice.length > 80 || offerLabel.length > 80) return errors.push({ row: line, message: "Offer price or name is too long (80 characters at most)." });
-    if (offerEnds && !isoDate.test(offerEnds)) return errors.push({ row: line, message: `Offer end date "${offerEnds}" must look like 2026-11-15.` });
+    if (!status) { errors.push({ row: line, message: `Status "${statusText}" must be Published or Draft.` }); continue; }
+    if (price.length > 100) { errors.push({ row: line, message: "Price is too long (100 characters at most)." }); continue; }
+    if (offerPrice.length > 80 || offerLabel.length > 80) { errors.push({ row: line, message: "Offer price or name is too long (80 characters at most)." }); continue; }
+    if (offerEnds && !isoDate.test(offerEnds)) { errors.push({ row: line, message: `Offer end date "${offerEnds}" must look like 2026-11-15.` }); continue; }
 
     const next = { price, offer_price: offerPrice || null, offer_label: offerLabel || null, offer_ends: offerEnds || null, status };
     const before = {
@@ -303,10 +306,10 @@ router.post("/import", requireAuth, (req, res) => {
       .map((k) => ({ field: k, from: before[k], to: next[k] }));
     if (changes.length === 0) {
       unchanged += 1;
-      return;
+      continue;
     }
     plan.push({ product: existing, next, changes });
-  });
+  }
 
   const summary = { rows: rows.length, willChange: plan.length, unchanged, errors: errors.length };
   const preview = plan.slice(0, 8).map((x) => ({ id: x.product.id, title: x.product.title, changes: x.changes }));
@@ -317,21 +320,17 @@ router.post("/import", requireAuth, (req, res) => {
     return res.status(422).json({ error: "Nothing was saved. Fix the rows listed and import again.", applied: false, summary, errors: errors.slice(0, 50), preview });
   }
 
-  const update = db.prepare(
-    `UPDATE products SET price = @price, offer_price = @offer_price, offer_label = @offer_label,
-       offer_ends = @offer_ends, status = @status, updated_at = CURRENT_TIMESTAMP WHERE id = @id`
-  );
-  db.transaction(() => {
-    for (const { product, next } of plan) update.run({ id: product.id, ...next });
-  })();
+  const UPDATE_SQL = `UPDATE products SET price = @price, offer_price = @offer_price, offer_label = @offer_label,
+       offer_ends = @offer_ends, status = @status, updated_at = CURRENT_TIMESTAMP WHERE id = @id`;
+  await db.batch(plan.map(({ product, next }) => ({ sql: UPDATE_SQL, args: { id: product.id, ...next } })));
   return res.json({ applied: true, summary, errors: [], preview });
 });
 
 // POST /api/products/reset - reset catalog to verified default GLEN products (protected)
-router.post("/reset", requireAuth, (req, res) => {
+router.post("/reset", requireAuth, async (req, res) => {
   try {
-    seedProducts(true);
-    const countRow = db.prepare("SELECT COUNT(*) as count FROM products").get();
+    await seedProducts(true);
+    const countRow = (await db.prepare("SELECT COUNT(*) as count FROM products").get());
     return res.json({
       success: true,
       count: countRow.count,
