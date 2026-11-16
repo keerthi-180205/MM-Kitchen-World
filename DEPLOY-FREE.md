@@ -93,7 +93,8 @@ Render's free plan allows about 750 running hours a month, which covers one serv
 | `SITE_URL` | `YOUR_SITE` (used for the sitemap and robots.txt) |
 | `VITE_GA_ID` | optional Google Analytics ID |
 
-4. Deploy. You get a `*.pages.dev` address. Open it and check that products appear and the admin login works at `/admin`.
+   Cloudflare may show its newer **Workers** flow instead of Pages. That works too: the repo has a `wrangler.jsonc` that serves `dist` as a single-page app. Keep the default deploy command `npx wrangler deploy`, and add the variables above as **Build variables** (Advanced settings), not runtime variables, because they are read while the site is built.
+4. Deploy. You get a `*.pages.dev` or `*.workers.dev` address. Open it and check that products appear and the admin login works at `/admin`.
 
 `VITE_API_URL` is baked in at build time. If you change it, trigger a new deploy.
 
