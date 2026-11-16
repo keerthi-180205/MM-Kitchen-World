@@ -43,7 +43,7 @@ export default function Hero() {
             </h1>
             <div className="w-16 h-1 bg-[#0878E8] rounded-full mb-5"></div>
             <p className="font-body-lg text-base sm:text-lg text-slate-600 max-w-xl mb-3 leading-relaxed">
-              Explore 283 premium kitchen appliances under one roof — chimneys, gas stoves, hobs, built-in ovens, dishwashers &amp; more with personalized guidance.
+              Explore 283 premium kitchen appliances under one roof — chimneys, gas stoves, hobs, water heaters, sinks, ovens, microwaves, dishwashers, cooking ranges &amp; small appliances with expert guidance.
             </p>
             <p className="text-sm sm:text-base font-medium text-slate-700 max-w-xl mb-6 leading-relaxed">
               Visit our Basaveshwara Nagar showroom or connect on WhatsApp for latest prices &amp; live demos.
