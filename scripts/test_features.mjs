@@ -74,6 +74,19 @@ await test("product offer price round-trips and can be cleared", async () => {
   assert.equal(cleared.json.offerPrice, null);
 });
 
+await test("product list is cached but changes show up straight away", async () => {
+  const first = await call("GET", "/api/products");
+  const again = await call("GET", "/api/products");
+  assert.equal(JSON.stringify(again.json), JSON.stringify(first.json));
+  const original = first.json.find((p) => p.id === productId);
+  const renamed = await call("PUT", `/api/products/${productId}`, { title: `${original.title} (edited)` }, token);
+  assert.equal(renamed.status, 200);
+  const after = (await call("GET", "/api/products")).json.find((p) => p.id === productId);
+  assert.equal(after.title, `${original.title} (edited)`);
+  await call("PUT", `/api/products/${productId}`, { title: original.title }, token);
+  assert.equal((await call("GET", "/api/products")).json.find((p) => p.id === productId).title, original.title);
+});
+
 await test("call-back requests are removed: the leads API no longer exists", async () => {
   assert.equal((await call("POST", "/api/leads", { name: "Ravi", phone: "9876543210" })).status, 404);
   assert.equal((await call("GET", "/api/leads", null, token)).status, 404);

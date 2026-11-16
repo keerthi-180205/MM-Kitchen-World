@@ -4,6 +4,18 @@ import { requireAuth } from "../middleware/auth.js";
 
 const router = Router();
 
+// The catalogue is read far more often than it changes, and every database read is a round trip to
+// the hosted database. Keep each answer for a short while and drop everything on any change.
+const LIST_TTL_MS = 60 * 1000;
+const listCache = new Map(); // request URL -> { at, products }
+router.use((req, res, next) => {
+  if (req.method !== "GET") {
+    listCache.clear();
+    res.on("finish", () => listCache.clear());
+  }
+  next();
+});
+
 /** Save the optional per-product offer fields (empty string clears them). */
 async function applyOffer(id, body) {
   const fields = { offer_price: body.offerPrice, offer_label: body.offerLabel, offer_ends: body.offerEnds };
@@ -17,6 +29,9 @@ async function applyOffer(id, body) {
 // GET /api/products - list all products with optional filters
 router.get("/", async (req, res) => {
   try {
+    const cached = listCache.get(req.originalUrl);
+    if (cached && Date.now() - cached.at < LIST_TTL_MS) return res.json(cached.products);
+
     const { status, category, search } = req.query;
     let query = "SELECT * FROM products WHERE 1=1";
     const params = [];
@@ -58,6 +73,8 @@ router.get("/", async (req, res) => {
 
     const rows = (await db.prepare(query).all(...params));
     const products = rows.map(rowToProduct);
+    if (listCache.size > 50) listCache.clear();
+    listCache.set(req.originalUrl, { at: Date.now(), products });
     return res.json(products);
   } catch (err) {
     console.error("[Products API] Error fetching products:", err);
