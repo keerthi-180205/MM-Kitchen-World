@@ -115,11 +115,11 @@ export default function Showroom() {
               </InfoRow>
               <InfoRow icon="schedule">
                 <p className="font-label-md text-label-md text-on-surface font-bold">Visiting Hours</p>
-                <p className="font-body-sm text-body-sm text-on-surface-variant">Monday – Sunday : 10:30 AM – 8:30 PM (Open all days · No Lunch Break)</p>
+                <p className="font-body-sm text-body-sm text-on-surface-variant">Monday – Sunday : 10:30 AM – 8:30 PM (Open all days)</p>
               </InfoRow>
               <InfoRow icon="support_agent">
                 <p className="font-label-md text-label-md text-on-surface font-bold">Showroom Consultation Desk</p>
-                <p className="font-body-sm text-body-sm text-on-surface-variant">Pravin Kumar: +91 97432 33729 / 96630 78780 · mmkitchenworld.glen@gmail.com</p>
+                <p className="font-body-sm text-body-sm text-on-surface-variant">Praveen Kumar: +91 97432 33729 / 96630 78780 · mmkitchenworld.glen@gmail.com</p>
               </InfoRow>
             </div>
             <div className="flex flex-col sm:flex-row items-center gap-3">
