@@ -57,7 +57,7 @@ export default function ContactSection() {
               <div className="relative w-52 h-52 sm:w-64 sm:h-64 lg:w-72 lg:h-72 rounded-full p-2 bg-white shadow-2xl ring-4 ring-primary/20 overflow-hidden">
                 <img
                   src={assetUrl("assets/team/praveen-kumar.webp")}
-                  alt="Praveen Kumar - Owner & Glen Appliance Specialist at MM Kitchen World"
+                  alt="Praveen Kumar - Proprietor & Chimney's Specialist at MM Kitchen World"
                   className="w-full h-full object-cover rounded-full group-hover:scale-105 transition-transform duration-500"
                 />
               </div>
@@ -73,7 +73,7 @@ export default function ContactSection() {
             {/* Animated name badge */}
             <div className="flex flex-col items-center">
               <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-primary/10 text-primary border border-primary/20 text-xs font-bold uppercase tracking-wider mb-2">
-                <Icon name="verified" className="text-sm text-primary" /> Showroom Owner &amp; Glen Specialist
+                <Icon name="verified" className="text-sm text-primary" /> Proprietor &amp; Chimney's Specialist
               </span>
               <h3 className="font-headline-md text-2xl sm:text-3xl lg:text-4xl font-extrabold text-on-surface tracking-tight">
                 Praveen Kumar

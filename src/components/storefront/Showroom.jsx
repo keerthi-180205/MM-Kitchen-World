@@ -91,13 +91,13 @@ export default function Showroom() {
 
           {/* Details & booking */}
           <div className="lg:col-span-5">
-            <span className="font-label-sm text-label-sm text-primary uppercase tracking-widest font-bold section-eyebrow mb-2">MM Kitchen World · Showroom Experience</span>
+            <span className="font-label-sm text-label-sm text-primary uppercase tracking-widest font-bold section-eyebrow mb-2">MM Kitchen World · Exclusive Showroom</span>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight mb-4">See It. Explore It. Experience It.</h2>
             <p className="font-body-md text-body-md text-slate-700 mb-3 leading-relaxed">
               Visit our Basaveshwara Nagar showroom and explore our collection of kitchen appliances in person. Experience product demonstrations, compare features and get personalised guidance from our team.
             </p>
-            <p className="font-body-md text-xs sm:text-sm text-slate-500 mb-6 leading-relaxed">
-              Chimney specialists providing live hands-on demos, expert guidance, and site visit services*. Watch unboxings &amp; reviews on our{" "}
+            <p className="font-body-md text-sm sm:text-base text-slate-800 mb-6 leading-relaxed">
+              <span className="text-[#0B4F9C] font-extrabold">Chimney specialists</span> providing live hands-on demos, expert guidance, and site visit services*. Watch unboxings &amp; reviews on our{" "}
               <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="text-primary font-semibold hover:underline">
                 Instagram Reels
               </a>{" "}

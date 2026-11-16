@@ -38,6 +38,15 @@ export default function Catalogue({ activeCategory, onSelectCategory }) {
     return idx === -1 ? 999 : idx;
   };
 
+  const subcategoryRank = (cat, sub) => {
+    if (cat === "Hobs") {
+      if (sub === "DFVS - Direct Flame Venturi System") return 0;
+      if (sub === "Built-in Induction Hobs") return 1;
+      return 2;
+    }
+    return 999;
+  };
+
   const published = useMemo(() => {
     const pub = allProducts.filter((p) => p.status === "Published" || !p.status);
     return pub.slice().sort((a, b) => {
@@ -45,6 +54,9 @@ export default function Catalogue({ activeCategory, onSelectCategory }) {
       const rB = categoryRank(b.category);
       if (rA !== rB) return rA - rB;
       if (a.subcategory !== b.subcategory) {
+        const sRankA = subcategoryRank(a.category, a.subcategory);
+        const sRankB = subcategoryRank(b.category, b.subcategory);
+        if (sRankA !== sRankB) return sRankA - sRankB;
         return (a.subcategory || "").localeCompare(b.subcategory || "");
       }
       return (a.title || "").localeCompare(b.title || "");
@@ -61,7 +73,7 @@ export default function Catalogue({ activeCategory, onSelectCategory }) {
     return ["ALL", ...ordered];
   }, [published]);
 
-  // Map of category -> list of subcategories with counts (sorted by count descending)
+  // Map of category -> list of subcategories with counts (sorted by user priority or count descending)
   const categorySubcategoriesMap = useMemo(() => {
     const map = {};
     for (const p of published) {
@@ -73,7 +85,12 @@ export default function Catalogue({ activeCategory, onSelectCategory }) {
     for (const cat of Object.keys(map)) {
       result[cat] = Object.entries(map[cat])
         .map(([name, count]) => ({ name, count }))
-        .sort((a, b) => b.count - a.count);
+        .sort((a, b) => {
+          const sRankA = subcategoryRank(cat, a.name);
+          const sRankB = subcategoryRank(cat, b.name);
+          if (sRankA !== sRankB) return sRankA - sRankB;
+          return b.count - a.count;
+        });
     }
     return result;
   }, [published]);

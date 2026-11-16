@@ -30,19 +30,19 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 bg-white/85 backdrop-blur-md supports-[backdrop-filter]:bg-white/80 border-b border-outline-variant/70 shadow-sm">
       <div className="w-full max-w-[1440px] mx-auto px-3 sm:px-6 lg:px-12 flex items-center justify-between gap-2 sm:gap-4 h-16 sm:h-20 min-w-0">
-        {/* Brand logo */}
-        <Link className="flex items-center gap-2.5 sm:gap-3 group min-w-0 shrink" to="/">
+        {/* Brand logo - fully visible, never compressed or truncated */}
+        <Link className="flex items-center gap-2 sm:gap-3 group shrink-0 whitespace-nowrap" to="/">
           <div className="w-9 h-9 sm:w-11 sm:h-11 shrink-0 rounded-xl bg-white border border-outline-variant/80 shadow-xs flex items-center justify-center p-1 sm:p-1.5 transition-transform duration-150 group-hover:scale-95 overflow-hidden">
             <img src={assetUrl("assets/brand/mm-logo-mark.webp")} alt="MM Kitchen World Logo" className="w-full h-full object-contain" />
           </div>
-          <div className="min-w-0">
-            <span className="font-headline-md text-[14px] xs:text-[16px] sm:text-[19px] xl:text-[20px] text-primary uppercase font-bold block leading-none truncate">MM Kitchen World</span>
-            <span className="font-label-sm text-[9px] xs:text-[10px] sm:text-label-sm text-on-surface-variant uppercase tracking-wider sm:tracking-widest mt-1 block truncate">Glen Exclusive Store</span>
+          <div className="shrink-0 whitespace-nowrap">
+            <span className="font-headline-md text-[14px] xs:text-[15px] sm:text-[17px] xl:text-[18px] 2xl:text-[20px] text-primary uppercase font-bold block leading-none">MM Kitchen World</span>
+            <span className="font-label-sm text-[9px] xs:text-[9.5px] sm:text-[11px] xl:text-label-sm text-on-surface-variant uppercase tracking-wider sm:tracking-widest mt-1 block">Glen Exclusive Store</span>
           </div>
         </Link>
 
         {/* Desktop navigation */}
-        <nav className="hidden xl:flex items-center gap-3.5 2xl:gap-6 min-w-0 mx-3 2xl:mx-8 shrink-0" id="desktopNav">
+        <nav className="hidden xl:flex items-center gap-2.5 2xl:gap-5 min-w-0 mx-2 2xl:mx-6 shrink-0" id="desktopNav">
           {NAV_LINKS.map(({ href, label }) => (
             <HashLink
               key={href}
@@ -60,38 +60,45 @@ export default function Header() {
         </nav>
 
         {/* Trailing action cluster */}
-        <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0 ml-auto">
+        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0 ml-auto">
           <a
             aria-label="Call us on 97432 33729"
             title="Call: 97432 33729"
-            className="hidden xl:inline-flex items-center justify-center gap-2 px-3 py-2 2xl:px-3.5 2xl:py-2.5 rounded-xl border border-outline-variant bg-white text-slate-800 hover:bg-slate-50 hover:border-slate-400 transition-colors duration-150 text-xs 2xl:text-sm font-semibold shadow-2xs shrink-0"
+            className="hidden xl:inline-flex items-center justify-center gap-1.5 px-2.5 py-2 2xl:px-3.5 2xl:py-2.5 rounded-xl border border-outline-variant bg-white text-slate-800 hover:bg-slate-50 hover:border-slate-400 transition-colors duration-150 text-xs 2xl:text-sm font-semibold shadow-2xs shrink-0"
             href={`tel:${PHONE_TEL}`}
           >
             <Icon name="call" className="text-primary text-base" />
-            <span className="hidden 2xl:inline whitespace-nowrap">Call: 97432 33729</span>
+            <span className="whitespace-nowrap">Call: 97432 33729</span>
           </a>
           <Link
             to="/wishlist"
             aria-label={`My list, ${wishlist.length} saved`}
             title="My List"
-            className="hidden sm:flex relative w-10 h-10 sm:w-11 sm:h-11 rounded-lg border border-outline-variant items-center justify-center text-on-surface-variant hover:text-primary hover:border-primary hover:bg-surface-container-low transition-colors"
+            className="hidden sm:flex relative w-9 h-9 sm:w-10 sm:h-10 rounded-lg border border-outline-variant items-center justify-center text-on-surface-variant hover:text-primary hover:border-primary hover:bg-surface-container-low transition-colors shrink-0"
           >
-            <Icon name="favorite" className="text-xl" />
+            <Icon name="favorite" className="text-lg sm:text-xl" />
             {wishlist.length > 0 && (
               <span className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-1 rounded-full bg-primary text-white text-[10px] font-bold flex items-center justify-center">{wishlist.length}</span>
             )}
           </Link>
-          <a onClick={() => trackEnquiry(null, "header")} aria-label="Chat on WhatsApp" className="flex items-center justify-center gap-2 w-9 h-9 sm:w-10 sm:h-10 md:w-auto md:h-auto md:px-4 md:py-2.5 xl:w-11 xl:h-11 xl:p-0 2xl:w-auto 2xl:h-auto 2xl:px-4 2xl:py-2.5 rounded-lg bg-tertiary text-on-tertiary font-label-md text-label-md shadow-sm hover:brightness-105 active:scale-98 transition-all duration-150 shrink-0" href={whatsappUrl()} rel="noopener noreferrer" target="_blank">
-            <Icon name="chat" className="text-on-tertiary text-lg" />
-            <span className="hidden md:inline xl:hidden 2xl:inline whitespace-nowrap">Chat on WhatsApp</span>
+          <a
+            onClick={() => trackEnquiry(null, "header")}
+            aria-label="Chat on WhatsApp"
+            className="flex items-center justify-center gap-2 px-3 py-2 sm:px-3.5 sm:py-2 rounded-lg bg-tertiary text-on-tertiary font-label-md text-xs sm:text-sm font-bold shadow-sm hover:brightness-105 active:scale-98 transition-all duration-150 shrink-0"
+            href={whatsappUrl()}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <Icon name="chat" className="text-on-tertiary text-base sm:text-lg" />
+            <span className="hidden sm:inline whitespace-nowrap">Chat on WhatsApp</span>
           </a>
           <Link
             to="/admin"
             aria-label="Admin Portal"
             title="Admin Portal"
-            className="w-9 h-9 sm:w-auto sm:px-3 sm:py-2 flex items-center justify-center gap-1.5 rounded-lg border border-outline-variant bg-surface hover:bg-surface-container-low text-on-surface hover:text-primary transition-colors font-label-md text-label-md font-semibold shrink-0"
+            className="w-9 h-9 sm:w-auto sm:px-3 sm:py-2 flex items-center justify-center gap-1.5 rounded-lg border border-outline-variant bg-surface hover:bg-surface-container-low text-on-surface hover:text-primary transition-colors font-label-md text-xs sm:text-sm font-semibold shrink-0"
           >
-            <Icon name="lock" className="text-base text-primary" />
+            <Icon name="lock" className="text-sm sm:text-base text-primary" />
             <span className="hidden sm:inline whitespace-nowrap">Admin</span>
           </Link>
           <button

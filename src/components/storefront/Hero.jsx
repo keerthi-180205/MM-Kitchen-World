@@ -17,18 +17,18 @@ export default function Hero() {
         <div className="absolute -bottom-40 -left-32 w-[460px] h-[460px] rounded-full bg-amber-200/30 blur-3xl"></div>
       </div>
       <div className="relative max-w-[1440px] mx-auto px-6 lg:px-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           {/* Left editorial copy */}
-          <div className="lg:col-span-7 flex flex-col justify-center">
-            <div className="flex items-center gap-3.5 mb-6">
-              <div className="w-14 h-14 sm:w-16 sm:h-16 shrink-0 animate-float-3d">
+          <div className="lg:col-span-7 flex flex-col">
+            <div className="flex items-center gap-3.5 mb-6 min-h-[66px]">
+              <div className="w-14 h-14 sm:w-16 sm:h-16 shrink-0 animate-float-3d flex items-center justify-center">
                 <img
                   src={assetUrl("assets/brand/mm-3d-emblem-transparent.webp")}
                   alt="MM Kitchen World 3D Brand Emblem"
                   className="w-full h-full object-contain hover:scale-110 transition-transform duration-300"
                 />
               </div>
-              <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-surface-container-low border border-outline-variant w-fit shadow-xs">
+              <div className="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-full bg-surface-container-low border border-outline-variant w-fit shadow-xs">
                 <span className="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
                 <span className="font-label-sm text-label-sm text-primary font-bold tracking-widest uppercase">BANGALORE'S GLEN EXCLUSIVE STORE · BASAVESHWARA NAGAR</span>
               </div>
@@ -84,7 +84,7 @@ export default function Hero() {
               target="_blank"
               rel="noopener noreferrer"
               title="View verified 4.7-star rating & 139+ reviews on Google Maps"
-              className="group flex items-center justify-between gap-3 p-3 sm:px-4 sm:py-3 rounded-2xl bg-white border border-outline-variant shadow-md hover:shadow-xl hover:border-primary/50 transition-all duration-300"
+              className="group flex items-center justify-between gap-3 p-3 sm:px-4 sm:py-2.5 min-h-[66px] rounded-2xl bg-white border border-outline-variant shadow-md hover:shadow-xl hover:border-primary/50 transition-all duration-300"
             >
               <div className="flex items-center gap-3 min-w-0">
                 {/* Official Google 4-Color G Logo */}
