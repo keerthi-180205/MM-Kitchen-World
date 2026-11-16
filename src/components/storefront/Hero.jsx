@@ -19,9 +19,9 @@ export default function Hero() {
         <div className="absolute -bottom-40 -left-32 w-[460px] h-[460px] rounded-full bg-amber-200/30 blur-3xl"></div>
       </div>
       <div className="relative max-w-[1440px] mx-auto px-6 lg:px-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 xl:gap-10 items-start">
           {/* Left editorial copy */}
-          <div className="lg:col-span-7 flex flex-col">
+          <div className="lg:col-span-5 flex flex-col">
             <div className="flex items-center gap-3.5 mb-6 min-h-[66px]">
               <div className="w-14 h-14 sm:w-16 sm:h-16 shrink-0 animate-float-3d flex items-center justify-center">
                 <img
@@ -35,37 +35,37 @@ export default function Hero() {
                 <span className="font-label-sm text-label-sm text-primary font-bold tracking-widest uppercase">BANGALORE'S GLEN EXCLUSIVE STORE · BASAVESHWARA NAGAR</span>
               </div>
             </div>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[50px] font-extrabold text-slate-900 tracking-tight leading-[1.14] mb-3">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[42px] xl:text-[46px] font-extrabold text-slate-900 tracking-tight leading-[1.14] mb-3">
               Your Dream Kitchen <br />
               <span>Starts Here.</span> <br />
               <span className="text-[#0878E8]">Discover Quality Kitchen Appliances with </span> <br className="hidden sm:inline" />
               <span className="text-[#0878E8]">MM Kitchen World.</span>
             </h1>
-            <div className="w-16 h-1 bg-[#0878E8] rounded-full mb-6"></div>
-            <p className="font-body-lg text-body-lg text-slate-600 max-w-2xl mb-4 leading-relaxed">
-              Explore a wide range of kitchen appliances, including chimneys, gas stoves, hobs, water heaters, sinks, ovens, microwaves, dishwashers, cooking ranges and small appliances. Discover 283 products under one roof, with expert guidance to help you find the right fit for your kitchen.
+            <div className="w-16 h-1 bg-[#0878E8] rounded-full mb-5"></div>
+            <p className="font-body-lg text-base sm:text-lg text-slate-600 max-w-xl mb-3 leading-relaxed">
+              Explore 283 premium kitchen appliances under one roof — chimneys, gas stoves, hobs, built-in ovens, dishwashers &amp; more with personalized guidance.
             </p>
-            <p className="text-sm sm:text-base font-medium text-slate-700 max-w-2xl mb-8 leading-relaxed">
-              Visit our Basaveshwara Nagar showroom or connect with us on WhatsApp for expert assistance and the latest prices.
+            <p className="text-sm sm:text-base font-medium text-slate-700 max-w-xl mb-6 leading-relaxed">
+              Visit our Basaveshwara Nagar showroom or connect on WhatsApp for latest prices &amp; live demos.
             </p>
-            <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-3 sm:gap-4 mb-8 sm:mb-10">
-              <a className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl bg-gradient-to-r from-[#0878E8] to-[#005bb3] text-white font-label-lg text-label-lg shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 hover:-translate-y-0.5 btn-shine transition-all duration-200 active:scale-98" href="#products">
+            <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 mb-6 sm:mb-8">
+              <a className="inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl bg-gradient-to-r from-[#0878E8] to-[#005bb3] text-white font-label-md sm:font-label-lg text-sm sm:text-base shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 hover:-translate-y-0.5 btn-shine transition-all duration-200 active:scale-98" href="#products">
                 <span>Explore 283 Products</span>
-                <Icon name="arrow_forward" className="text-lg" />
+                <Icon name="arrow_forward" className="text-base sm:text-lg" />
               </a>
-              <a className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-tertiary text-on-tertiary font-label-lg text-label-lg shadow-lg shadow-tertiary/30 hover:brightness-105 hover:-translate-y-0.5 transition-all duration-200 active:scale-98" onClick={() => trackEnquiry(null, "hero")} href={whatsappUrl()} rel="noopener noreferrer" target="_blank">
-                <Icon name="chat" className="text-lg" />
+              <a className="inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-3 sm:py-3.5 rounded-xl bg-tertiary text-on-tertiary font-label-md sm:font-label-lg text-sm sm:text-base shadow-lg shadow-tertiary/30 hover:brightness-105 hover:-translate-y-0.5 transition-all duration-200 active:scale-98" onClick={() => trackEnquiry(null, "hero")} href={whatsappUrl()} rel="noopener noreferrer" target="_blank">
+                <Icon name="chat" className="text-base sm:text-lg" />
                 <span>Chat on WhatsApp</span>
               </a>
-              <a className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl border border-outline-variant bg-white/70 backdrop-blur text-primary font-label-lg text-label-lg hover:bg-white hover:-translate-y-0.5 transition-all duration-200" href="#showroom">
-                <Icon name="storefront" className="text-lg" />
-                <span>Visit Our Showroom</span>
+              <a className="inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-3 sm:py-3.5 rounded-xl border border-outline-variant bg-white/70 backdrop-blur text-primary font-label-md sm:font-label-lg text-sm sm:text-base hover:bg-white hover:-translate-y-0.5 transition-all duration-200" href="#showroom">
+                <Icon name="storefront" className="text-base sm:text-lg" />
+                <span>Visit Showroom</span>
               </a>
             </div>
           </div>
 
-          {/* Right hero visual */}
-          <div className="lg:col-span-5 flex flex-col gap-3.5">
+          {/* Right hero visual - expanded horizontally across 7 columns */}
+          <div className="lg:col-span-7 flex flex-col gap-3.5">
             {/* Eye-catching Google Reviews Tab Above Image */}
             <a
               href={GMB_URL}
@@ -108,10 +108,10 @@ export default function Hero() {
               </div>
             </a>
 
-            {/* 100% Unobstructed Full Showroom Photo (inner_image) - Enlarged vertically */}
+            {/* 100% Unobstructed Full Showroom Photo - Expands into empty space, full 16:9 view */}
             <div className="relative rounded-3xl overflow-hidden border border-outline-variant/80 bg-surface-container-lowest shadow-xl shadow-slate-900/10">
               <img
-                className="w-full h-[320px] sm:h-[420px] lg:h-[480px] xl:h-[500px] object-cover object-[65%_center]"
+                className="w-full h-auto aspect-[16/9] object-cover"
                 alt="MM Kitchen World - GLEN Exclusive Showroom Interior with live consultation counter, built-in appliances, and display counters"
                 src={assetUrl("assets/hero/hero-inner.webp")}
                 loading="eager"
